@@ -3,7 +3,14 @@
 #include "probvalues.h"
 
 /*
-El objetivo de este programa es calcular la probabilidad de conseguir un cluster percolante
+El objetivo de este programa es calcular la probabilidad de conseguir un cluster percolante, se recomienda ejecutar como
+
+g++ -std=c++17 -o clusterprob.exe clusterprob.cpp matrix.cpp dfspercolation.cpp probvalues.cpp
+.\clusterprob.exe L num_samples p_vals x
+
+Asi, se obtiene el arreglo de que para una matriz de tamaño L se genere un cluster percolante a partir de la probabilidad 
+de llenado p y el numero de veces que se calcula esto es num_samples.
+
 */
 
 int main(int argc, char **argv) {

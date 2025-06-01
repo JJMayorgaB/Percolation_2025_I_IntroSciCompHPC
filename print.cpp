@@ -1,5 +1,9 @@
 #include "probvalues.h"
 
+/*
+Este programa es de verificación, queremos ver la salida de generate_p_values(N), borrar despues
+*/
+
 int main(int argc, char **argv) {
 
     int N = std::atoi(argv[1]);

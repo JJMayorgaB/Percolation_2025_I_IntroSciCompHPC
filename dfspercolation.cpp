@@ -1,6 +1,6 @@
 #include "dfspercolation.h"
 
-// Función principal de percolación
+// Función principal de percolación se returna un booleano segun si hay o no hay cluster percolante
 bool hasPercolationCluster(const std::vector<int>& matrix, int L) {
 
     std::vector<bool> visited(L * L, false);
@@ -22,7 +22,7 @@ bool hasPercolationCluster(const std::vector<int>& matrix, int L) {
 }
 
 
-// Implementación DFS para matriz 1D
+// Implementación DFS para matriz 1D, es el algoritmo para identificar el cluster percolante
 void dfs(const std::vector<int> & matrix, std::vector<bool> & visited, int L, int i, int j, bool& reached_bottom) {
 
     int id = i * L + j;
