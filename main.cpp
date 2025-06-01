@@ -5,7 +5,7 @@ int main(int argc, char **argv) {
 
     if (argc != 3) {
 
-        std::cerr << "Uso: " << argv[0] << " <size_L> <probability_p>\n";
+        std::cerr << "Use: " << argv[0] << " <size_L> <probability_p>\n";
         return 1;
 
     }
@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
 
     if (L <= 0 || p < 0.0 || p > 1.0) {
 
-        std::cerr << "Error: L debe ser > 0 y p debe estar en [0, 1]\n";
+        std::cerr << "Error: L should be > 0 and p should be in [0, 1]\n";
         return 1;
 
     }
@@ -25,11 +25,11 @@ int main(int argc, char **argv) {
 
     if (hasPercolationCluster(matrix, L)) {
 
-        std::cout << "¡Existe un cluster percolante!\n";
+        std::cout << "There is a percolating cluster\n";
 
     } else {
 
-        std::cout << "No hay cluster percolante.\n";
+        std::cout << "There is a percolating cluster\n";
 
     }
 

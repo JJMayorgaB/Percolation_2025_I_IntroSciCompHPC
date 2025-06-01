@@ -14,9 +14,9 @@ std::vector<int> generatematrix(int L, double p) {
 
         for (int j = 0; j < L; ++j) {
 
-            int id = i * L + j;  // Mapeo 2D → 1D
+            int id = i * L + j;  // Map 2D → 1D
             double r = dis(gen);
-            matrix[id] = (r < p) ? 1 : 0; //se llena la matriz
+            matrix[id] = (r < p) ? 1 : 0; //Fills the matrix
 
         }
     }

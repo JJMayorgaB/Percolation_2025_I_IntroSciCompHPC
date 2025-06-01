@@ -1,16 +1,14 @@
-CXX=g++
-CXXFLAGS = -Wall -std=c++17 -Iinclude
-SRC=$(wildcard source/*.cpp)
-OUT= build/percolation
+CXX = g++
+CXXFLAGS = -std=c++17 -Wall
+TARGET = percolation.x
 
-build:$(OUT)
+SRCS = main.cpp matriz.cpp dfspercolation.cpp
+OBJS = $(SRCS:.cpp=.o)
 
-$(OUT):$(SRC)
-	mkdir -p build
-	$(CXX) $(CXXFLAGS) -o $(OUT) $(SRC)
+all: $(TARGET)
 
-run:build
-	./$(OUT) 4 0.4
+$(TARGET): $(OBJS)
+    $(CXX) $(CXXFLAGS) -o $@ $^
 
 clean:
-	rm -rf build
+    rm -f $(OBJS) $(TARGET)
