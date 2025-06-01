@@ -1,5 +1,6 @@
 #include "matrix.h"
 #include "dfspercolation.h"
+#include "probvalues.h"
 
 /*
 El objetivo de este programa es calcular la probabilidad de conseguir un cluster percolante
@@ -19,7 +20,7 @@ int main(int argc, char **argv) {
 
 
     // Array de valores de p específicos
-    std::vector<double> p_values = {0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.55, 0.6, 0.65, 0.7, 0.8, 0.9, 1.0};
+    std::vector<double> p_values = generate_p_values(30);
 
     // Barrer los valores de p desde el array
     for (double p : p_values) {
