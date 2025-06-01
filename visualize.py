@@ -3,8 +3,13 @@ import numpy as np
 import matplotlib.colors as mcolors
 
 def read_matrix(file):
-    with open(file, 'r', encoding='utf-16') as f:  
-        lines = f.readlines()
+
+    try:
+        with open(file, 'r', encoding='utf-16') as f:  #Predeterminado: utf-16
+            lines = f.readlines()
+    except UnicodeDecodeError:
+        with open(file, 'r', encoding='utf-8') as f:  # Fallback a otra codificación
+            lines = f.readlines()
     
     matrix = []
     
