@@ -1,33 +1,26 @@
 #include "dfspercolation.h"
 
-
 // Función principal de percolación
 bool hasPercolationCluster(const std::vector<int>& matrix, int L) {
 
     std::vector<bool> visited(L * L, false);
-    bool percolates = false;
-
-    // Solo necesitamos verificar la fila superior (i = 0)
+    
     for (int j = 0; j < L; ++j) {
-
-        int id = 0 * L + j;  // Convertir (0,j) a índice 1D
-
+        int id = j;  // (0,j) since i=0
+        
         if (matrix[id] == 1 && !visited[id]) {
-
             bool reached_bottom = false;
             dfs(matrix, visited, L, 0, j, reached_bottom);
-
+            
             if (reached_bottom) {
-
-                percolates = true;
-                break;
-
+                return true;  // Salir inmediatamente al encontrar percolación
             }
         }
     }
-
-    return percolates;
+    
+    return false;
 }
+
 
 // Implementación DFS para matriz 1D
 void dfs(const std::vector<int> & matrix, std::vector<bool> & visited, int L, int i, int j, bool& reached_bottom) {
@@ -47,10 +40,10 @@ void dfs(const std::vector<int> & matrix, std::vector<bool> & visited, int L, in
     if (i == L - 1) reached_bottom = true;
     
     // Explorar vecinos (arriba, abajo, izquierda, derecha)
-    dfs(matrix, visited, L, i + 1, j, reached_bottom);  // Abajo
-    dfs(matrix, visited, L, i - 1, j, reached_bottom);  // Arriba
-    dfs(matrix, visited, L, i, j + 1, reached_bottom);  // Derecha
-    dfs(matrix, visited, L, i, j - 1, reached_bottom);  // Izquierda
+    dfs(matrix, visited, L, i + 1, j, reached_bottom);  // Abajo primero
+    if (!reached_bottom) dfs(matrix, visited, L, i - 1, j, reached_bottom);
+    if (!reached_bottom) dfs(matrix, visited, L, i, j + 1, reached_bottom);
+    if (!reached_bottom) dfs(matrix, visited, L, i, j - 1, reached_bottom);
 }
 
 

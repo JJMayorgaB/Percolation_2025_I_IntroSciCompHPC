@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
 
     } else {
 
-        std::cout << "There is a percolating cluster\n";
+        std::cout << "There is no a percolating cluster\n";
 
     }
 
