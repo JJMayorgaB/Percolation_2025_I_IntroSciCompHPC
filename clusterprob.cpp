@@ -8,19 +8,19 @@ El objetivo de este programa es calcular la probabilidad de conseguir un cluster
 
 int main(int argc, char **argv) {
 
-    if (argc != 3) {
+    if (argc != 4) {
 
-        std::cerr << "Use: " << argv[0] << " <size_L> <num_samples>\n";
+        std::cerr << "Use: " << argv[0] << " <size_L> <num_samples> <p_vals>\n";
         return 1;
 
     }
 
     int L = std::atoi(argv[1]);
     int num_samples = std::atof(argv[2]);
-
+    int p_vals = std::atoi(argv[3]);
 
     // Array de valores de p específicos
-    std::vector<double> p_values = generate_p_values(30);
+    std::vector<double> p_values = generate_p_values(p_vals);
 
     // Barrer los valores de p desde el array
     for (double p : p_values) {
