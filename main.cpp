@@ -23,13 +23,19 @@ int main(int argc, char **argv) {
     std::vector<int> matrix = generatematrix(L, p);
     printmatrix(matrix, L);
 
+    bool percolation;
+
     if (hasPercolationCluster(matrix, L)) {
 
         std::cout << "There is a percolating cluster\n";
+        percolation = true;
+        std::cout << percolation << std::endl;
 
     } else {
 
         std::cout << "There is no a percolating cluster\n";
+        percolation = false;
+        std::cout << percolation << std::endl;
 
     }
 
