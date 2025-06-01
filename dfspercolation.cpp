@@ -1,4 +1,4 @@
-#include "percolation.h"
+#include "dfspercolation.h"
 
 
 // Función principal de percolación
