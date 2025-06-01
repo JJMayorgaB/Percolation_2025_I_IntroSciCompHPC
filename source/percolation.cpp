@@ -1,52 +1,35 @@
-#include <iostream>
+#include "percolation.h"
 #include <vector>
-#include <random>
-#include <iomanip> // opcional, por estética
 
-// Función que genera la matriz
-std::vector<std::vector<int>> generarMatriz(int L, double p) {
-    std::vector<std::vector<int>> matriz(L, std::vector<int>(L, 0));
-
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<> dis(0.0, 1.0);
-
-    for (int i = 0; i < L; ++i) {
-        for (int j = 0; j < L; ++j) {
-            double r = dis(gen);
-            matriz[i][j] = (r < p) ? 1 : 0;
+bool hasPercolationCluster(const std::vector<std::vector<int>>& matriz){
+    int L = matriz.size();
+    std::vector<std::vector<bool>> visitado(L,std::vector<bool>(L,false));
+    bool percola = false;
+     for (int j = 0; j < L; ++j) {
+        if (matriz[0][j] == 1 && !visitado[0][j]) {
+            bool llegoAlFondo = false;
+            dfs(matriz, visitado, 0, j, llegoAlFondo);
+            if (llegoAlFondo) {
+                percola = true;
+                break;
+            }
         }
     }
-
-    return matriz;
+    return percola;
 }
 
-// Función para imprimir la matriz
-void imprimirMatriz(const std::vector<std::vector<int>>& matriz) {
-    for (const auto& fila : matriz) {
-        for (int celda : fila) {
-            std::cout << (celda ? "x" : " ");
-        }
-        std::cout << '\n';
-    }
+void dfs(const std::vector<std::vector<int>>& matriz, std::vector<std::vector<bool>>& visitado, int i, int j, bool& llegoAlFondo) {
+    int L = matriz.size();
+    if (i < 0 || i >= L || j < 0 || j >= L) return;
+    if (matriz[i][j] == 0 || visitado[i][j]) return;
+
+    visitado[i][j] = true;
+
+    if (i == L - 1) llegoAlFondo = true;
+
+    dfs(matriz, visitado, i + 1, j, llegoAlFondo); // abajo
+    dfs(matriz, visitado, i - 1, j, llegoAlFondo); // arriba
+    dfs(matriz, visitado, i, j + 1, llegoAlFondo); // derecha
+    dfs(matriz, visitado, i, j - 1, llegoAlFondo); // izquierda
 }
 
-int main(int argc, char* argv[]) {
-    if (argc != 3) {
-        std::cerr << "Uso: " << argv[0] << " <tamano_L> <probabilidad_p>\n";
-        return 1;
-    }
-
-    int L = std::stoi(argv[1]);
-    double p = std::stod(argv[2]);
-
-    if (L <= 0 || p < 0.0 || p > 1.0) {
-        std::cerr << "Error: L debe ser > 0 y p debe estar en [0, 1]\n";
-        return 1;
-    }
-
-    auto matriz = generarMatriz(L, p);
-    imprimirMatriz(matriz);
-
-    return 0;
-}
