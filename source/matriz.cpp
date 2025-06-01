@@ -1,31 +1,41 @@
-#include "matriz.h"
-#include <random>
-#include <iostream>
+#include "matrix.h"
 
-// Función que genera la matriz
-std::vector<std::vector<int>> generarMatriz(int L, double p) {
-    std::vector<std::vector<int>> matriz(L, std::vector<int>(L, 0));
+//Generate the matrix
+std::vector<int> generatematrix(int L, double p) {
+
+    int N = L * L;
+    std::vector<int> matrix(N, 0);  // Vector 1D contiguo
 
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_real_distribution<> dis(0.0, 1.0);
 
     for (int i = 0; i < L; ++i) {
+
         for (int j = 0; j < L; ++j) {
+
+            int id = i * L + j;  // Mapeo 2D → 1D
             double r = dis(gen);
-            matriz[i][j] = (r < p) ? 1 : 0;
+            matrix[id] = (r < p) ? 1 : 0; //se llena la matriz
+
         }
     }
 
-    return matriz;
+    return matrix;
 }
 
-// Función para imprimir la matriz
-void imprimirMatriz(const std::vector<std::vector<int>>& matriz) {
-    for (const auto& fila : matriz) {
-        for (int celda : fila) {
-            std::cout << (celda ? "1" : "0");
+
+//Print the percolation matrix
+void printmatrix(const std::vector<int>& matrix, int L) { 
+
+    for (int i = 0; i < L; ++i) {
+        for (int j = 0; j < L; ++j) {
+
+            int id = i * L + j;  // Map 2D → 1D
+            std::cout << (matrix[id] ? "1" : "0") << " ";
+
         }
+
         std::cout << '\n';
     }
 }
