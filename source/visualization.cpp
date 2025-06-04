@@ -1,6 +1,6 @@
 #include "matrix.h"
 #include "dfspercolation.h"
-#include "hoshen_kopelman.h"
+
 /*
 Este programa cumple el objetivo de devolvernos la matriz de percolación llenada por medio de la salida de 
 la consola, una vez ejecutado este codigo se puede utilizar la salida en un .txt para obtener la grafica de la matriz.
@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
     std::vector<int> matrix = generatematrix(L, p);
     printmatrix(matrix, L);
 
-    bool percolation;
+    // bool percolation;
 
     if (hasPercolationCluster(matrix, L)) {
 
@@ -39,15 +39,6 @@ int main(int argc, char **argv) {
         std::cout << "There is no a percolating cluster\n";
 
     }
-
-    auto result = hoshen_kopelman(matrix, L);
-
-    std::cout << "¿Percolación? " << (result.percolates ? "Sí" : "No") << "\n";
-    std::cout << "Tamaño máximo de cluster: " << result.max_cluster_size << "\n";
-
-    std::cout << "\nVista simplificada de clusters:\n";
-    print_clusters(result.labels, L);
-
 
     return 0;
 }
