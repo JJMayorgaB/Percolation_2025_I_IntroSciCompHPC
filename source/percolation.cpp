@@ -5,6 +5,7 @@
 
 // Función que genera la matriz
 std::vector<std::vector<int>> generarMatriz(int L, double p) {
+    
     std::vector<std::vector<int>> matriz(L, std::vector<int>(L, 0));
 
     std::random_device rd;
@@ -37,8 +38,8 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    int L = std::stoi(argv[1]);
-    double p = std::stod(argv[2]);
+    int L = std::atoi(argv[1]);
+    double p = std::atof(argv[2]);
 
     if (L <= 0 || p < 0.0 || p > 1.0) {
         std::cerr << "Error: L debe ser > 0 y p debe estar en [0, 1]\n";
