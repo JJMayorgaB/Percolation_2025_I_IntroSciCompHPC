@@ -26,9 +26,10 @@ int main(int argc, char **argv) {
     }
 
     std::vector<int> matrix = generatematrix(L, p);
-    printmatrix(matrix, L);
 
-    bool percolation;
+    auto result = hoshen_kopelman(matrix, L);
+
+    print_clusters(result.labels, L);
 
     if (hasPercolationCluster(matrix, L)) {
 
@@ -40,13 +41,8 @@ int main(int argc, char **argv) {
 
     }
 
-    auto result = hoshen_kopelman(matrix, L);
 
-    std::cout << "¿Percolación? " << (result.percolates ? "Sí" : "No") << "\n";
-    std::cout << "Tamaño máximo de cluster: " << result.max_cluster_size << "\n";
-
-    std::cout << "\nVista simplificada de clusters:\n";
-    print_clusters(result.labels, L);
+    std::cout << "Tamano maximo de cluster: " << result.max_cluster_size << "\n";
 
 
     return 0;
