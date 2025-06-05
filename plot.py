@@ -22,8 +22,6 @@ def load_data(filename):
             return None
 
 # Cargar datos
-data8 = load_data("datasorted_8.txt")
-data16 = load_data("datasorted_16.txt")
 data32 = load_data("datasorted_32.txt")
 data64 = load_data("datasorted_64.txt")
 data128 = load_data("datasorted_128.txt")
@@ -32,8 +30,6 @@ data512 = load_data("datasorted_512.txt")
 
 fig, ax = plt.subplots()
 #ax.plot(data[:, 1], data[:, 2], label="L = 3", color='red', linestyle='-', marker='o', markeredgecolor='black')
-ax.plot(data8[:, 0], data8[:, 1], label="L = 8", color='red', linestyle='none', marker='.', markersize=1)
-ax.plot(data16[:, 0], data16[:, 1], label="L = 16", color='green', linestyle='none', marker='.', markersize=1)
 ax.plot(data32[:, 0], data32[:, 1], label="L = 32", color='blue', linestyle='none', marker='.', markersize=1)
 ax.plot(data64[:, 0], data64[:, 1], label="L = 64", color='cyan', linestyle='none', marker='.', markersize=1)
 ax.plot(data128[:, 0], data128[:, 1], label="L = 128", color='magenta', linestyle='none', marker='.', markersize=1)

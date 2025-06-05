@@ -52,7 +52,7 @@ int main(int argc, char **argv) {
     // Calcular tamaño medio solo si hay clusters percolantes
     double mean_size = 0.0;
     if (percolating_count > 0) {
-        mean_size = static_cast<double>(total_cluster_size) / percolating_count;
+        mean_size = static_cast<double>(total_cluster_size) /(percolating_count*L);//Normalizado a L
     }
 
     std::cout << p << "\t" << probability << "\t" << mean_size << std::endl;
