@@ -27,9 +27,7 @@ int main(int argc, char **argv) {
         std::cerr << "L must be > 0, num_samples must be > 0, p must be between 0 and 1\n";
         return 1;
     }
-
-    // Array de valores de p específicos
-    //std::vector<double> p_values = generate_p_values(N);
+    
 
     int percolating_count = 0;
     int total_cluster_size = 0;
