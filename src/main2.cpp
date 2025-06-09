@@ -1,5 +1,5 @@
-#include "matrix.h"
-#include "hoshen_kopelman.h"
+#include "../include/matrix.h"
+#include "../include/hoshen_kopelman.h"
 
 /*
 Funcion main alterna
@@ -7,9 +7,9 @@ Funcion main alterna
 
 int main(int argc, char **argv) {
 
-    if (argc != 4) {
+    if (argc < 4) {
 
-        std::cerr << "Use: " << argv[0] << " <size_L> <num_samples> <p_vals>\n";
+        std::cerr << "Use: " << argv[0] << " <size_L> <num_samples> <p_vals> <seed>(optional)\n";
         return 1;
 
     }
@@ -17,16 +17,12 @@ int main(int argc, char **argv) {
     int L = std::atoi(argv[1]);
     int num_samples = std::atoi(argv[2]);
     double p = std::atof(argv[3]);
-    int seed = -1;
-
-    if (argc >= 4) {
-            seed = std::atoi(argv[4]);
-        }
+    int seed = (argc == 5) ? std::atoi(argv[4]) : -1;
 
     // Validar parámetros de entrada
-    if (L <= 0 || num_samples <= 0 || p < 0.0 || p > 1.0) {
+    if (L <= 0 || num_samples <= 0 || p < 0.0 || p > 1.0 || (argc >= 5 && seed <= 0)) {
         std::cerr << "Error: Invalid parameters\n";
-        std::cerr << "L must be > 0, num_samples must be > 0, p must be between 0 and 1\n";
+        std::cerr << "L must be > 0, num_samples must be > 0, p must be between 0 and 1, seed (if given) must be > 0\n";
         return 1;
     }
 

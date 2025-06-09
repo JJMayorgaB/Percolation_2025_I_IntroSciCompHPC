@@ -17,7 +17,7 @@ int main(int argc, char **argv) {
 
     int L = std::atoi(argv[1]);
     double p = std::atof(argv[2]);
-    int seed = (argc >= 4) ? std::atoi(argv[3]) : -1;
+    int seed = (argc == 4) ? std::atoi(argv[3]) : -1;
 
     if (L <= 0 || p < 0.0 || p > 1.0) {
 

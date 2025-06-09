@@ -27,3 +27,7 @@ g++ -std=c++17 -I include/ -o src/main.exe src/main.cpp src/matrix.cpp src/hoshe
 
 g++ -std=c++17 -I include/ -o src/main2.exe src/main2.cpp src/matrix.cpp src/hoshen_kopelman.cpp src/union_find.cpp src/probvalues.cpp
 ./src/main2.exe
+
+#Obtenemos los valores de probabilidad como
+g++ -std=c++17 -o printvalues.exe printvalues.cpp probvalues.cpp
+./printvalues.exe 50 > probabilidades.txt   

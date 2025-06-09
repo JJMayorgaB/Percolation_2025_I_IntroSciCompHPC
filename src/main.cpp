@@ -12,7 +12,7 @@ int main(int argc, char **argv) {
 
         L = std::atoi(argv[1]);
         p = std::atof(argv[2]);
-        if (argc >= 4) {
+        if (argc == 4) {
             seed = std::atoi(argv[3]);
         }
         
