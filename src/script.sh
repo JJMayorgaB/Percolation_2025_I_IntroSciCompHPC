@@ -9,7 +9,7 @@ mkdir -p ../build/resultados/raw_data/Pfiles
 mkdir -p ../build/resultados/raw_data/Clusters
 mkdir -p ../build/graficas
 
-#rm -r graficas
+rm -r graficas
 
 # Valores de L
 Ls=(32 64 128 256 512)
@@ -57,13 +57,13 @@ simulate() {
     percolating_count=0
     for rep in {1..10}; do
         output=$(echo -e "$L\n$p" | $EXEC 2>/dev/null)
-        perc=$(echo "$output" | grep -i "¿Existe percolacion?" | grep -o "Sí\|No")
-        size=$(echo "$output" | grep -i "Tamano del mayor cluster percolante" | awk '{print $NF}')
+        perc=$(echo "$output" | grep -i "¿Existe percolación?" | grep -o "Sí\|No")
+        size=$(echo "$output" | grep -i "Tamaño del mayor cluster percolante" | awk '{print $NF}')
         size=${size:-0}
 
         echo "$size" >> "$raw_file"
 
-        if [ "$perc" == "Si" ]; then
+        if [ "$perc" == "Sí" ]; then
 
             percolating_count=$((percolating_count + 1))
             cluster_perc_sizes+=("$size")
@@ -217,4 +217,3 @@ EOF
 
 echo "✅ Simulaciones y gráficas completadas."
 echo "📂 Ver resultados en: build/graficas/"
-
