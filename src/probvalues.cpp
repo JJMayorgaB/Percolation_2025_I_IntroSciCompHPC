@@ -1,4 +1,4 @@
-#include "probvalues.h"
+#include "../include/probvalues.h"
 
 std::vector<double> generate_p_values(int N) {
     

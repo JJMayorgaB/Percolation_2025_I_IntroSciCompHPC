@@ -1,14 +1,22 @@
-#include "matrix.h"
+#include "../include/matrix.h"
 
 //Generate the matrix
-std::vector<int> generatematrix(int L, double p) {
+std::vector<int> generatematrix(int L, double p, int seed) {
+
+    std::mt19937 gen;
+    
+    if (seed == -1) {
+        std::random_device rd;
+        gen.seed(rd()); // Semilla aleatoria
+    } else {
+        gen.seed(seed); // Semilla fija
+    }
+
+    std::uniform_real_distribution<> dis(0.0, 1.0);  
 
     int N = L * L;
     std::vector<int> matrix(N, 0);  // Vector 1D contiguo
 
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<> dis(0.0, 1.0);
 
     for (int i = 0; i < L; ++i) {
 

@@ -1,25 +1,38 @@
-#include <iostream>
-#include <vector>
 #include "../include/matrix.h"
 #include "../include/hoshen_kopelman.h"
 
-int main() {
+int main(int argc, char **argv) {
+    
     int L;
     double p;
+    int seed = -1; //semilla aleatoriaL * L
 
-    std::cout << "Ingrese el tamaño de la matriz (LxL): ";
-    std::cin >> L;
-    std::cout << "Ingrese la probabilidad de ocupación (0.0 - 1.0): ";
-    std::cin >> p;
+    // Si se pasan argumentos, úsalos; si no, pide entrada interactiva
+    if (argc >= 3) {
 
-    std::vector<int> matrix = generatematrix(L, p);
+        L = std::atoi(argv[1]);
+        p = std::atof(argv[2]);
+        if (argc >= 4) {
+            seed = std::atoi(argv[3]);
+        }
+        
+    } else {
+
+        std::cout << "Ingrese el tamano de la matriz (LxL): ";
+        std::cin >> L;
+        std::cout << "Ingrese la probabilidad de ocupación (0.0 - 1.0): ";
+        std::cin >> p;
+
+    }
+
+    std::vector<int> matrix = generatematrix(L, p, seed);
 
     std::cout << "\nMatriz generada:\n";
     printmatrix(matrix, L);
 
     ClusterInfo info = hoshen_kopelman(matrix, L);
 
-    std::cout << "\n¿Existe percolación?: " << (info.percolates ? "Sí" : "No") << '\n';
+    std::cout << "\n¿Existe percolacion?: " << (info.percolates ? "Si" : "No") << '\n';
 
     if (info.percolates) {
         std::cout << "Tamaño del mayor cluster percolante: " << info.max_cluster_size << '\n';
