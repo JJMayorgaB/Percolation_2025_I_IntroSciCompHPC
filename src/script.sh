@@ -5,13 +5,14 @@ EXEC="./percolacion"
 # Crear carpetas necesarias
 rm -rf  ../build
 
-
 mkdir -p ../build/resultados/raw_data/Pfiles
 mkdir -p ../build/resultados/raw_data/Clusters
 mkdir -p ../build/graficas
+
 rm -r graficas
+
 # Valores de L
-Ls=(3 32 64 128 256 512)
+Ls=(32 64 128 256 512)
 
 # Generar valores de p (20 uniformes y 10 críticos)
 ps=()
@@ -137,7 +138,7 @@ done
 
     echo "$p $P_avg $P_std" >> ../build/graficas/L${L}_P.txt
     echo "$p $avg_cluster $std_cluster" >> ../build/graficas/L${L}_Cluster.txt
-
+    echo "$L,$p,$avg_cluster,$std_cluster,$P_avg,$P_std"
 }
 
 
@@ -145,11 +146,12 @@ export -f simulate
 export EXEC
 
 # Encabezado del resumen CSV
-
 echo "L,p,promedio_cluster_percolante,desviacion_cluster_percolante,media_P,desviacion_P" > resultados/resumen.csv
 
-# Ejecutar en paralelo
-parallel --colsep ' ' simulate {1} {2} :::: "$combinations" >> resultados/resumen.csv
+# Ejecutar en paralelo y salida de datos
+parallel --colsep ' ' simulate {1} {2} :::: "$combinations" > resultados/resumen_temp.csv
+sort -t',' -k1,1n -k2,2n resultados/resumen_temp.csv >> resultados/resumen.csv 
+rm resultados/resumen_temp.csv
 
 # Limpieza
 rm -r resultados/temp "$combinations"
@@ -160,31 +162,53 @@ for L in "${Ls[@]}" ; do
     sort -n ../build/graficas/L${L}_Cluster.txt -o ../build/graficas/L${L}_Cluster.txt
 done
 
+# Generar gráfica de probabilidad (P vs p) con estilos personalizados
+gnuplot -persist <<-EOF
+    set terminal pngcairo size 800,600 enhanced font "Arial,12"
+    set output "../build/graficas/P_all_L.png"
+    set title "Probabilidad de percolación para diferentes L"
+    set xlabel "p"
+    set ylabel "P(p)"
+    set grid
+    set key top left
 
-for L in "${Ls[@]}" ; do
-    gnuplot -persist <<-EOF
-        set terminal pngcairo size 800,600
-        set output "../build/graficas/L${L}_P.png"
-        set title "Probabilidad de percolación para L=$L"
-        set xlabel "p"
-        set ylabel "P"
-        set grid
-        set key top left
-        plot "../build/graficas/L${L}_P.txt" using 1:2:3 with yerrorlines title 'P vs p (error)
+    # Definir estilos personalizados (colores + símbolos)
+    set style line 1 lt 1 lc rgb "#FF0000" lw 1 pt 7 ps 1.0   # Rojo (círculo)
+    set style line 2 lt 1 lc rgb "#00AA00" lw 1 pt 11 ps 1.0  # Verde (triángulo)
+    set style line 3 lt 1 lc rgb "#0000FF" lw 1 pt 9 ps 1.0   # Azul (rombo)
+    set style line 4 lt 1 lc rgb "#FF00FF" lw 1 pt 5 ps 1.0   # Magenta (cuadrado)
+    set style line 5 lt 1 lc rgb "#FFA500" lw 1 pt 13 ps 1.0  # Naranja (estrella)
+
+    plot \
+    $(i=1; for L in "${Ls[@]}"; do
+        echo "\"../build/graficas/L${L}_P.txt\" using 1:2:3 with yerrorlines ls $i title 'L=${L}', \\"
+        ((i++))
+    done | sed '$ s/,\\//')
 EOF
 
-    gnuplot -persist <<-EOF
-        set terminal pngcairo size 800,600
-        set output "../build/graficas/L${L}_Cluster.png"
-        set title "Tamaño normalizado del clúster percolante para L=$L"
-        set xlabel "p"
-        set ylabel "Tamaño normalizado de cluster percolante"
-        set grid
-        set key top left
-        plot "../build/graficas/L${L}_Cluster.txt" using 1:2:3 with yerrorlines title 'Cluster vs p (error)
+# Generar gráfica de tamaño de clúster con los mismos estilos
+gnuplot -persist <<-EOF
+    set terminal pngcairo size 800,600 enhanced font "Arial,12"
+    set output "../build/graficas/Cluster_all_L.png"
+    set title "Tamaño normalizado del clúster percolante para diferentes L"
+    set xlabel "p"
+    set ylabel "Tamaño normalizado del clúster"
+    set grid
+    set key top left
 
+    # Reutilizar los mismos estilos para consistencia
+    set style line 1 lt 1 lc rgb "#FF0000" lw 1 pt 7 ps 1.0   # Rojo
+    set style line 2 lt 1 lc rgb "#00AA00" lw 1 pt 11 ps 1.0  # Verde
+    set style line 3 lt 1 lc rgb "#0000FF" lw 1 pt 9 ps 1.0   # Azul
+    set style line 4 lt 1 lc rgb "#FF00FF" lw 1 pt 5 ps 1.0   # Magenta
+    set style line 5 lt 1 lc rgb "#FFA500" lw 1 pt 13 ps 1.0  # Naranja
+
+    plot \
+    $(i=1; for L in "${Ls[@]}"; do
+        echo "\"../build/graficas/L${L}_Cluster.txt\" using 1:2:3 with yerrorlines ls $i title 'L=${L}', \\"
+        ((i++))
+    done | sed '$ s/,\\//')
 EOF
-done
 
 
 #for L in "${Ls[@]}" ; do
