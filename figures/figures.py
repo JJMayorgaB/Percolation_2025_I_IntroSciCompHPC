@@ -19,7 +19,7 @@ Ls = [32, 64, 128, 256, 512]
 # Leer y graficar cada archivo
 for i, L in enumerate(Ls):
     try:
-        data = np.loadtxt(f"../build/graficas/L{L}_Cluster.txt")
+        data = np.loadtxt(f"build/graficas/L{L}_Cluster.txt")
         p = data[:, 0]
         cluster_size = data[:, 1]
         error = data[:, 2]
@@ -45,7 +45,7 @@ ax.set_xlim(0, 1)
 ax.set_ylim(-0.1, 1.1)
 
 # Guardar sin tight_layout para evitar problemas
-plt.savefig("Cluster_all_L.png", bbox_inches='tight', dpi=300)
+plt.savefig("figures/Cluster_all_L.png", bbox_inches='tight', dpi=300)
 #plt.savefig("figures/Cluster_all_L.pdf", bbox_inches='tight', dpi=300)
 
 plt.close()
@@ -68,7 +68,7 @@ Ls = [32, 64, 128, 256, 512]
 # Leer y graficar cada archivo
 for i, L in enumerate(Ls):
     try:
-        data = np.loadtxt(f"../build/graficas/L{L}_P.txt")
+        data = np.loadtxt(f"build/graficas/L{L}_P.txt")
         p = data[:, 0]
         cluster_size = data[:, 1]
         error = data[:, 2]
@@ -94,7 +94,7 @@ ax.set_xlim(0, 1)
 ax.set_ylim(-0.1, 1.1)
 
 # Guardar sin tight_layout para evitar problemas
-plt.savefig("P_all_L.png", bbox_inches='tight', dpi=300)
+plt.savefig("figures/P_all_L.png", bbox_inches='tight', dpi=300)
 #plt.savefig("figures/Cluster_all_L.pdf", bbox_inches='tight', dpi=300)
 
 plt.close()

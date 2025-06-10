@@ -39,9 +39,9 @@ printvalues.x: $(PRINTVALUES_SOURCES) $(HEADERS)
 probabilidades.txt: printvalues.x
 	./printvalues.x 50 > $@
 
-# Ejecutar simulación
+#Ejecutar simulación
 run-simulation: main.x printvalues.x probabilidades.txt
-	@bash script.sh
+	@bash $(SRC_DIR)/script.sh
 
 # Debug con GDB
 debug: main_debug.x
@@ -81,7 +81,7 @@ profile: main_pg.x
 
 
 clean:
-	rm -f *.x *.gcno *.gcda *.data *.out *.txt
+	rm -f *.x *.gcno *.gcda *.data *.out *.txt *.png *.x
 
 help:
 	@echo "Targets disponibles:"

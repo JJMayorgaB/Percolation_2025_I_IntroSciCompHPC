@@ -1,16 +1,13 @@
 #!/bin/bash
 
-# Ejecutables (definidos por el Makefile)
+# Ejecutables 
 EXEC="./main.x"
 
-# Compilar y preparar todo usando Makefile
-echo "🔧 Preparando proyecto con Makefile..."
-make all setup
-if [ $? -ne 0 ]; then
-    echo "❌ Error en la preparación del proyecto"
-    exit 1
-fi
-
+# Crear carpetas necesarias
+rm -rf build
+mkdir -p build/resultados/raw_data/Pfiles
+mkdir -p build/resultados/raw_data/Clusters
+mkdir -p build/graficas
 # Valores de L
 Ls=(32 64 128 256 512)
 
@@ -43,7 +40,7 @@ simulate() {
         percolating_count=0
         for rep in {1..10}; do
             output=$(${EXEC} $L $p 2>/dev/null)
-            perc=$(echo "$output" | grep -i "¿Existe percolacion?" | grep -o "Si\|No")
+            perc=$(echo "$output" | grep -i "¿Existe percolación?" | grep -o "Si\|No")
             size=$(echo "$output" | grep -i "Tamaño del mayor cluster percolante" | awk '{print $NF}')
             size=${size:-0}
 
@@ -117,19 +114,16 @@ export -f simulate
 export EXEC
 
 # Encabezado del resumen CSV
-echo "L,p,promedio_cluster_percolante,desviacion_cluster_percolante,media_P,desviacion_P" > build/resultados/resumen.csv
+echo "L,p,promedio_cluster_percolante,desviacion_cluster_percolante,media_P,desviacion_P" > src/resultados/resumen.csv
 
-# Ejecutar en paralelo
-echo "🚀 Ejecutando simulaciones en paralelo..."
-parallel --colsep ' ' simulate {1} {2} :::: "$combinations" > build/resultados/resumen_temp.csv
-sort -t',' -k1,1n -k2,2n build/resultados/resumen_temp.csv >> build/resultados/resumen.csv 
+parallel --colsep ' ' simulate {1} {2} :::: "$combinations" > src/resultados/resumen_temp.csv
+sort -t',' -k1,1n -k2,2n build/resultados/resumen_temp.csv >> src/resultados/resumen.csv 
 rm build/resultados/resumen_temp.csv
 
 # Limpieza
-rm -f "$combinations"
+rm -f "$combinations" probabilidades.txt
 
 # Ordenar archivos de gráficas
-echo "📊 Ordenando archivos de resultados..."
 for L in "${Ls[@]}"; do
     if [ -f "build/graficas/L${L}_P.txt" ]; then
         sort -n build/graficas/L${L}_P.txt -o build/graficas/L${L}_P.txt
