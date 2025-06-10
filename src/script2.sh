@@ -117,7 +117,7 @@ export -f simulate
 export EXEC REPETITIONS NUM_SAMPLES  # Exportar todas las variables necesarias
 
 # Encabezado del resumen CSV
-echo "L,p,promedio_cluster_percolante,desviacion_cluster_percolante,media_P,desviacion_P" > ../build/resultados/resumen.csv  # Corregida la ruta
+echo "L,p,promedio_cluster_percolante,desviacion_cluster_percolante,media_P,desviacion_P" > resultados/resumen.csv  # Corregida la ruta
 
 
 # Ejecutar en paralelo y salida de datos
@@ -183,9 +183,5 @@ gnuplot -persist <<-EOF
 EOF
 
 
-#for L in "${Ls[@]}" ; do
-    #sort -n graficas/L$L.txt -o graficas/L$L.txt
-#done
-
-echo "✅ Simulaciones y gráficas completadas."
-echo "📂 Ver resultados en: build/graficas/"
+echo "Simulaciones y gráficas completadas."
+echo "Ver resultados en: build/graficas/"
