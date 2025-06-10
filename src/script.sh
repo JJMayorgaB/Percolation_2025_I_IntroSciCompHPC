@@ -1,26 +1,20 @@
 #!/bin/bash
-EXEC="./source/main.x"
 
-# Crear carpetas necesarias
-rm -rf build
-mkdir -p build/resultados/raw_data/Pfiles
-mkdir -p build/resultados/raw_data/Clusters
-mkdir -p build/graficas
+# Ejecutables (definidos por el Makefile)
+EXEC="./main.x"
 
-
-# Compilar y generar probabilidades
-g++ -std=c++17 -I include -o printvalues.x printvalues.cpp probvalues.cpp
+# Compilar y preparar todo usando Makefile
+echo "🔧 Preparando proyecto con Makefile..."
+make all setup
 if [ $? -ne 0 ]; then
-    echo "Error en la compilación"
+    echo "❌ Error en la preparación del proyecto"
     exit 1
 fi
-
-./printvalues.x 50 > probabilidades.txt
 
 # Valores de L
 Ls=(32 64 128 256 512)
 
-# Crear combinaciones
+# Crear combinaciones usando el archivo ya generado por make
 combinations="combinations.txt"
 > "$combinations"
 for L in "${Ls[@]}"; do
@@ -34,22 +28,22 @@ simulate() {
     L=$1
     p=$2
 
-    raw_file="../build/resultados/raw_data/L${L}_p${p}.txt"
-    P_file="../build/resultados/raw_data/Pfiles/L${L}_p${p}_Pvalores.txt"
-    clusters_percolantes_file="../build/resultados/raw_data/Clusters/L${L}_p${p}_clusters_percolantes.txt"
+    raw_file="build/resultados/raw_data/L${L}_p${p}.txt"
+    P_file="build/resultados/raw_data/Pfiles/L${L}_p${p}_Pvalores.txt"
+    clusters_percolantes_file="build/resultados/raw_data/Clusters/L${L}_p${p}_clusters_percolantes.txt"
 
     > "$raw_file"
     > "$P_file"
     > "$clusters_percolantes_file"
 
     cluster_perc_sizes=()
-    P_vals=()  # INICIALIZAR LA VARIABLE
+    P_vals=()
 
     for iter in {1..10}; do
         percolating_count=0
         for rep in {1..10}; do
-            output=$($EXEC $L $p 2>/dev/null)
-            perc=$(echo "$output" | grep -i "¿Existe percolación?" | grep -o "Si\|No")
+            output=$(${EXEC} $L $p 2>/dev/null)
+            perc=$(echo "$output" | grep -i "¿Existe percolacion?" | grep -o "Si\|No")
             size=$(echo "$output" | grep -i "Tamaño del mayor cluster percolante" | awk '{print $NF}')
             size=${size:-0}
 
@@ -66,9 +60,8 @@ simulate() {
         P_vals+=("$P_iter")
     done
 
-    # CORREGIR EL CÁLCULO DE CLUSTERS
+    # Calcular estadísticas de clusters
     if [ ${#cluster_perc_sizes[@]} -gt 0 ]; then
-        # Normalizar cluster sizes y guardar
         cluster_perc_sizes_normalized=()
         for size in "${cluster_perc_sizes[@]}"; do
             norm=$(awk -v s="$size" -v L="$L" 'BEGIN {printf "%.8f", s / (L*L)}')
@@ -76,7 +69,6 @@ simulate() {
         done
         printf "%s\n" "${cluster_perc_sizes_normalized[@]}" >> "$clusters_percolantes_file"
 
-        # Calcular estadísticas de clusters
         read avg_cluster std_cluster < <(
             printf "%s\n" "${cluster_perc_sizes_normalized[@]}" | awk '
                 { x += $1; x2 += $1*$1; n++ }
@@ -94,7 +86,6 @@ simulate() {
             '
         )
     else
-        # Sin clusters percolantes
         avg_cluster="0.00000"
         std_cluster="0.00000"
     fi
@@ -117,33 +108,37 @@ simulate() {
         '
     )
 
-    echo "$p $P_avg $P_std" >> ../build/graficas/L${L}_P.txt
-    echo "$p $avg_cluster $std_cluster" >> ../build/graficas/L${L}_Cluster.txt
+    echo "$p $P_avg $P_std" >> build/graficas/L${L}_P.txt
+    echo "$p $avg_cluster $std_cluster" >> build/graficas/L${L}_Cluster.txt
     echo "$L,$p,$avg_cluster,$std_cluster,$P_avg,$P_std"
 }
-  
- 
-
 
 export -f simulate
 export EXEC
 
 # Encabezado del resumen CSV
-echo "L,p,promedio_cluster_percolante,desviacion_cluster_percolante,media_P,desviacion_P" > resultados/resumen.csv
+echo "L,p,promedio_cluster_percolante,desviacion_cluster_percolante,media_P,desviacion_P" > build/resultados/resumen.csv
 
-# Ejecutar en paralelo y salida de datos
-parallel --colsep ' ' simulate {1} {2} :::: "$combinations" > resultados/resumen_temp.csv
-sort -t',' -k1,1n -k2,2n resultados/resumen_temp.csv >> resultados/resumen.csv 
-rm resultados/resumen_temp.csv
+# Ejecutar en paralelo
+echo "🚀 Ejecutando simulaciones en paralelo..."
+parallel --colsep ' ' simulate {1} {2} :::: "$combinations" > build/resultados/resumen_temp.csv
+sort -t',' -k1,1n -k2,2n build/resultados/resumen_temp.csv >> build/resultados/resumen.csv 
+rm build/resultados/resumen_temp.csv
 
 # Limpieza
-rm -r resultados/temp "$combinations" probabilidades.txt
+rm -f "$combinations"
 
-
-for L in "${Ls[@]}" ; do
-    sort -n ../build/graficas/L${L}_P.txt -o ../build/graficas/L${L}_P.txt
-    sort -n ../build/graficas/L${L}_Cluster.txt -o ../build/graficas/L${L}_Cluster.txt
+# Ordenar archivos de gráficas
+echo "📊 Ordenando archivos de resultados..."
+for L in "${Ls[@]}"; do
+    if [ -f "build/graficas/L${L}_P.txt" ]; then
+        sort -n build/graficas/L${L}_P.txt -o build/graficas/L${L}_P.txt
+    fi
+    if [ -f "build/graficas/L${L}_Cluster.txt" ]; then
+        sort -n build/graficas/L${L}_Cluster.txt -o build/graficas/L${L}_Cluster.txt
+    fi
 done
 
-echo "✅ Simulaciones y gráficas completadas."
+echo "✅ Simulaciones completadas."
 echo "📂 Ver resultados en: build/graficas/"
+echo "📊 Resumen CSV en: build/resultados/resumen.csv"

@@ -19,7 +19,7 @@ MAIN_SOURCES = $(SRC_DIR)/main.cpp $(SRC_DIR)/matrix.cpp $(SRC_DIR)/hoshen_kopel
 PRINTVALUES_SOURCES = $(SRC_DIR)/printvalues.cpp $(SRC_DIR)/probvalues.cpp
 
 # Headers (ajusta según tus archivos)
-HEADERS = $(wildcard $(INC_DIR)/*.h $(INC_DIR)/*.hpp)
+HEADERS = $(wildcard $(INC_DIR)/*.h)
 
 # Targets por defecto
 .PHONY: all clean debug valgrind profile run-simulation
