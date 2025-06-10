@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
 
         std::cout << "Ingrese el tamano de la matriz (LxL): ";
         std::cin >> L;
-        std::cout << "Ingrese la probabilidad de ocupación (0.0 - 1.0): ";
+        std::cout << "Ingrese la probabilidad de ocupacion (0.0 - 1.0): ";
         std::cin >> p;
 
     }
@@ -32,13 +32,13 @@ int main(int argc, char **argv) {
 
     ClusterInfo info = hoshen_kopelman(matrix, L);
 
-    std::cout << "\n¿Existe percolacion?: " << (info.percolates ? "Si" : "No") << '\n';
+    std::cout << "\nExiste percolacion?: " << (info.percolates ? "Si" : "No") << '\n';
 
     if (info.percolates) {
-        std::cout << "Tamaño del mayor cluster percolante: " << info.max_cluster_size << '\n';
+        std::cout << "Tamano del mayor cluster percolante: " << info.max_cluster_size << '\n';
     } else {
-        std::cout << "No hay cluster percolante, por lo tanto no se calcula el tamaño.\n";
+        std::cout << "No hay cluster percolante, por lo tanto no se calcula el tamano.\n";
     }
     print_clusters(info.labels,L);
     return 0;
-}
+} 

@@ -10,6 +10,8 @@ g++ -std=c++17 -I include/ -o figures/clustervisualization.x figures/clustervisu
 ./figures/clustervisualization.x 10 0.5 0.6 > figures/data_clusters.txt
 python3 ./figures/clustervisualize.py
 
+#P(p,L) and s(p,L) figures
+python3 ./figures/figures.py
 
 g++ -std=c++17 -I include/ -o src/main.exe src/main.cpp src/matrix.cpp src/hoshen_kopelman.cpp src/union_find.cpp
 ./src/main.exe
