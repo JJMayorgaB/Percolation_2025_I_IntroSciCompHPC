@@ -55,14 +55,22 @@ figures/visualization.x: $(VISUALIZATION_SOURCES) $(HEADERS)
 figures/clustervisualization.x: $(CLUSTERVIS_SOURCES) $(HEADERS)
 	$(CXX) $(CXXFLAGS) -o $@ $(CLUSTERVIS_SOURCES)
 
+# Archivos de datos generados por run-simulation
+DATA_FILES = build/graficas/L32_P.txt build/graficas/L64_P.txt build/graficas/L128_P.txt build/graficas/L256_P.txt build/graficas/L512_P.txt \
+             build/graficas/L32_Cluster.txt build/graficas/L64_Cluster.txt build/graficas/L128_Cluster.txt build/graficas/L256_Cluster.txt build/graficas/L512_Cluster.txt
+
+
 # Generar todas las figuras
-figures: figures/visualization.x figures/clustervisualization.x
+figures: figures/visualization.x figures/clustervisualization.x $(DATA_FILES)
 	./figures/visualization.x 10 0.5 0.6 > figures/data.txt
 	python3 ./figures/visualize.py
 	./figures/clustervisualization.x 10 0.5 0.6 > figures/data_clusters.txt
 	python3 ./figures/clustervisualize.py
 	python3 ./figures/figures.py
-	
+
+# Generar archivos de datos (ejecuta run-simulation si no existen)
+$(DATA_FILES): run-simulation
+
 # Debug con GDB
 debug: main_debug.x
 	gdb ./main_debug.x
@@ -101,7 +109,9 @@ profile: main_pg.x
 
 
 clean:
-	rm -f *.x *.gcno *.gcda *.data *.out *.txt *.png *.x
+		rm -f *.x *.gcno *.gcda *.gcov *.data *.out *.txt gmon.out
+	rm -f figures/*.x figures/data.txt figures/data_clusters.txt
+	rm -rf build/graficas/
 
 help:
 	@echo "Targets disponibles:"
