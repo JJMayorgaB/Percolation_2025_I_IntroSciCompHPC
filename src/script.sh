@@ -45,49 +45,71 @@ simulate() {
     > "$clusters_percolantes_file"
 
     cluster_perc_sizes=()
+    P_vals=()  # INICIALIZAR LA VARIABLE
 
     for iter in {1..10}; do
-    percolating_count=0
-    for rep in {1..10}; do
-        output=$(echo -e "$L\n$p" | $EXEC 2>/dev/null)
-        perc=$(echo "$output" | grep -i "¿Existe percolación?" | grep -o "Sí\|No")
-        size=$(echo "$output" | grep -i "Tamaño del mayor cluster percolante" | awk '{print $NF}')
-        size=${size:-0}
+        percolating_count=0
+        for rep in {1..10}; do
+            output=$($EXEC $L $p 2>/dev/null)
+            perc=$(echo "$output" | grep -i "¿Existe percolación?" | grep -o "Si\|No")
+            size=$(echo "$output" | grep -i "Tamaño del mayor cluster percolante" | awk '{print $NF}')
+            size=${size:-0}
 
-        echo "$size" >> "$raw_file"
+            echo "$size" >> "$raw_file"
 
-        if [ "$perc" == "Sí" ]; then
+            if [ "$perc" == "Si" ]; then
+                percolating_count=$((percolating_count + 1))
+                cluster_perc_sizes+=("$size")
+            fi
+        done
 
-            percolating_count=$((percolating_count + 1))
-            cluster_perc_sizes+=("$size")
-
-        fi
+        P_iter=$(awk -v c="$percolating_count" 'BEGIN {printf "%.5f", c/10.0}')
+        echo "$P_iter" >> "$P_file"
+        P_vals+=("$P_iter")
     done
 
-    P_iter=$(awk -v c="$percolating_count" 'BEGIN {printf "%.5f", c/10.0}')
-    echo "$P_iter" >> "$P_file"
-    P_vals+=("$P_iter")
+    # CORREGIR EL CÁLCULO DE CLUSTERS
+    if [ ${#cluster_perc_sizes[@]} -gt 0 ]; then
+        # Normalizar cluster sizes y guardar
+        cluster_perc_sizes_normalized=()
+        for size in "${cluster_perc_sizes[@]}"; do
+            norm=$(awk -v s="$size" -v L="$L" 'BEGIN {printf "%.8f", s / (L*L)}')
+            cluster_perc_sizes_normalized+=("$norm")
+        done
+        printf "%s\n" "${cluster_perc_sizes_normalized[@]}" >> "$clusters_percolantes_file"
 
-done
+        # Calcular estadísticas de clusters
+        read avg_cluster std_cluster < <(
+            printf "%s\n" "${cluster_perc_sizes_normalized[@]}" | awk '
+                { x += $1; x2 += $1*$1; n++ }
+                END {
+                    if (n > 1) {
+                        m = x / n;
+                        s = sqrt((x2 - (x*x)/n)/(n-1));
+                        printf "%.5f %.5f", m, s;
+                    } else if (n == 1) {
+                        printf "%.5f 0.00000", x;
+                    } else {
+                        printf "0.00000 0.00000";
+                    }
+                }
+            '
+        )
+    else
+        # Sin clusters percolantes
+        avg_cluster="0.00000"
+        std_cluster="0.00000"
+    fi
 
-
-    # Normalizar cluster sizes y guardar
-    cluster_perc_sizes_normalized=()
-    for size in "${cluster_perc_sizes[@]}"; do
-        norm=$(awk -v s="$size" -v L="$L" 'BEGIN {printf "%.8f", s / (L*L)}')
-        cluster_perc_sizes_normalized+=("$norm")
-    done
-    printf "%s\n" "${cluster_perc_sizes_normalized[@]}" >> "$clusters_percolantes_file"
-
-
-     read avg_cluster std_cluster < <(
-        printf "%s\n" "${cluster_perc_sizes_normalized[@]}" | awk '
+    # Calcular estadísticas de P
+    read P_avg P_std < <(
+        printf "%s\n" "${P_vals[@]}" | awk '
             { x += $1; x2 += $1*$1; n++ }
             END {
                 if (n > 1) {
-                    m = x / n;
-                    s = sqrt((x2 - (x*x)/n)/(n-1));
-                    printf "%.5f %.5f", m, s;
+                    avg = x / n;
+                    std = sqrt((x2 - (x*x)/n) / (n - 1));
+                    printf "%.5f %.5f", avg, std;
                 } else if (n == 1) {
                     printf "%.5f 0.00000", x;
                 } else {
@@ -97,27 +119,12 @@ done
         '
     )
 
-    read P_avg P_std < <(
-    awk '{
-        x += $1;
-        x2 += $1 * $1;
-        n++;
-    }
-    END {
-        if (n > 1) {
-            avg = x / n;
-            std = sqrt((x2 - (x*x)/n) / (n - 1));
-            printf "%.5f %.5f\n", avg, std;
-        } else {
-            print $1, 0;
-        }
-    }' "$P_file"
-    )
-
     echo "$p $P_avg $P_std" >> ../build/graficas/L${L}_P.txt
     echo "$p $avg_cluster $std_cluster" >> ../build/graficas/L${L}_Cluster.txt
     echo "$L,$p,$avg_cluster,$std_cluster,$P_avg,$P_std"
 }
+  
+ 
 
 
 export -f simulate

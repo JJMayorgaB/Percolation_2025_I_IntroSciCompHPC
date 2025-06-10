@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
 
     ClusterInfo info = hoshen_kopelman(matrix, L);
 
-    std::cout << "\n¿Existe percolacion?: " << (info.percolates ? "Si" : "No") << '\n';
+    std::cout << "\n¿Existe percolación?: " << (info.percolates ? "Si" : "No") << '\n';
 
     if (info.percolates) {
         std::cout << "Tamaño del mayor cluster percolante: " << info.max_cluster_size << '\n';

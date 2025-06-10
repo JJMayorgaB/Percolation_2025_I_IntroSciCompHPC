@@ -35,7 +35,7 @@ for i, L in enumerate(Ls):
 # Configuración de ejes y título
 ax.set_title("Tamaño normalizado del clúster percolante para diferentes L", 
              fontsize=11, pad=15)
-ax.set_xlabel("p", fontsize=11)
+ax.set_xlabel("Probabilidad p", fontsize=11)
 ax.set_ylabel("Tamaño normalizado del clúster", fontsize=11)
 
 # Ajustes de estilo
@@ -84,7 +84,7 @@ for i, L in enumerate(Ls):
 # Configuración de ejes y título
 ax.set_title("Probabilidad de que exista un clúster percolante para diferentes L", 
              fontsize=11, pad=15)
-ax.set_xlabel("probabilidad p", fontsize=11)
+ax.set_xlabel("Probabilidad p", fontsize=11)
 ax.set_ylabel("Probabilidad de que exista un clúster percolante P ", fontsize=11)
 
 # Ajustes de estilo
