@@ -34,7 +34,7 @@ int main(int argc, char **argv) {
 
         std::vector<int> matrix = generatematrix(L, p, seed);
         ClusterInfo info = hoshen_kopelman(matrix, L);
-        
+       
         if (info.percolates) {  
                 total_cluster_size += info.max_cluster_size;
                 percolating_count++;
@@ -54,4 +54,4 @@ int main(int argc, char **argv) {
 
     return 0;
 
-}
+} 
