@@ -26,6 +26,7 @@ HEADERS = $(wildcard $(INC_DIR)/*.h)
 DATA_FILES = build/graficas/L32_P.txt build/graficas/L64_P.txt build/graficas/L128_P.txt build/graficas/L256_P.txt build/graficas/L512_P.txt \
              build/graficas/L32_Cluster.txt build/graficas/L64_Cluster.txt build/graficas/L128_Cluster.txt build/graficas/L256_Cluster.txt build/graficas/L512_Cluster.txt
 FIGURE_FILES = figures/P_all_L.png figures/Cluster_all_L.png figures/percolation.png figures/clusterpercolation.png
+TIME_FILES = $(wildcard time-*-*.txt)
 
 # Targets por defecto
 .PHONY: all clean debug valgrind profile run-simulation figures report help clean-figures time-executables
@@ -45,9 +46,12 @@ TIME_EXECUTABLES = $(foreach opt,$(OPTIMIZATION_LEVELS),time_mainO$(opt).x)
 time_mainO%.x: $(TIME_MAIN_SOURCES) $(HEADERS)
 	$(CXX) $(CXXFLAGS) -O$* $(SANITIZE_FLAGS) -o $@ $(TIME_MAIN_SOURCES)
 
-# Target para compilar todos los ejecutables de timing
+# Target para ejecutar los experimentos de tiempo
 time-computing: $(TIME_EXECUTABLES) probabilidades10.txt
-	bash $(SRC_DIR)/time.sh
+	parallel './time_mainO{1}.x {1} {2} {3} >> time-{1}-{3}.txt' ::: 1 3 ::: $$(cat probabilidades10.txt) ::: {100..1000..100}
+
+# Target para compilar solo los ejecutables de tiempo
+time-executables: $(TIME_EXECUTABLES)
 
 # Compilar printvalues.x
 printvalues.x: $(PRINTVALUES_SOURCES) $(HEADERS)

@@ -9,7 +9,7 @@
 ClusterInfo hoshen_kopelman(const std::vector<int>& matrix, int L) {
     int N = L * L;
     std::vector<int> labels(N, 0);  // 0: vacío
-    UnionFind uf(N);
+    UnionFind uf(N+1);
     int next_label = 1;
 
     // Paso 1: etiquetado preliminar con vecinos N y O
