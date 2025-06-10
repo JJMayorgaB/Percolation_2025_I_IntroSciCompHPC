@@ -1,17 +1,23 @@
-#!/bin/bash
-
 EXEC="./percolacion"
 
-# Crear carpetas necesarias
-rm -rf  ../build
+# Variables que necesitas definir
+REPETITIONS=10  # Número de repeticiones por simulación
+NUM_SAMPLES=10 # Número de muestras por ejecución
 
+# Crear carpetas necesarias
+rm -rf ../build
 mkdir -p ../build/resultados/raw_data/Pfiles
 mkdir -p ../build/resultados/raw_data/Clusters
 mkdir -p ../build/graficas
 
+# Compilar y generar probabilidades
 g++ -std=c++17 -I include -o printvalues.exe printvalues.cpp probvalues.cpp
-./printvalues.exe 50 > probabilidades.txt   
+if [ $? -ne 0 ]; then
+    echo "Error en la compilación"
+    exit 1
+fi
 
+./printvalues.exe 50 > probabilidades.txt
 
 # Valores de L
 Ls=(32 64 128 256 512)
@@ -20,7 +26,7 @@ Ls=(32 64 128 256 512)
 combinations="combinations.txt"
 > "$combinations"
 for L in "${Ls[@]}"; do
-    for p in $(cat probabilidades.txt); do  
+    for p in $(cat probabilidades.txt); do
         echo "$L $p" >> "$combinations"
     done
 done
@@ -29,15 +35,15 @@ done
 simulate() {
     local L=$1
     local p=$2
-
+    
     raw_file="../build/resultados/raw_data/L${L}_p${p}.txt"
     P_file="../build/resultados/raw_data/Pfiles/L${L}_p${p}_Pvalores.txt"
     clusters_percolantes_file="../build/resultados/raw_data/Clusters/L${L}_p${p}_clusters_percolantes.txt"
-
+    
     > "$raw_file"
     > "$P_file"
     > "$clusters_percolantes_file"
-
+    
     local P_values=()
     local cluster_sizes=()
     
@@ -54,7 +60,7 @@ simulate() {
         P_values+=("$probability")
         
         if (( $(echo "$probability > 0" | bc -l) )); then
-            echo "$mean_size" >> "$clusters_file"
+            echo "$mean_size" >> "$clusters_percolantes_file"  # Corregido: era $clusters_file
             cluster_sizes+=("$mean_size")
         fi
     done
@@ -100,21 +106,19 @@ simulate() {
     )
     
     # Guardar resultados para gráficas
-    echo "$p $P_avg $P_std" >> "${GRAPHS_DIR}/L${L}_P.txt"
-    echo "$p $size_avg $size_std" >> "${GRAPHS_DIR}/L${L}_Cluster.txt"
+    echo "$p $P_avg $P_std" >> ../build/graficas/L${L}_P.txt
+    echo "$p $size_avg $size_std" >> ../build/graficas/L${L}_Cluster.txt  # Corregido: eran variables indefinidas
     
     # Mostrar resumen
     echo "$L,$p,$size_avg,$size_std,$P_avg,$P_std"
 }
 
-}
-
-
 export -f simulate
-export EXEC
+export EXEC REPETITIONS NUM_SAMPLES  # Exportar todas las variables necesarias
 
 # Encabezado del resumen CSV
-echo "L,p,promedio_cluster_percolante,desviacion_cluster_percolante,media_P,desviacion_P" > resultados/resumen.csv
+echo "L,p,promedio_cluster_percolante,desviacion_cluster_percolante,media_P,desviacion_P" > ../build/resultados/resumen.csv  # Corregida la ruta
+
 
 # Ejecutar en paralelo y salida de datos
 parallel --colsep ' ' simulate {1} {2} :::: "$combinations" > resultados/resumen_temp.csv
@@ -122,10 +126,10 @@ sort -t',' -k1,1n -k2,2n resultados/resumen_temp.csv >> resultados/resumen.csv
 rm resultados/resumen_temp.csv
 
 # Limpieza
-rm -r resultados/temp "$combinations"
+rm "$combinations" probabilidades.txt printvalues.exe 
 
-COMBINATIONS_FILE
-for L in "${Ls[@]}" ; do
+# Ordenar archivos de gráficas
+for L in "${Ls[@]}"; do
     sort -n ../build/graficas/L${L}_P.txt -o ../build/graficas/L${L}_P.txt
     sort -n ../build/graficas/L${L}_Cluster.txt -o ../build/graficas/L${L}_Cluster.txt
 done
