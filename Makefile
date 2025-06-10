@@ -1,25 +1,65 @@
-CXX = g++ -I include/
-CXXFLAGS = -fsanitize=address,undefined,leak -fprofile-arcs -ftest-coverage
-DEBUGFLAGS = -g -ggdb -O0 
-VALGRINDFLAGS = -g -O1
-COVERAGEFLAGS = -g -coverage -fprofile-arcs -ftest-coverage
-SOURCES = src/main.cpp src/matrix.cpp src/hoshen_kopelman.cpp src/union_find.cpp
+# Compilador y directorios
+CXX = g++
+INC_DIR = include
+SRC_DIR = src
 
+# Flags base
+CXXFLAGS = -std=c++17 -I $(INC_DIR)
+SANITIZE_FLAGS = -fsanitize=address,undefined,leak
+COVERAGE_FLAGS = -fprofile-arcs -ftest-coverage
+DEBUG_FLAGS = -g -ggdb -O0
+VALGRIND_FLAGS = -g -O1
+PROFILE_FLAGS = -O0 -pg -g -fno-inline
+
+# Herramientas externas
 FLAME = $(HOME)/Downloads/FlameGraph
 
-main.x: $(SOURCES)
-	$(CXX) $(CXXFLAGS) -o $@ $^
+# Archivos fuente
+MAIN_SOURCES = $(SRC_DIR)/main.cpp $(SRC_DIR)/matrix.cpp $(SRC_DIR)/hoshen_kopelman.cpp $(SRC_DIR)/union_find.cpp
+PRINTVALUES_SOURCES = $(SRC_DIR)/printvalues.cpp $(SRC_DIR)/probvalues.cpp
 
-debug:
-	$(CXX) $(DEBUGFLAGS) $(SOURCES) -o main_debug.x
+# Headers (ajusta según tus archivos)
+HEADERS = $(wildcard $(INC_DIR)/*.h $(INC_DIR)/*.hpp)
+
+# Targets por defecto
+.PHONY: all clean debug valgrind profile run-simulation
+.DEFAULT_GOAL := all
+
+all: main.x printvalues.x
+
+# Compilar main.x con sanitizers y coverage
+main.x: $(MAIN_SOURCES) $(HEADERS)
+	$(CXX) $(CXXFLAGS) $(SANITIZE_FLAGS) $(COVERAGE_FLAGS) -o $@ $(MAIN_SOURCES)
+
+# Compilar printvalues.x
+printvalues.x: $(PRINTVALUES_SOURCES) $(HEADERS)
+	$(CXX) $(CXXFLAGS) $(SANITIZE_FLAGS) $(COVERAGE_FLAGS) -o $@ $(PRINTVALUES_SOURCES)
+
+# Generar archivo de probabilidades
+probabilidades.txt: printvalues.x
+	./printvalues.x 50 > $@
+
+# Ejecutar simulación
+run-simulation: main.x printvalues.x probabilidades.txt
+	@bash script.sh
+
+# Debug con GDB
+debug: main_debug.x
 	gdb ./main_debug.x
 
-valgrind:
-	$(CXX) $(VALGRINDFLAGS) $(SOURCES) -o main_val.x
+main_debug.x: $(MAIN_SOURCES) $(HEADERS)
+	$(CXX) $(CXXFLAGS) $(DEBUG_FLAGS) -o $@ $(MAIN_SOURCES)
+
+# Análisis con Valgrind
+valgrind: main_val.x
 	valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes ./main_val.x 6 0.6 10
 
-main_pg.x: $(SOURCES)
-	$(CXX) $(CXXFLAGS) -O0 -pg -g -fno-inline $^ -o $@ 
+main_val.x: $(MAIN_SOURCES) $(HEADERS)
+	$(CXX) $(CXXFLAGS) $(VALGRIND_FLAGS) -o $@ $(MAIN_SOURCES)
+
+# Profiling con gprof
+main_pg.x: $(MAIN_SOURCES) $(HEADERS)
+	$(CXX) $(CXXFLAGS) $(PROFILE_FLAGS) -o $@ $(MAIN_SOURCES
 
 
 profiling-report.txt: main_pg.x
@@ -42,3 +82,12 @@ profile: main_pg.x
 
 clean:
 	rm -f *.x *.gcno *.gcda *.data *.out *.txt
+
+help:
+	@echo "Targets disponibles:"
+	@echo "  all          - Compilar main.x y printvalues.x"
+	@echo "  debug        - Compilar y ejecutar con GDB"
+	@echo "  valgrind     - Análisis de memoria con Valgrind"
+	@echo "  profile      - Profiling completo con gprof y flamegraph"
+	@echo "  clean        - Limpiar archivos generados"
+	@echo "  help         - Mostrar esta ayuda"

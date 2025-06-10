@@ -1,14 +1,12 @@
 #!/bin/bash
-EXEC="./main.x"
+EXEC="./source/main.x"
 
 # Crear carpetas necesarias
-rm -rf  ../build
+rm -rf build
+mkdir -p build/resultados/raw_data/Pfiles
+mkdir -p build/resultados/raw_data/Clusters
+mkdir -p build/graficas
 
-mkdir -p ../build/resultados/raw_data/Pfiles
-mkdir -p ../build/resultados/raw_data/Clusters
-mkdir -p ../build/graficas
-
-rm -r graficas
 
 # Compilar y generar probabilidades
 g++ -std=c++17 -I include -o printvalues.x printvalues.cpp probvalues.cpp
