@@ -41,4 +41,4 @@ profile: main_pg.x
 
 
 clean:
-	rm -f *.x *.gcno *.gcda
+	rm -f *.x *.gcno *.gcda *.data *.out *.txt
