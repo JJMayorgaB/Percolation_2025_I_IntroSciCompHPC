@@ -3,7 +3,7 @@ CXX = g++
 INC_DIR = include
 SRC_DIR = src
 
-# Flags base
+# Flags 
 CXXFLAGS = -std=c++17 -I $(INC_DIR)
 SANITIZE_FLAGS = -fsanitize=address,undefined,leak
 COVERAGE_FLAGS = -fprofile-arcs -ftest-coverage
@@ -22,7 +22,7 @@ PRINTVALUES_SOURCES = $(SRC_DIR)/printvalues.cpp $(SRC_DIR)/probvalues.cpp
 HEADERS = $(wildcard $(INC_DIR)/*.h)
 
 # Targets por defecto
-.PHONY: all clean debug valgrind profile run-simulation
+.PHONY: all clean debug valgrind profile run-simulation figures report help
 .DEFAULT_GOAL := all
 
 all: main.x printvalues.x
@@ -59,22 +59,28 @@ figures/clustervisualization.x: $(CLUSTERVIS_SOURCES) $(HEADERS)
 DATA_FILES = build/graficas/L32_P.txt build/graficas/L64_P.txt build/graficas/L128_P.txt build/graficas/L256_P.txt build/graficas/L512_P.txt \
              build/graficas/L32_Cluster.txt build/graficas/L64_Cluster.txt build/graficas/L128_Cluster.txt build/graficas/L256_Cluster.txt build/graficas/L512_Cluster.txt
 
+# Archivos de figura que se generan
+FIGURE_FILES = figures/P_all_L.png figures/Cluster_all_L.png figures/percolation.png figures/clusterpercolation.png
 
-# Generar todas las figuras
-figures: figures/visualization.x figures/clustervisualization.x $(DATA_FILES)
+# Generar todas las figuras solo si no existen o si los datos cambiaron
+$(FIGURE_FILES): figures/visualization.x figures/clustervisualization.x $(DATA_FILES)
 	./figures/visualization.x 10 0.5 0.6 > figures/data.txt
 	python3 ./figures/visualize.py
 	./figures/clustervisualization.x 10 0.5 0.6 > figures/data_clusters.txt
 	python3 ./figures/clustervisualize.py
 	python3 ./figures/figures.py
+	@touch $(FIGURE_FILES)  # Actualizar timestamp de las figuras
+
+# Target para generar figuras manualmente
+figures: $(FIGURE_FILES)
 
 # Generar archivos de datos (ejecuta run-simulation si no existen)
 $(DATA_FILES): run-simulation
 
 # Generar reporte PDF desde LaTeX (requiere figuras)
-report: figures report.pdf
+report: report.pdf
 
-report.pdf: src/report.tex figures
+report.pdf: src/report.tex src/report.bib $(FIGURE_FILES)
 	@mkdir -p latex_output
 	# Primera compilación
 	pdflatex -output-directory=latex_output src/report.tex
@@ -112,10 +118,9 @@ valgrind: main_val.x
 main_val.x: $(MAIN_SOURCES) $(HEADERS)
 	$(CXX) $(CXXFLAGS) $(VALGRIND_FLAGS) -o $@ $(MAIN_SOURCES)
 
-# Profiling con gprof
+# Profiling con gprof - LÍNEA CORREGIDA
 main_pg.x: $(MAIN_SOURCES) $(HEADERS)
 	$(CXX) $(CXXFLAGS) $(PROFILE_FLAGS) -o $@ $(MAIN_SOURCES)
-
 
 profiling-report.txt: main_pg.x
 	@mkdir -p profiling
@@ -127,24 +132,30 @@ profile: main_pg.x
 	@mkdir -p profiling
 	./main_pg.x 8 0.5 10 
 	gprof main_pg.x gmon.out | grep -v 'std::\|__gnu_cxx\|operator\|std::chrono\|std::__' > profiling/analysis.txt
-
 	perf record --call-graph dwarf -F99 -g -- ./main_pg.x 8 0.5 10
 	perf script | $(FLAME)/stackcollapse-perf.pl > profiling/out.folded
 	$(FLAME)/flamegraph.pl profiling/out.folded > profiling/flamegraph.svg
-
 	@echo "Wrote flat profile and flamegraph to profiling/analysis.txt and profiling/flamegraph.svg"
-
 
 clean:
 	rm -f *.x *.gcno *.gcda *.gcov *.data *.out *.txt gmon.out
 	rm -f figures/*.x figures/data.txt figures/data_clusters.txt
 	rm -rf build latex_output
+	
+# Limpiar solo figuras (útil para forzar regeneración)
+clean-figures:
+	rm -f $(FIGURE_FILES) figures/data.txt figures/data_clusters.txt
 
 help:
 	@echo "Targets disponibles:"
-	@echo "  all          - Compilar main.x y printvalues.x"
-	@echo "  debug        - Compilar y ejecutar con GDB"
-	@echo "  valgrind     - Análisis de memoria con Valgrind"
-	@echo "  profile      - Profiling completo con gprof y flamegraph"
-	@echo "  clean        - Limpiar archivos generados"
-	@echo "  help         - Mostrar esta ayuda"
+	@echo "  all            - Compilar main.x y printvalues.x"
+	@echo "  run-simulation - Ejecutar simulación y generar datos"
+	@echo "  figures        - Generar figuras (solo si no existen)"
+	@echo "  report         - Generar reporte PDF"
+	@echo "  clean-figures  - Limpiar solo las figuras"
+	@echo "  debug          - Compilar y ejecutar con GDB"
+	@echo "  valgrind       - Análisis de memoria con Valgrind"
+	@echo "  profile        - Profiling completo con gprof y flamegraph"
+	@echo "  clean          - Limpiar archivos generados"
+	@echo "  simul          - Compilación y simulación con L=4, p=0.6 y seed=10"
+	@echo "  help           - Mostrar esta ayuda"
