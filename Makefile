@@ -141,6 +141,7 @@ clean:
 	rm -f *.x *.gcno *.gcda *.gcov *.data *.out *.txt gmon.out
 	rm -f figures/*.x figures/data.txt figures/data_clusters.txt
 	rm -rf build latex_output
+	rm -f src/*.x
 	
 # Limpiar solo figuras (útil para forzar regeneración)
 clean-figures:
