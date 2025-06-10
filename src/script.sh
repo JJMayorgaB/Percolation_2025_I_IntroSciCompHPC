@@ -1,5 +1,5 @@
 #!/bin/bash
-EXEC="./percolacion"
+EXEC="./main.x"
 
 # Crear carpetas necesarias
 rm -rf  ../build
