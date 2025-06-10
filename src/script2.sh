@@ -9,8 +9,8 @@ mkdir -p ../build/resultados/raw_data/Pfiles
 mkdir -p ../build/resultados/raw_data/Clusters
 mkdir -p ../build/graficas
 
-g++ -std=c++17 -I include -o src/printvalues.exe src/printvalues.cpp src/probvalues.cpp
-./src/printvalues.exe 50 > probabilidades.txt   
+g++ -std=c++17 -I include -o printvalues.exe printvalues.cpp probvalues.cpp
+./printvalues.exe 50 > probabilidades.txt   
 
 
 # Valores de L
