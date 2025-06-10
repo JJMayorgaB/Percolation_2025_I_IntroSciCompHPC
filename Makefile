@@ -25,7 +25,7 @@ HEADERS = $(wildcard $(INC_DIR)/*.h)
 # Archivos de datos y figuras
 DATA_FILES = build/graficas/L32_P.txt build/graficas/L64_P.txt build/graficas/L128_P.txt build/graficas/L256_P.txt build/graficas/L512_P.txt \
              build/graficas/L32_Cluster.txt build/graficas/L64_Cluster.txt build/graficas/L128_Cluster.txt build/graficas/L256_Cluster.txt build/graficas/L512_Cluster.txt
-FIGURE_FILES = figures/P_all_L.png figures/Cluster_all_L.png figures/percolation.png figures/clusterpercolation.png
+FIGURE_FILES = figures/P_all_L.png figures/Cluster_all_L.png figures/percolation.png figures/clusterpercolation.png figures/time_analysis.png
 TIME_FILES = $(wildcard time-*-*.txt)
 
 # Targets por defecto
@@ -48,7 +48,7 @@ time_mainO%.x: $(TIME_MAIN_SOURCES) $(HEADERS)
 
 # Target para ejecutar los experimentos de tiempo
 time-computing: $(TIME_EXECUTABLES) probabilidades10.txt
-	parallel './time_mainO{1}.x {3} {2} >> time-{1}-{3}.txt' ::: 1 3 ::: $$(cat probabilidades10.txt) ::: {100..1000..100}
+	parallel './time_mainO{1}.x {3} {2} >> time-{1}-{3}.txt' ::: 1 3 ::: $$(cat probabilidades10.txt) ::: {100..2000..100}
 
 # Target para compilar solo los ejecutables de tiempo
 time-executables: $(TIME_EXECUTABLES)
@@ -92,7 +92,14 @@ $(FIGURE_FILES): figures/visualization.x figures/clustervisualization.x | $(DATA
 	./figures/clustervisualization.x 10 0.5 0.6 > figures/data_clusters.txt
 	python3 ./figures/clustervisualize.py
 	python3 ./figures/figures.py
+	@if ls time-*-*.txt 1> /dev/null 2>&1; then \
+		echo "Generando gráfica de tiempo..."; \
+		python3 ./figures/time_figure.py; \
+	else \
+		echo "Advertencia: No se encontraron archivos time-*-*.txt, omitiendo gráfica de tiempo"; \
+	fi
 	@echo "Figuras generadas exitosamente"
+
 
 # Target para generar figuras manualmente
 figures: $(FIGURE_FILES)
