@@ -71,6 +71,9 @@ figures: figures/visualization.x figures/clustervisualization.x $(DATA_FILES)
 # Generar archivos de datos (ejecuta run-simulation si no existen)
 $(DATA_FILES): run-simulation
 
+#Simulación
+simul: main.x
+	./main.x 4 0.6 10 
 # Debug con GDB
 debug: main_debug.x
 	gdb ./main_debug.x
