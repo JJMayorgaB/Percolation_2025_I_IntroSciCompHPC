@@ -58,7 +58,7 @@ plt.tight_layout(pad=1.5)
 # Guardar en formatos adecuados para LaTeX
 output_path = "../build/graficas/Cluster_all_L"
 plt.savefig(f"{output_path}.pdf", bbox_inches='tight', dpi=300)
-plt.savefig(f"{output_path}.pgf", bbox_inches='tight')  # Para usar directamente con matplotlib en LaTeX
-plt.savefig(f"{output_path}.png", bbox_inches='tight', dpi=300)
+#plt.savefig(f"{output_path}.pgf", bbox_inches='tight')  # Para usar directamente con matplotlib en LaTeX
+#plt.savefig(f"{output_path}.png", bbox_inches='tight', dpi=300)
 
 plt.close()
