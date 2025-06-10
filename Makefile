@@ -81,7 +81,7 @@ $(DATA_FILES):
 	@$(MAKE) run-simulation
 
 # Generar figuras (depende de datos y programas de visualización)
-$(FIGURE_FILES): figures/visualization.x figures/clustervisualization.x | $(DATA_FILES)
+$(FIGURE_FILES): figures/visualization.x figures/clustervisualization.x | $(DATA_FILES) | $(TIME_FILES)
 	@echo "Generando figuras..."
 	./figures/visualization.x 10 0.5 0.6 > figures/data.txt
 	python3 ./figures/visualize.py
