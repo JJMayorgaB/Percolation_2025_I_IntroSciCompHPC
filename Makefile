@@ -80,28 +80,25 @@ $(FIGURE_FILES): figures/visualization.x figures/clustervisualization.x | $(DATA
 # Target para generar figuras manualmente
 figures: $(FIGURE_FILES)
 
-# Generar reporte PDF desde LaTeX (requiere figuras)
-report: report.pdf
-
-report.pdf: src/reporte2.tex src/report.bib $(FIGURE_FILES)
+report.pdf: src/report.tex src/report.bib $(FIGURE_FILES)
 	@mkdir -p latex_output
 	@echo "Compilando reporte LaTeX..."
 	# Primera compilación
-	pdflatex -output-directory=latex_output src/reporte2.tex
+	pdflatex -interaction=nonstopmode -halt-on-error -output-directory=latex_output src/report.tex
 	# Procesar bibliografía si existe
 	@if [ -f src/report.bib ]; then \
 		cp src/report.bib latex_output/; \
-		cd latex_output && bibtex reporte2 && cd ..; \
+		cd latex_output && bibtex report && cd ..; \
 		echo "Bibliografía procesada"; \
 	else \
 		echo "Advertencia: No se encontró archivo .bib"; \
 	fi
 	# Segunda compilación para resolver referencias
-	pdflatex -output-directory=latex_output src/reporte2.tex
+	pdflatex -interaction=nonstopmode -halt-on-error -output-directory=latex_output src/report.tex
 	# Tercera compilación para asegurar referencias cruzadas
-	pdflatex -output-directory=latex_output src/reporte2.tex
+	pdflatex -interaction=nonstopmode -halt-on-error -output-directory=latex_output src/report.tex
 	# Copiar PDF final al directorio raíz
-	cp latex_output/reporte2.pdf report.pdf
+	cp latex_output/report.pdf report.pdf
 	@echo "Reporte generado: report.pdf"
 
 # Simulación rápida
