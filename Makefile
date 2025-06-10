@@ -82,9 +82,21 @@ figures: $(FIGURE_FILES)
 
 report: report.pdf
 
-report.pdf: src/report.tex src/report.bib $(FIGURE_FILES)
+report.pdf: src/report.tex src/report.bib
 	@mkdir -p latex_output
 	@echo "Compilando reporte LaTeX..."
+	@# Verificar que las figuras existan (advertencia si no están)
+	@missing_figures=""; \
+	for fig in $(FIGURE_FILES); do \
+		if [ ! -f "$$fig" ]; then \
+			missing_figures="$$missing_figures $$fig"; \
+		fi; \
+	done; \
+	if [ ! -z "$$missing_figures" ]; then \
+		echo "ADVERTENCIA: Las siguientes figuras no existen:$$missing_figures"; \
+		echo "El reporte se compilará pero puede tener figuras faltantes."; \
+		echo "Ejecuta 'make figures' para generar las figuras si es necesario."; \
+	fi
 	# Primera compilación
 	pdflatex -interaction=nonstopmode -halt-on-error -output-directory=latex_output src/report.tex
 	# Procesar bibliografía si existe
@@ -101,7 +113,7 @@ report.pdf: src/report.tex src/report.bib $(FIGURE_FILES)
 	pdflatex -interaction=nonstopmode -halt-on-error -output-directory=latex_output src/report.tex
 	# Copiar PDF final al directorio raíz
 	cp latex_output/report.pdf report.pdf
-	@echo "Reporte generado: report.pdf"
+	@echo "Reporte generado exitosamente: report.pdf"
 
 # Simulación rápida
 simul: main.x

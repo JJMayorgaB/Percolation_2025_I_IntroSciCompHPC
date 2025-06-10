@@ -118,7 +118,7 @@ echo "L,p,promedio_cluster_percolante,desviacion_cluster_percolante,media_P,desv
 
 parallel --colsep ' ' simulate {1} {2} :::: "$combinations" > src/resultados/resumen_temp.csv
 sort -t',' -k1,1n -k2,2n src/resultados/resumen_temp.csv >> src/resultados/resumen.csv 
-rm resultados/resumen_temp.csv
+rm src/resultados/resumen_temp.csv
 
 # Limpieza
 rm -f "$combinations" probabilidades.txt
