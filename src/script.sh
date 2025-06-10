@@ -1,5 +1,4 @@
 #!/bin/bash
-
 EXEC="./percolacion"
 
 # Crear carpetas necesarias
