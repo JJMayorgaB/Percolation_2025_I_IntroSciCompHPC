@@ -35,7 +35,7 @@ El umbral de percolación crítico para una red cuadrada bidimensional es $p_c =
 
 \subsection{Algoritmo de Hoshen-Kopelman}
 
-Para identificar eficientemente los clusters conectados, implementamos el algoritmo de Hoshen-Kopelman \cite{hoshen1976percolation}, que utiliza una estructura de datos Union-Find para mantener la conectividad de los sitios ocupados. Este algoritmo tiene complejidad temporal $O(N \alpha(N))$, donde $\alpha$ es la función inversa de Ackermann.
+Para identificar eficientemente los clusters conectados, implementamos el algoritmo de Hoshen-\linebreak Kopelman \cite{hoshen1976percolation}, que utiliza una estructura de datos Union-Find para mantener la conectividad de los sitios ocupados. Este algoritmo tiene complejidad temporal $O(N \alpha(N))$, donde $\alpha$ es la función inversa de Ackermann.
 
 El algoritmo procede de la siguiente manera:
 \begin{enumerate}
@@ -47,7 +47,7 @@ El algoritmo procede de la siguiente manera:
 
 \subsection{Parámetros de Simulación}
 
-Se realizaron simulaciones para tamaños de red $L \in \{32, 64, 128, 256, 512\}$ y probabilidades en el rango $p \in [0.4, 0.8]$ con incrementos de $\Delta p = 0.01$. Para cada configuración se promediaron $N_{samples} = 1000$ realizaciones independientes.
+Se realizaron simulaciones para tamaños de red $L \in \{32, 64, 128, 256, 512\}$ y probabilidades en el rango $p \in [0.4, 0.8]$ con incrementos de $\Delta p = 0.01$. Para cada configuración se promediaron $N_{\text{samples}} = 1000$ realizaciones independientes.
 
 \section{Resultados}
 
@@ -118,8 +118,8 @@ Este estudio proporciona una base sólida para investigaciones más avanzadas en
 
 Agradecemos al profesor del curso de Introducción a la Computación Científica de Alto Rendimiento por su guía en este proyecto.
 
-% Bibliografía
+% Bibliografía - CORREGIDO: cambiado de 'references' a 'report'
 \bibliographystyle{unsrt}
-\bibliography{references}
+\bibliography{report}
 
 \end{document}

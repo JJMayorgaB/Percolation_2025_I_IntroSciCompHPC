@@ -76,15 +76,21 @@ report: figures report.pdf
 
 report.pdf: src/report.tex figures
 	@mkdir -p latex_output
+	# Primera compilación
 	pdflatex -output-directory=latex_output src/report.tex
-
-	pdflatex -output-directory=latex_output src/report.tex
-
-	@if grep -q "\\bibliography" src/report.tex; then \
-		cd latex_output && bibtex report.aux; \
-		cd .. && pdflatex -output-directory=latex_output src/report.tex; \
+	# Procesar bibliografía si existe
+	@if [ -f src/report.bib ]; then \
+		cp src/report.bib latex_output/; \
+		cd latex_output && bibtex report && cd ..; \
+		echo "Bibliografía procesada"; \
+	else \
+		echo "Advertencia: No se encontró archivo .bib"; \
 	fi
-	@# Copiar PDF final al directorio raíz
+	# Segunda compilación para resolver referencias
+	pdflatex -output-directory=latex_output src/report.tex
+	# Tercera compilación para asegurar referencias cruzadas
+	pdflatex -output-directory=latex_output src/report.tex
+	# Copiar PDF final al directorio raíz
 	cp latex_output/report.pdf .
 	@echo "Reporte generado: report.pdf"
 
@@ -108,7 +114,7 @@ main_val.x: $(MAIN_SOURCES) $(HEADERS)
 
 # Profiling con gprof
 main_pg.x: $(MAIN_SOURCES) $(HEADERS)
-	$(CXX) $(CXXFLAGS) $(PROFILE_FLAGS) -o $@ $(MAIN_SOURCES
+	$(CXX) $(CXXFLAGS) $(PROFILE_FLAGS) -o $@ $(MAIN_SOURCES)
 
 
 profiling-report.txt: main_pg.x
@@ -130,9 +136,9 @@ profile: main_pg.x
 
 
 clean:
-		rm -f *.x *.gcno *.gcda *.gcov *.data *.out *.txt gmon.out
+	rm -f *.x *.gcno *.gcda *.gcov *.data *.out *.txt gmon.out
 	rm -f figures/*.x figures/data.txt figures/data_clusters.txt
-	rm -rf build
+	rm -rf build latex_output
 
 help:
 	@echo "Targets disponibles:"
