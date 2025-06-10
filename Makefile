@@ -38,11 +38,11 @@ main.x: $(MAIN_SOURCES) $(HEADERS)
 	$(CXX) $(CXXFLAGS) -O3 $(SANITIZE_FLAGS) $(COVERAGE_FLAGS) -o $@ $(MAIN_SOURCES)
 
 # Niveles de optimización para time_main
-OPTIMIZATION_LEVELS = 1, 3
-TIME_EXECUTABLES = $(foreach opt,$(OPTIMIZATION_LEVELS),time_main$(opt).x)
+OPTIMIZATION_LEVELS = 1 3
+TIME_EXECUTABLES = $(foreach opt,$(OPTIMIZATION_LEVELS),time_mainO$(opt).x)
 
 # Compilar time_main con diferentes niveles de optimización
-time_main%.x: $(TIME_MAIN_SOURCES) $(HEADERS)
+time_mainO%.x: $(TIME_MAIN_SOURCES) $(HEADERS)
 	$(CXX) $(CXXFLAGS) -O$* $(SANITIZE_FLAGS) -o $@ $(TIME_MAIN_SOURCES)
 
 # Target para compilar todos los ejecutables de timing
