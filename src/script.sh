@@ -1,5 +1,5 @@
 #!/bin/bash
-EXEC="./percolacion.x"
+EXEC="./percolacion"
 
 # Crear carpetas necesarias
 rm -rf  ../build
@@ -49,8 +49,8 @@ simulate() {
     percolating_count=0
     for rep in {1..10}; do
         output=$(echo -e "$L\n$p" | $EXEC 2>/dev/null)
-        perc=$(echo "$output" | grep -i "Existe percolacion?" | grep -o "Si\|No")
-        size=$(echo "$output" | grep -i "Tamano del mayor cluster percolante" | awk '{print $NF}')
+        perc=$(echo "$output" | grep -i "¿Existe percolación?" | grep -o "Sí\|No")
+        size=$(echo "$output" | grep -i "Tamaño del mayor cluster percolante" | awk '{print $NF}')
         size=${size:-0}
 
         echo "$size" >> "$raw_file"
