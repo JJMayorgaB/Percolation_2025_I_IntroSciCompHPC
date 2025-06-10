@@ -30,7 +30,7 @@ for i, L in enumerate(Ls):
                    capsize=2.5,
                    elinewidth=0.8)
     except FileNotFoundError:
-        print(f"Advertencia: No se encontró el archivo para L={L}")
+        print(f"Advertencia: No se encontró el archivo para L={L}_Cluster.txt")
 
 # Configuración de ejes y título
 ax.set_title("Tamaño normalizado del clúster percolante para diferentes L", 
@@ -79,7 +79,7 @@ for i, L in enumerate(Ls):
                    capsize=2.5,
                    elinewidth=0.8)
     except FileNotFoundError:
-        print(f"Advertencia: No se encontró el archivo para L={L}")
+        print(f"Advertencia: No se encontró el archivo para L={L}_P.txt")
 
 # Configuración de ejes y título
 ax.set_title("Probabilidad de que exista un clúster percolante para diferentes L", 

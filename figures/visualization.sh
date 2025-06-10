@@ -13,8 +13,8 @@ python3 ./figures/clustervisualize.py
 #P(p,L) and s(p,L) figures
 python3 ./figures/figures.py
 
-g++ -std=c++17 -I include/ -o src/main.exe src/main.cpp src/matrix.cpp src/hoshen_kopelman.cpp src/union_find.cpp
-./src/main.exe
+g++ -std=c++17 -I include/ -o src/main.x src/main.cpp src/matrix.cpp src/hoshen_kopelman.cpp src/union_find.cpp
+./src/main.x
 
 g++ -std=c++17 -I include/ -o src/main2.exe src/main2.cpp src/matrix.cpp src/hoshen_kopelman.cpp src/union_find.cpp src/probvalues.cpp
 ./src/main2.exe
