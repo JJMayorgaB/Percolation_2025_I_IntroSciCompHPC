@@ -46,18 +46,19 @@ time_mainO%.x: $(TIME_MAIN_SOURCES) $(HEADERS)
 	$(CXX) $(CXXFLAGS) -O$* $(SANITIZE_FLAGS) -o $@ $(TIME_MAIN_SOURCES)
 
 # Target para compilar todos los ejecutables de timing
-time-executables: $(TIME_EXECUTABLES)
+time-computing: $(TIME_EXECUTABLES) probabilidades10.txt
+	bash $(SRC_DIR)/time.sh
 
 # Compilar printvalues.x
 printvalues.x: $(PRINTVALUES_SOURCES) $(HEADERS)
 	$(CXX) $(CXXFLAGS) $(SANITIZE_FLAGS) $(COVERAGE_FLAGS) -o $@ $(PRINTVALUES_SOURCES)
 
 # Generar archivo de probabilidades
-probabilidades.txt: printvalues.x
-	./printvalues.x 50 > $@
+probabilidades%.txt: printvalues.x
+	./printvalues.x $* > $@
 
 # Ejecutar simulación (solo genera datos, NO figuras)
-run-simulation: main.x printvalues.x probabilidades.txt
+run-simulation: main.x printvalues.x probabilidades50.txt
 	@echo "Ejecutando simulación..."
 	@bash $(SRC_DIR)/script.sh
 	@echo "Simulación completada. Datos generados en build/graficas/"

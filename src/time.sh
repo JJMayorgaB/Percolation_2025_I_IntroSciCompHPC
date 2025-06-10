@@ -1,0 +1,1 @@
+parallel './time_mainO{1}.x {1} 30 {2} >> data-{1}-L.txt' ::: 1 3 ::: $(cat probabilidades.txt)

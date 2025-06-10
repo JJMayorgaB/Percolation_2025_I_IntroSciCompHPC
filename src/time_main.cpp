@@ -6,7 +6,7 @@
 int main(int argc, char **argv) {
     
   
-    if (argc < 4) {
+    if (argc < 3) {
 
         std::cerr << "Use: " << argv[0] << " <size_L> <p_val> <seed>(optional)\n";
         return 1;
@@ -29,9 +29,6 @@ int main(int argc, char **argv) {
 
     std::vector<int> matrix = generatematrix(L, p, seed);
 
-    std::cout << "\nMatriz generada:\n";
-    printmatrix(matrix, L);
-
     ClusterInfo info = hoshen_kopelman(matrix, L);
 
     std::cout << "\n¿Existe percolación?: " << (info.percolates ? "Si" : "No") << '\n';
@@ -41,7 +38,6 @@ int main(int argc, char **argv) {
     } else {
         std::cout << "No hay cluster percolante, por lo tanto no se calcula el tamaño.\n";
     }
-    print_clusters(info.labels,L);
 
     auto wend{std::chrono::steady_clock::now()};
     std::clock_t cend = std::clock();
