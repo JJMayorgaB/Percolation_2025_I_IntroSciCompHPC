@@ -16,6 +16,7 @@ FLAME = $(HOME)/Downloads/FlameGraph
 
 # Archivos fuente
 MAIN_SOURCES = $(SRC_DIR)/main.cpp $(SRC_DIR)/matrix.cpp $(SRC_DIR)/hoshen_kopelman.cpp $(SRC_DIR)/union_find.cpp
+TIME_MAIN_SOURCES =  $(SRC_DIR)/time_main.cpp $(SRC_DIR)/matrix.cpp $(SRC_DIR)/hoshen_kopelman.cpp $(SRC_DIR)/union_find.cpp
 PRINTVALUES_SOURCES = $(SRC_DIR)/printvalues.cpp $(SRC_DIR)/probvalues.cpp
 
 # Headers (ajusta según tus archivos)
@@ -27,7 +28,7 @@ DATA_FILES = build/graficas/L32_P.txt build/graficas/L64_P.txt build/graficas/L1
 FIGURE_FILES = figures/P_all_L.png figures/Cluster_all_L.png figures/percolation.png figures/clusterpercolation.png
 
 # Targets por defecto
-.PHONY: all clean debug valgrind profile run-simulation figures report help clean-figures force-figures
+.PHONY: all clean debug valgrind profile run-simulation figures report help clean-figures time-executables
 .DEFAULT_GOAL := all
 
 all: main.x printvalues.x
@@ -35,6 +36,17 @@ all: main.x printvalues.x
 # Compilar main.x con sanitizers y coverage
 main.x: $(MAIN_SOURCES) $(HEADERS)
 	$(CXX) $(CXXFLAGS) -O3 $(SANITIZE_FLAGS) $(COVERAGE_FLAGS) -o $@ $(MAIN_SOURCES)
+
+# Niveles de optimización para time_main
+OPTIMIZATION_LEVELS = 1, 3
+TIME_EXECUTABLES = $(foreach opt,$(OPTIMIZATION_LEVELS),time_main$(opt).x)
+
+# Compilar time_main con diferentes niveles de optimización
+time_main%.x: $(TIME_MAIN_SOURCES) $(HEADERS)
+	$(CXX) $(CXXFLAGS) -O$* $(SANITIZE_FLAGS) -o $@ $(TIME_MAIN_SOURCES)
+
+# Target para compilar todos los ejecutables de timing
+time-executables: $(TIME_EXECUTABLES)
 
 # Compilar printvalues.x
 printvalues.x: $(PRINTVALUES_SOURCES) $(HEADERS)
