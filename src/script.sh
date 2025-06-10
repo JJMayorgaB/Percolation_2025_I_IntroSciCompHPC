@@ -117,7 +117,7 @@ export EXEC
 echo "L,p,promedio_cluster_percolante,desviacion_cluster_percolante,media_P,desviacion_P" > src/resultados/resumen.csv
 
 parallel --colsep ' ' simulate {1} {2} :::: "$combinations" > src/resultados/resumen_temp.csv
-sort -t',' -k1,1n -k2,2n build/resultados/resumen_temp.csv >> src/resultados/resumen.csv 
+sort -t',' -k1,1n -k2,2n src/resultados/resumen_temp.csv >> src/resultados/resumen.csv 
 rm build/resultados/resumen_temp.csv
 
 # Limpieza

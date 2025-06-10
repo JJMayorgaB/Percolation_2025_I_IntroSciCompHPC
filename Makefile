@@ -71,9 +71,27 @@ figures: figures/visualization.x figures/clustervisualization.x $(DATA_FILES)
 # Generar archivos de datos (ejecuta run-simulation si no existen)
 $(DATA_FILES): run-simulation
 
+# Generar reporte PDF desde LaTeX (requiere figuras)
+report: figures report.pdf
+
+report.pdf: src/report.tex figures
+	@mkdir -p latex_output
+	pdflatex -output-directory=latex_output src/report.tex
+
+	pdflatex -output-directory=latex_output src/report.tex
+
+	@if grep -q "\\bibliography" src/report.tex; then \
+		cd latex_output && bibtex report.aux; \
+		cd .. && pdflatex -output-directory=latex_output src/report.tex; \
+	fi
+	@# Copiar PDF final al directorio raíz
+	cp latex_output/report.pdf .
+	@echo "Reporte generado: report.pdf"
+
 #Simulación
 simul: main.x
 	./main.x 4 0.6 10 
+
 # Debug con GDB
 debug: main_debug.x
 	gdb ./main_debug.x
@@ -114,7 +132,7 @@ profile: main_pg.x
 clean:
 		rm -f *.x *.gcno *.gcda *.gcov *.data *.out *.txt gmon.out
 	rm -f figures/*.x figures/data.txt figures/data_clusters.txt
-	rm -rf build/graficas/
+	rm -rf build
 
 help:
 	@echo "Targets disponibles:"
