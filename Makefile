@@ -80,14 +80,16 @@ $(FIGURE_FILES): figures/visualization.x figures/clustervisualization.x | $(DATA
 # Target para generar figuras manualmente
 figures: $(FIGURE_FILES)
 
+report: report.pdf
+
 report.pdf: src/report.tex src/report.bib $(FIGURE_FILES)
 	@mkdir -p latex_output
 	@echo "Compilando reporte LaTeX..."
 	# Primera compilación
 	pdflatex -interaction=nonstopmode -halt-on-error -output-directory=latex_output src/report.tex
 	# Procesar bibliografía si existe
-	@if [ -f src/report.bib ]; then \
-		cp src/report.bib latex_output/; \
+	@if [ -f src/report1.bib ]; then \
+		cp src/report1.bib latex_output/; \
 		cd latex_output && bibtex report && cd ..; \
 		echo "Bibliografía procesada"; \
 	else \
