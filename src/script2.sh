@@ -9,12 +9,12 @@ mkdir -p ../build/resultados/raw_data/Pfiles
 mkdir -p ../build/resultados/raw_data/Clusters
 mkdir -p ../build/graficas
 
+g++ -std=c++17 -I include -o src/printvalues.exe src/printvalues.cpp src/probvalues.cpp
+./src/printvalues.exe 50 > probabilidades.txt   
+
 
 # Valores de L
 Ls=(32 64 128 256 512)
-
-g++ -std=c++17 -I include -o src/printvalues.exe src/printvalues.cpp src/probvalues.cpp
-./src/printvalues.exe 50 > probabilidades.txt   
 
 # Crear combinaciones
 combinations="combinations.txt"
