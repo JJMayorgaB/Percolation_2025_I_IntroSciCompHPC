@@ -43,6 +43,26 @@ probabilidades.txt: printvalues.x
 run-simulation: main.x printvalues.x probabilidades.txt
 	@bash $(SRC_DIR)/script.sh
 
+# Archivos fuente para visualización
+VISUALIZATION_SOURCES = figures/visualization.cpp $(SRC_DIR)/matrix.cpp $(SRC_DIR)/hoshen_kopelman.cpp $(SRC_DIR)/union_find.cpp
+CLUSTERVIS_SOURCES = figures/clustervisualization.cpp $(SRC_DIR)/matrix.cpp $(SRC_DIR)/hoshen_kopelman.cpp $(SRC_DIR)/union_find.cpp
+
+# Compilar programa de visualización
+figures/visualization.x: $(VISUALIZATION_SOURCES) $(HEADERS)
+	$(CXX) $(CXXFLAGS) -o $@ $(VISUALIZATION_SOURCES)
+
+# Compilar programa de visualización de clusters
+figures/clustervisualization.x: $(CLUSTERVIS_SOURCES) $(HEADERS)
+	$(CXX) $(CXXFLAGS) -o $@ $(CLUSTERVIS_SOURCES)
+
+# Generar todas las figuras
+figures: figures/visualization.x figures/clustervisualization.x
+	./figures/visualization.x 10 0.5 0.6 > figures/data.txt
+	python3 ./figures/visualize.py
+	./figures/clustervisualization.x 10 0.5 0.6 > figures/data_clusters.txt
+	python3 ./figures/clustervisualize.py
+	python3 ./figures/figures.py
+	
 # Debug con GDB
 debug: main_debug.x
 	gdb ./main_debug.x
