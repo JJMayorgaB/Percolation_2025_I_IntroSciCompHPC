@@ -21,8 +21,13 @@ PRINTVALUES_SOURCES = $(SRC_DIR)/printvalues.cpp $(SRC_DIR)/probvalues.cpp
 # Headers (ajusta según tus archivos)
 HEADERS = $(wildcard $(INC_DIR)/*.h)
 
+# Archivos de datos y figuras
+DATA_FILES = build/graficas/L32_P.txt build/graficas/L64_P.txt build/graficas/L128_P.txt build/graficas/L256_P.txt build/graficas/L512_P.txt \
+             build/graficas/L32_Cluster.txt build/graficas/L64_Cluster.txt build/graficas/L128_Cluster.txt build/graficas/L256_Cluster.txt build/graficas/L512_Cluster.txt
+FIGURE_FILES = figures/P_all_L.png figures/Cluster_all_L.png figures/percolation.png figures/clusterpercolation.png
+
 # Targets por defecto
-.PHONY: all clean debug valgrind profile run-simulation figures report help
+.PHONY: all clean debug valgrind profile run-simulation figures report help clean-figures force-figures
 .DEFAULT_GOAL := all
 
 all: main.x printvalues.x
@@ -39,9 +44,11 @@ printvalues.x: $(PRINTVALUES_SOURCES) $(HEADERS)
 probabilidades.txt: printvalues.x
 	./printvalues.x 50 > $@
 
-#Ejecutar simulación
+# Ejecutar simulación (solo genera datos, NO figuras)
 run-simulation: main.x printvalues.x probabilidades.txt
+	@echo "Ejecutando simulación..."
 	@bash $(SRC_DIR)/script.sh
+	@echo "Simulación completada. Datos generados en build/graficas/"
 
 # Archivos fuente para visualización
 VISUALIZATION_SOURCES = figures/visualization.cpp $(SRC_DIR)/matrix.cpp $(SRC_DIR)/hoshen_kopelman.cpp $(SRC_DIR)/union_find.cpp
@@ -55,52 +62,49 @@ figures/visualization.x: $(VISUALIZATION_SOURCES) $(HEADERS)
 figures/clustervisualization.x: $(CLUSTERVIS_SOURCES) $(HEADERS)
 	$(CXX) $(CXXFLAGS) -o $@ $(CLUSTERVIS_SOURCES)
 
-# Archivos de datos generados por run-simulation
-DATA_FILES = build/graficas/L32_P.txt build/graficas/L64_P.txt build/graficas/L128_P.txt build/graficas/L256_P.txt build/graficas/L512_P.txt \
-             build/graficas/L32_Cluster.txt build/graficas/L64_Cluster.txt build/graficas/L128_Cluster.txt build/graficas/L256_Cluster.txt build/graficas/L512_Cluster.txt
+# Regla para generar los archivos de datos individualmente
+$(DATA_FILES): 
+	@echo "Los archivos de datos no existen. Ejecutando simulación..."
+	@$(MAKE) run-simulation
 
-# Archivos de figura que se generan
-FIGURE_FILES = figures/P_all_L.png figures/Cluster_all_L.png figures/percolation.png figures/clusterpercolation.png
-
-# Generar todas las figuras solo si no existen o si los datos cambiaron
-$(FIGURE_FILES): figures/visualization.x figures/clustervisualization.x $(DATA_FILES)
+# Generar figuras (depende de datos y programas de visualización)
+$(FIGURE_FILES): figures/visualization.x figures/clustervisualization.x | $(DATA_FILES)
+	@echo "Generando figuras..."
 	./figures/visualization.x 10 0.5 0.6 > figures/data.txt
 	python3 ./figures/visualize.py
 	./figures/clustervisualization.x 10 0.5 0.6 > figures/data_clusters.txt
 	python3 ./figures/clustervisualize.py
 	python3 ./figures/figures.py
-	@touch $(FIGURE_FILES)  # Actualizar timestamp de las figuras
+	@echo "Figuras generadas exitosamente"
 
 # Target para generar figuras manualmente
 figures: $(FIGURE_FILES)
 
-# Generar archivos de datos (ejecuta run-simulation si no existen)
-$(DATA_FILES): run-simulation
-
 # Generar reporte PDF desde LaTeX (requiere figuras)
 report: report.pdf
 
-report.pdf: src/report.tex src/report.bib $(FIGURE_FILES)
+report.pdf: src/reporte2.tex src/report.bib $(FIGURE_FILES)
 	@mkdir -p latex_output
+	@echo "Compilando reporte LaTeX..."
 	# Primera compilación
-	pdflatex -output-directory=latex_output src/report.tex
+	pdflatex -output-directory=latex_output src/reporte2.tex
 	# Procesar bibliografía si existe
 	@if [ -f src/report.bib ]; then \
 		cp src/report.bib latex_output/; \
-		cd latex_output && bibtex report && cd ..; \
+		cd latex_output && bibtex reporte2 && cd ..; \
 		echo "Bibliografía procesada"; \
 	else \
 		echo "Advertencia: No se encontró archivo .bib"; \
 	fi
 	# Segunda compilación para resolver referencias
-	pdflatex -output-directory=latex_output src/report.tex
+	pdflatex -output-directory=latex_output src/reporte2.tex
 	# Tercera compilación para asegurar referencias cruzadas
-	pdflatex -output-directory=latex_output src/report.tex
+	pdflatex -output-directory=latex_output src/reporte2.tex
 	# Copiar PDF final al directorio raíz
-	cp latex_output/report.pdf .
+	cp latex_output/reporte2.pdf report.pdf
 	@echo "Reporte generado: report.pdf"
 
-#Simulación
+# Simulación rápida
 simul: main.x
 	./main.x 4 0.6 10 
 
@@ -118,7 +122,7 @@ valgrind: main_val.x
 main_val.x: $(MAIN_SOURCES) $(HEADERS)
 	$(CXX) $(CXXFLAGS) $(VALGRIND_FLAGS) -o $@ $(MAIN_SOURCES)
 
-# Profiling con gprof - LÍNEA CORREGIDA
+# Profiling con gprof
 main_pg.x: $(MAIN_SOURCES) $(HEADERS)
 	$(CXX) $(CXXFLAGS) $(PROFILE_FLAGS) -o $@ $(MAIN_SOURCES)
 
@@ -140,7 +144,7 @@ profile: main_pg.x
 clean:
 	rm -f *.x *.gcno *.gcda *.gcov *.data *.out *.txt gmon.out
 	rm -f figures/*.x figures/data.txt figures/data_clusters.txt
-	rm -rf build latex_output
+	rm -rf build latex_output profiling
 	rm -f src/*.x
 	
 # Limpiar solo figuras (útil para forzar regeneración)
