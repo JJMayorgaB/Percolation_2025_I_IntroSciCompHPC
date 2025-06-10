@@ -6,7 +6,7 @@ int main(int argc, char **argv) {
      
     std::vector<double> p_values = generate_p_values(N);
 
-     std::cout << std::fixed << std::setprecision(2);
+     std::cout << std::fixed << std::setprecision(4);
     
     for (size_t i = 0; i < p_values.size(); ++i) {
 
