@@ -48,7 +48,7 @@ time_mainO%.x: $(TIME_MAIN_SOURCES) $(HEADERS)
 
 # Target para ejecutar los experimentos de tiempo
 time-computing: $(TIME_EXECUTABLES) probabilidades10.txt
-	parallel './time_mainO{1}.x {1} {2} {3} >> time-{1}-{3}.txt' ::: 1 3 ::: $$(cat probabilidades10.txt) ::: {100..1000..100}
+	parallel './time_mainO{1}.x {3} {2} >> time-{1}-{3}.txt' ::: 1 3 ::: $$(cat probabilidades10.txt) ::: {100..1000..100}
 
 # Target para compilar solo los ejecutables de tiempo
 time-executables: $(TIME_EXECUTABLES)
