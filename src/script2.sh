@@ -9,19 +9,18 @@ mkdir -p ../build/resultados/raw_data/Pfiles
 mkdir -p ../build/resultados/raw_data/Clusters
 mkdir -p ../build/graficas
 
-rm -r graficas
 
 # Valores de L
 Ls=(32 64 128 256 512)
 
 g++ -std=c++17 -I include -o src/printvalues.exe src/printvalues.cpp src/probvalues.cpp
-./printvalues.exe 50 > probabilidades.txt   
+./src/printvalues.exe 50 > probabilidades.txt   
 
 # Crear combinaciones
 combinations="combinations.txt"
 > "$combinations"
 for L in "${Ls[@]}"; do
-    for p in $(cat probabilidades.txt); do  # Sin comillas alrededor de $()
+    for p in $(cat probabilidades.txt); do  
         echo "$L $p" >> "$combinations"
     done
 done
@@ -42,29 +41,28 @@ simulate() {
     cluster_perc_sizes=()
 
     for iter in {1..10}; do
-    percolating_count=0
-    for rep in {1..10}; do
-        output=$(echo -e "$L\n$p" | $EXEC 2>/dev/null)
-        perc=$(echo "$output" | grep -i "¿Existe percolación?" | grep -o "Sí\|No")
-        size=$(echo "$output" | grep -i "Tamaño del mayor cluster percolante" | awk '{print $NF}')
-        size=${size:-0}
+        percolating_count=0
+        for rep in {1..10}; do
+            output=$(echo -e "$L\n$p" | $EXEC 2>/dev/null)
+            perc=$(echo "$output" | grep -i "¿Existe percolación?" | grep -o "Sí\|No")
+            size=$(echo "$output" | grep -i "Tamaño del mayor cluster percolante" | awk '{print $NF}')
+            size=${size:-0}
 
-        echo "$size" >> "$raw_file"
+            echo "$size" >> "$raw_file"
 
-        if [ "$perc" == "Sí" ]; then
+            if [ "$perc" == "Sí" ]; then
 
-            percolating_count=$((percolating_count + 1))
-            cluster_perc_sizes+=("$size")
+                percolating_count=$((percolating_count + 1))
+                cluster_perc_sizes+=("$size")
 
-        fi
+            fi
+        done
+
+        P_iter=$(awk -v c="$percolating_count" 'BEGIN {printf "%.5f", c/10.0}')
+        echo "$P_iter" >> "$P_file"
+        P_vals+=("$P_iter")
+
     done
-
-    P_iter=$(awk -v c="$percolating_count" 'BEGIN {printf "%.5f", c/10.0}')
-    echo "$P_iter" >> "$P_file"
-    P_vals+=("$P_iter")
-
-done
-
 
     # Normalizar cluster sizes y guardar
     cluster_perc_sizes_normalized=()
@@ -74,15 +72,7 @@ done
     done
     printf "%s\n" "${cluster_perc_sizes_normalized[@]}" >> "$clusters_percolantes_file"
 
-
-
-
-   #read avg < <(
-    #awk '$1 > 0 { x += $1; n++ }
-        #END { if (n > 0) printf "%.5f\n", x / n; else print 0 }' "$raw_file"
-    #)
-
-     read avg_cluster std_cluster < <(
+    read avg_cluster std_cluster < <(
         printf "%s\n" "${cluster_perc_sizes_normalized[@]}" | awk '
             { x += $1; x2 += $1*$1; n++ }
             END {
@@ -98,14 +88,6 @@ done
             }
         '
     )
-
-    #prob=$(awk -v count="$percolating_count" 'BEGIN {printf "%.3f", count / 10}')
-
-    #echo "$L,$p,$avg,$std,$prob"
-    #mkdir -p graficas
-    #echo "$p $prob" >> graficas/L${L}.txt
-
-    #sort -n graficas/L${L}.txt -o graficas/L${L}.txt
 
     read P_avg P_std < <(
     awk '{
@@ -144,7 +126,7 @@ rm resultados/resumen_temp.csv
 # Limpieza
 rm -r resultados/temp "$combinations"
 
-
+COMBINATIONS_FILE
 for L in "${Ls[@]}" ; do
     sort -n ../build/graficas/L${L}_P.txt -o ../build/graficas/L${L}_P.txt
     sort -n ../build/graficas/L${L}_Cluster.txt -o ../build/graficas/L${L}_Cluster.txt
