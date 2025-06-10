@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Compile and run visualization program
-g++ -std=c++17 -I include/ -o figures/visualization figures/visualization.cpp src/matrix.cpp src/hoshen_kopelman.cpp src/union_find.cpp
-./figures/visualization 10 0.5 0.6 > figures/data.txt
+g++ -std=c++17 -I include/ -o figures/visualization.x figures/visualization.cpp src/matrix.cpp src/hoshen_kopelman.cpp src/union_find.cpp
+./figures/visualization.x 10 0.5 0.6 > figures/data.txt
 python3 ./figures/visualize.py
 
 # Compile and run cluster visualization program
-g++ -std=c++17 -I include/ -o figures/clustervisualization figures/clustervisualization.cpp src/matrix.cpp src/hoshen_kopelman.cpp src/union_find.cpp
-./figures/clustervisualization 10 0.5 0.6 > figures/data_clusters.txt
+g++ -std=c++17 -I include/ -o figures/clustervisualization.x figures/clustervisualization.cpp src/matrix.cpp src/hoshen_kopelman.cpp src/union_find.cpp
+./figures/clustervisualization.x 10 0.5 0.6 > figures/data_clusters.txt
 python3 ./figures/clustervisualize.py
 
 #WINDOWS

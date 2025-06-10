@@ -5,10 +5,10 @@ import re
 
 def read_matrix_and_metadata(file):
     try:
-        with open(file, 'r', encoding='utf-16') as f:
+        with open(file, 'r', encoding='utf-8') as f:
             lines = f.readlines()
     except UnicodeDecodeError:
-        with open(file, 'r', encoding='utf-8') as f:
+        with open(file, 'r', encoding='utf-16') as f:
             lines = f.readlines()
     
     matrix = []

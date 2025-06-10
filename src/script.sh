@@ -11,29 +11,23 @@ mkdir -p ../build/graficas
 
 rm -r graficas
 
+# Compilar y generar probabilidades
+g++ -std=c++17 -I include -o printvalues.x printvalues.cpp probvalues.cpp
+if [ $? -ne 0 ]; then
+    echo "Error en la compilación"
+    exit 1
+fi
+
+./printvalues.x 50 > probabilidades.txt
+
 # Valores de L
 Ls=(32 64 128 256 512)
-
-# Generar valores de p (20 uniformes y 10 críticos)
-ps=()
-for i in $(seq 0 20); do
-    val=$(awk -v i=$i 'BEGIN {printf "%.5f", i * 0.05}')
-    ps+=($val)
-done
-
-for i in $(seq 0 12); do
-    val=$(awk -v i=$i 'BEGIN {printf "%.5f", 0.55 + i * 0.01}')
-    ps+=($val)
-done
-
-# Ordenar y eliminar duplicados
-ps=($(printf "%s\n" "${ps[@]}" | sort -n | uniq))
 
 # Crear combinaciones
 combinations="combinations.txt"
 > "$combinations"
 for L in "${Ls[@]}"; do
-    for p in "${ps[@]}"; do
+    for p in $(cat probabilidades.txt); do
         echo "$L $p" >> "$combinations"
     done
 done
@@ -87,13 +81,6 @@ done
     printf "%s\n" "${cluster_perc_sizes_normalized[@]}" >> "$clusters_percolantes_file"
 
 
-
-
-   #read avg < <(
-    #awk '$1 > 0 { x += $1; n++ }
-        #END { if (n > 0) printf "%.5f\n", x / n; else print 0 }' "$raw_file"
-    #)
-
      read avg_cluster std_cluster < <(
         printf "%s\n" "${cluster_perc_sizes_normalized[@]}" | awk '
             { x += $1; x2 += $1*$1; n++ }
@@ -110,14 +97,6 @@ done
             }
         '
     )
-
-    #prob=$(awk -v count="$percolating_count" 'BEGIN {printf "%.3f", count / 10}')
-
-    #echo "$L,$p,$avg,$std,$prob"
-    #mkdir -p graficas
-    #echo "$p $prob" >> graficas/L${L}.txt
-
-    #sort -n graficas/L${L}.txt -o graficas/L${L}.txt
 
     read P_avg P_std < <(
     awk '{
@@ -154,7 +133,7 @@ sort -t',' -k1,1n -k2,2n resultados/resumen_temp.csv >> resultados/resumen.csv
 rm resultados/resumen_temp.csv
 
 # Limpieza
-rm -r resultados/temp "$combinations"
+rm -r resultados/temp "$combinations" probabilidades.txt
 
 
 for L in "${Ls[@]}" ; do
@@ -209,11 +188,6 @@ gnuplot -persist <<-EOF
         ((i++))
     done | sed '$ s/,\\//')
 EOF
-
-
-#for L in "${Ls[@]}" ; do
-    #sort -n graficas/L$L.txt -o graficas/L$L.txt
-#done
 
 echo "✅ Simulaciones y gráficas completadas."
 echo "📂 Ver resultados en: build/graficas/"

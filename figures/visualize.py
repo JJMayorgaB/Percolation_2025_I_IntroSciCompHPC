@@ -5,10 +5,10 @@ import matplotlib.colors as mcolors
 def read_matrix(file):
 
     try:
-        with open(file, 'r', encoding='utf-16') as f:  #Predeterminado: utf-16
+        with open(file, 'r', encoding='utf-8') as f:  #Predeterminado: utf-16
             lines = f.readlines()
     except UnicodeDecodeError:
-        with open(file, 'r', encoding='utf-8') as f:  # Fallback a otra codificación
+        with open(file, 'r', encoding='utf-16') as f:  # Fallback a otra codificación
             lines = f.readlines()
     
     matrix = []
