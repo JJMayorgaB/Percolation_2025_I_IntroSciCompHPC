@@ -29,7 +29,7 @@ all: main.x printvalues.x
 
 # Compilar main.x con sanitizers y coverage
 main.x: $(MAIN_SOURCES) $(HEADERS)
-	$(CXX) $(CXXFLAGS) $(SANITIZE_FLAGS) $(COVERAGE_FLAGS) -o $@ $(MAIN_SOURCES)
+	$(CXX) $(CXXFLAGS) -O3 $(SANITIZE_FLAGS) $(COVERAGE_FLAGS) -o $@ $(MAIN_SOURCES)
 
 # Compilar printvalues.x
 printvalues.x: $(PRINTVALUES_SOURCES) $(HEADERS)
