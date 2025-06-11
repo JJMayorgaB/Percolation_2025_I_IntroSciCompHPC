@@ -27,12 +27,15 @@ def read_matrix_and_metadata(file):
             cluster_size = int(size_match.group(1))
             continue
         
-        # Process numeric lines
+        # Process numeric lines - FIXED: Better handling of multi-digit numbers
         if line and not any(c.isalpha() for c in line):
+            # Split by whitespace and process each token
+            tokens = line.split()
             row = []
-            for num in line.split():
+            for token in tokens:
                 try:
-                    row.append(int(num))
+                    # This will correctly handle multi-digit numbers like 10, 11, etc.
+                    row.append(int(token))
                 except ValueError:
                     continue
             
@@ -87,11 +90,6 @@ def visualize_matrix(matrix, cluster_size=None, save_path="percolation.png"):
     bounds = np.append(unique_labels, unique_labels[-1]+1) - 0.5
     norm = mcolors.BoundaryNorm(bounds, custom_cmap.N)
 
-    
-    custom_cmap = mcolors.ListedColormap(colors)
-    bounds = np.append(unique_labels, unique_labels[-1]+1) - 0.5
-    norm = mcolors.BoundaryNorm(bounds, custom_cmap.N)
-
     # Create figure with appropriate size for 100x100 matrix
     fig, ax = plt.subplots()
     img = ax.imshow(matrix, cmap=custom_cmap, norm=norm, interpolation='none')
@@ -121,14 +119,17 @@ def visualize_matrix(matrix, cluster_size=None, save_path="percolation.png"):
     plt.title(title, fontsize=12)
     
     # Legend (only show if reasonable number of labels)
-    if num_labels <= 20:
-        legend_elements = [plt.Rectangle((0,0), 1, 1, 
-                           color=colors[i], 
-                           label=f'Cluster {unique_labels[i]}') 
-                          for i in range(num_labels)]
+    if len(unique_labels) <= 20:
+        # Create legend mapping each unique label to its color
+        legend_elements = []
+        for i, label in enumerate(unique_labels):
+            legend_elements.append(plt.Rectangle((0,0), 1, 1, 
+                                   color=colors[i], 
+                                   label=f'Cluster {label}'))
+        
         ax.legend(handles=legend_elements, title="Clusters",
                   bbox_to_anchor=(1.05, 1), loc='upper left',
-                  fontsize=8, title_fontsize=9)
+                  fontsize=10, title_fontsize=11)
 
     # Adjust layout with constrained_layout instead of tight_layout
     fig.set_constrained_layout(True)
