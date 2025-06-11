@@ -1,11 +1,11 @@
 #define CATCH_CONFIG_MAIN
 #include "../include/catch2/catch.hpp"
-#include "../include/dfspercolation.h"
 #include "../include/hoshen_kopelman.h"
 #include "../include/matrix.h"
 
 
 TEST_CASE("En arreglo de solo ceros nunca hay percolación, Y en arreglo de unos, siempre la hay.", "[unosceros]"){
+	
 	int n_muestras = 10;
 	int tamanhos[10] = {1, 10, 20, 30, 40, 50, 500, 1000, 5000, 10000};
 

@@ -135,8 +135,8 @@ check-figures:
 		fi; \
 	done; \
 	if [ -n "$$missing_figs" ]; then \
-		echo "Error: Figuras faltantes:$$missing_figs"; \
-		echo "Ejecuta 'make figures' para generarlas."; \
+		echo "Error: Figuras faltantes:$$missing_figs, creandolas"; \
+		$(MAKE) figures; \
 		exit 1; \
 	fi
 

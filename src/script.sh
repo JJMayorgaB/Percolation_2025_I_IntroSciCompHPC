@@ -15,7 +15,7 @@ Ls=(32 64 128 256 512)
 combinations="combinations.txt"
 > "$combinations"
 for L in "${Ls[@]}"; do
-    for p in $(cat probabilidades.txt); do
+    for p in $(cat probabilidades50.txt); do
         echo "$L $p" >> "$combinations"
     done
 done
@@ -121,7 +121,7 @@ sort -t',' -k1,1n -k2,2n src/resultados/resumen_temp.csv >> src/resultados/resum
 rm src/resultados/resumen_temp.csv
 
 # Limpieza
-rm -f "$combinations" probabilidades.txt
+rm -f "$combinations" probabilidades50.txt
 
 # Ordenar archivos de gráficas
 for L in "${Ls[@]}"; do
