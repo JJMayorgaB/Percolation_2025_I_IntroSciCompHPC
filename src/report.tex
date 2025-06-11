@@ -89,7 +89,7 @@
 \maketitle
 
 \begin{abstract}
-Este trabajo presenta una implementación computacional del proceso de percolación en redes bidimensionales utilizando el algoritmo de Hoshen-Kopelman. Se analizaron sistemas de diferentes tamaños ($L = 32, 64, 128, 256, 512$) para estudiar el comportamiento crítico cerca del umbral de percolación $p_c \approx 0.5927$. Los resultados muestran la formación de clusters percolantes y la dependencia del tamaño del sistema en las propiedades críticas.
+Este trabajo presenta una implementación computacional del modelo de percolación por sitio en redes bidimensionales, utilizando el algoritmo de Hoshen-Kopelman para la identificación de clústeres. Se estudian las propiedades fundamentales del sistema cerca del punto crítico $p_c \approx 0.5927$, incluyendo la probabilidad de percolación $P(p,L)$ y el tamaño normalizado del clúster percolante más grande $s(p,L)$. Mediante simulaciones exhaustivas para diferentes tamaños de red $L$ desde 100 hasta 2000 y probabilidades de ocupación $p$ entre 0 y 1, se caracteriza la transición de fase del sistema. Adicionalmente, se analiza el desempeño computacional del algoritmo bajo diferentes niveles de optimización -O1 y -O3, identificando los cuellos de botella principales mediante técnicas de profiling. Los resultados muestran el comportamiento característico de transición de fase, con $P(p,L)$ aproximándose a una función escalón cuando $L \rightarrow \infty$, y $s(p,L)$ mostrando máxima fluctuación cerca de $p_c$. El análisis de rendimiento revela que las operaciones con hash maps y la generación de números aleatorios consumen aproximadamente el 55\% y 23\% del tiempo de ejecución respectivamente.
 \end{abstract}
 
 \section{Introducción}
@@ -498,16 +498,70 @@ de la que se esperaba que el manejo de memoria por medio de $\texttt{reserve}$ y
 \\
 
 Sin embargo, a pesar de las optimizaciones realizadas los valores reportados en el flat profile con $\texttt{perf}$ y obtenido para estas funciones, al momento de revisar el reporte se encontro que los porcentajes obtenidos no solo se daban en las mismas funciones que se encontraron en el código no optimizado sino que ademas, los porcentajes eran de la misma magnitud teniendo en cuenta las fluctuaciones propias debido a la naturaleza del procesador donde se llevaron a cabo las simulaciones. Este reporte se puede revisar en el repositorio para la rama $\texttt{optimized\_main}$ y se puede obtener de la misma forma que en la rama $\texttt{master}$ para el target $\texttt{$\texttt{make profiling-report.txt}$}$.
+\\
+
+Estos resultados se interpretaron tal que el algoritmo HK es una excelente implementación para la tarea que realiza y cualquier implementación subyacente no afectara el desarrollo de esta, por estos motivos, se descarto cualquier intento de optimización posterior y se decidió utilizar los programas ya realizados.
 
 \subsection{Probabilidad de percolación $P(p,L)$}
 
+Los resultados obtenidos para la probabilidad de percolación $P(p,L)$ por medio del script en $\texttt{bash}$ son presentados en la figura \ref{fig:5}.
+
+\begin{figure}[H]
+    \centering
+   \includegraphics[width=0.9\linewidth]{../figures/P_all_L.png}
+   \caption{Probabilidad de percolación en función de la probabilidad de llenado para distintos L.}
+    \label{fig:5}
+\end{figure}
+
+Como se puede observar, $P(p,L)$ se aproxima a una función de Heaviside $\Theta(p-p_c)$ para $L\rightarrow\infty$, tal que $p_c\approx$ 5.9, es decir, el limite termodinámico. También, se observa que las incertidumbres son mayores en la vecindad de $p_C$, lo cual es esperable porque cerca del punto crítico las fluctuaciones son más intensas.
+\\
+
+En ese sentido, es posible observar la transición de fase del sistema entre $p\in$(0.55, 0.62) al pasar $P(p<p_C,L)$ = 0 a $P(p>p_C,L)$ = 1. Sin embargo, el comportamiento en general para $P(p,L)$ varia según la dimensión del sistema $L$ cerca de $p_c$, a este fenómeno se le conoce como escalamiento crítico.
+
 \subsection{Tamaño promedio del clúster percolante mas grande $s(p,L)$}
+
+Los resultados obtenidos para el tamaño medio de clúster de percolación $s(p,L)$ por medio del script en $\texttt{bash}$ son presentados en la figura \ref{fig:6}.
+
+\begin{figure}[H]
+   \centering
+   \includegraphics[width=0.9\linewidth]{../figures/Cluster_all_L.png}
+    \caption{Tamaño medio de clúster de percolación en función de la probabilidad de llenado para distintos L.}
+    \label{fig:6}
+\end{figure}
+
+Como se puede observar, $s(p,L)$ se observa una tendencia en su comportamiento para $L\rightarrow\infty$ de converger a una misma solución, la cual es distinta de cero cerca de la probabilidad critica $p_c\approx$ 5.9. 
 
 \section{Conclusiones}
 
-\clearpage
+El estudio realizado permitió caracterizar satisfactoriamente el fenómeno de percolación en redes bidimensionales mediante simulaciones computacionales. Los principales hallazgos y conclusiones son:
+
+\begin{itemize}
+    \item Se confirmó el comportamiento crítico del sistema alrededor de $p_c \approx 0.5927$, donde la probabilidad de percolación $P(p,L)$ muestra una transición abrupta al aumentar el tamaño de la red $L$, aproximándose a una función escalón en el límite termodinámico, $L \rightarrow \infty$.
+
+    \item El algoritmo de Hoshen-Kopelman demostró ser eficiente para el análisis de sistemas de tamaño moderado, $L \leq 2000$, aunque el análisis de profiling reveló que aproximadamente el 78\% del tiempo de ejecución se concentra en solo dos funciones: la identificación de clústeres (55\%) y la generación de la matriz aleatoria (23\%).
+
+    \item Las optimizaciones implementadas, -O1 y -O3, mostraron mejoras modestas en el tiempo de ejecución, sugiriendo que el algoritmo ya está altamente optimizado en su forma básica. Los intentos de optimización manual adicional no produjeron mejoras significativas.
+
+    \item Las simulaciones para diferentes tamaños de red permitieron observar el fenómeno de escalamiento crítico, donde las propiedades del sistema cerca de $p_c$ dependen fuertemente del tamaño $L$, mientras que lejos del punto crítico el comportamiento es más universal.
+
+    \item La implementación modular y el uso de herramientas modernas ($\texttt{GNU Parallel, perf, Catch2}$) demostraron ser efectivos para manejar la naturaleza intensiva en cómputo de las simulaciones, permitiendo la generación de resultados estadísticamente robustos.
+\end{itemize}
+
+\section{Apéndice}
+
+\subsection{Uso de herramientas externas: Todoist}
+Para la realización de este proyecto se utilizo Todoist para coordinar y gestionar el trabajo entre los miembros del grupo. Se adjunta evidencia gráfica en la figura \ref{fig:7}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{../figures/todoist.png}
+    \caption{Gestión de tareas en Todoist.}
+    \label{fig:7}
+\end{figure}
 
 \bibliographystyle{plain}
 \bibliography{report}
+
+
 
 \end{document}
