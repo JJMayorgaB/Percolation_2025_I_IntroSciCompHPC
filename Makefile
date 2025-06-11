@@ -61,12 +61,6 @@ valgrind: main_val.x
 test: test.x
 	./test.x $(FILTER)
 
-#coverage
-coverage: test.x
-	./$<
-	@gcovr --html --html-details -o coverage.html
-	@echo "Coverage report generated at -> firefox coverage.html
-
 #flat profile
 profiling-report.txt: main_pg.x
 	@mkdir -p profiling
@@ -79,7 +73,9 @@ profiling-report.txt: main_pg.x
 profile: main_pg.x 
 	@mkdir -p profiling
 	./main_pg.x 8 0.5 10 
+	@#Profiling con gprof
 	gprof main_pg.x gmon.out | grep -v 'std::\|__gnu_cxx\|operator\|std::chrono\|std::__' > profiling/analysis.txt
+	@#Profiling con perf
 	perf record --call-graph dwarf -F99 -g -- ./main_pg.x 8 0.5 10
 	perf script | $(FLAME)/stackcollapse-perf.pl > profiling/out.folded
 	$(FLAME)/flamegraph.pl profiling/out.folded > profiling/flamegraph.svg
@@ -137,7 +133,7 @@ test.x: $(TEST_OBJECTS)
 
 # Regla genérica para compilar cualquier .cpp → .o
 %.o: %.cpp $(HEADERS)
-	$(CXX) $(CXXFLAGS) $(COVERAGE) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Niveles de optimización para time_main
 OPTIMIZATION_LEVELS = 1 3
