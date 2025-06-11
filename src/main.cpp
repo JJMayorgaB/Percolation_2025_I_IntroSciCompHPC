@@ -2,28 +2,23 @@
 #include "../include/hoshen_kopelman.h"
 
 int main(int argc, char **argv) {
-    
-    int L;
-    double p;
-    int seed = -1; //semilla aleatoriaL * L
 
-    // Si se pasan argumentos, úsalos; si no, pide entrada interactiva
-    if (argc >= 3) {
-
-        L = std::atoi(argv[1]);
-        p = std::atof(argv[2]);
-        if (argc == 4) {
-            seed = std::atoi(argv[3]);
-        }
-        
-    } else {
-
-        std::cout << "Ingrese el tamano de la matriz (LxL): ";
-        std::cin >> L;
-        std::cout << "Ingrese la probabilidad de ocupación (0.0 - 1.0): ";
-        std::cin >> p;
-
+    if (argc < 3) {
+        std::cerr << "Uso: " << argv[0] << " <L> <p> [<seed>]\n"
+                  << "Donde:\n"
+                  << "  L    : Tamaño de la red (entero positivo)\n"
+                  << "  p    : Probabilidad de ocupación (0.0 a 1.0)\n"
+                  << "  seed : Semilla para RNG (opcional, -1 si no se especifica)\n";
+        return 1;
     }
+
+    int L = std::atoi(argv[1]);
+    double p = std::atof(argv[2]);
+    int seed = -1;
+    if (argc == 4) {
+        seed = std::atoi(argv[3]);
+    }
+        
 
     std::vector<int> matrix = generatematrix(L, p, seed);
 
