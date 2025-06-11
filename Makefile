@@ -214,7 +214,7 @@ check-figures:
 	
 # Limpiar solo figuras (útil para forzar regeneración)
 clean-figures:
-	rm -f $(FIGURE_FILES) figures/data.txt figures/data_clusters.txt
+	rm -f $(FIGURE_FILES) figures/*.txt
 
 help:
 	@echo "Targets disponibles:"
