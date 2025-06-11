@@ -4,19 +4,21 @@
 int main(int argc, char **argv) {
 
     if (argc < 3) {
-        std::cerr << "Uso: " << argv[0] << " <L> <p> [<seed>]\n"
-                  << "Donde:\n"
-                  << "  L    : Tamaño de la red (entero positivo)\n"
-                  << "  p    : Probabilidad de ocupación (0.0 a 1.0)\n"
-                  << "  seed : Semilla para RNG (opcional, -1 si no se especifica)\n";
+
+        std::cerr << "Use: " << argv[0] << " <size_L> <p_val> <seed>(optional)\n";
         return 1;
+
     }
 
     int L = std::atoi(argv[1]);
     double p = std::atof(argv[2]);
-    int seed = -1;
-    if (argc == 4) {
-        seed = std::atoi(argv[3]);
+    int seed = (argc == 4) ? std::atoi(argv[3]) : -1;
+
+    // Validar parámetros de entrada
+    if (L <= 0 || p < 0.0 || p > 1.0 || (argc >= 5 && seed <= 0)) {
+        std::cerr << "Error: Invalid parameters\n";
+        std::cerr << "L must be > 0, p must be between 0 and 1, seed (if given) must be > 0\n";
+        return 1;
     }
         
 
