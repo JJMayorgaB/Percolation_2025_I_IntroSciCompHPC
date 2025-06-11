@@ -92,6 +92,7 @@ profile: main_pg.x
 # Debug con GDB
 debug: main_debug.x
 	gdb ./main_debug.x
+	@echo "Para hacer run utilizar <r L p seed> o <run L p seed>"
 
 # Análisis con Valgrind
 valgrind: main_val.x
