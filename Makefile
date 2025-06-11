@@ -180,7 +180,8 @@ profile: main_pg.x
 clean:
 	rm -f *.x *.gcno *.gcda *.gcov *.data *.out *.txt gmon.out
 	rm -f figures/*.x figures/data.txt figures/data_clusters.txt
-	rm -rf build profiling
+	rm -rf build 
+	rm -f profiling/out.folded profiling/perf.data
 	rm -f src/*.x
 	
 # Limpiar solo figuras (útil para forzar regeneración)
