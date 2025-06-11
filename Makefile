@@ -27,7 +27,8 @@ HEADERS = $(wildcard $(INC_DIR)/*.h)
 # Archivos de datos y figuras
 DATA_FILES = build/graficas/L32_P.txt build/graficas/L64_P.txt build/graficas/L128_P.txt build/graficas/L256_P.txt build/graficas/L512_P.txt \
              build/graficas/L32_Cluster.txt build/graficas/L64_Cluster.txt build/graficas/L128_Cluster.txt build/graficas/L256_Cluster.txt build/graficas/L512_Cluster.txt
-FIGURE_FILES = figures/P_all_L.png figures/Cluster_all_L.png figures/percolation.png figures/clusterpercolation.png figures/time_analysis.png
+FIGURE_FILES = figures/P_all_L.png figures/Cluster_all_L.png figures/percolation1.png figures/clusterpercolation1.png figures/time_analysis.png \
+			 figures/percolation2.png figures/clusterpercolation2.png figures/clusterpercolation3.png figures/clusterpercolation4.png
 TIME_FILES = time-1-100.txt time-1-200.txt time-1-300.txt time-1-400.txt time-1-500.txt \
              time-1-600.txt time-1-700.txt time-1-800.txt time-1-900.txt time-1-1000.txt \
              time-1-1100.txt time-1-1200.txt time-1-1300.txt time-1-1400.txt time-1-1500.txt \
