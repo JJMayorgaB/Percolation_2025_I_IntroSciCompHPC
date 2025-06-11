@@ -107,7 +107,7 @@ report:	src/report.tex src/report.bib check-figures
 #borra archivos temporales
 clean:
 	rm -f *.x *.gcno *.gcda *.gcov *.data *.out *.txt gmon.out
-	rm -f figures/*.x figures/data.txt figures/data_clusters.txt
+	rm -f figures/*.x figures/*.txt 
 	rm -rf build 
 	rm -f profiling/out.folded profiling/perf.data
 	rm -f src/*.x
@@ -182,12 +182,12 @@ figures/clustervisualization.x: $(CLUSTERVIS_SOURCES) $(HEADERS)
 $(FIGURE_FILES): figures/visualization.x figures/clustervisualization.x $(DATA_FILES) $(TIME_FILES)
 	@echo "Generando figuras..."
 	./figures/visualization.x 10 0.5 0.6 > figures/data1.txt
-	./figures/visualization.x 10 0.7 0.6 > figures/data2.txt
+	./figures/visualization.x 10 0.58 11 > figures/data2.txt
 	python3 ./figures/visualize.py
 	./figures/clustervisualization.x 10 0.5 0.6 > figures/data_clusters1.txt
-	./figures/clustervisualization.x 10 0.7 0.6 > figures/data_clusters2.txt
-	./figures/clustervisualization.x 1000 0.5 0.6 > figures/data_clusters3.
-	./figures/clustervisualization.x 1000 0.7 0.6 > figures/data_clusters4.txt
+	./figures/clustervisualization.x 10 0.58 11 > figures/data_clusters2.txt 
+	./figures/clustervisualization.x 500 0.55 0.6 > figures/data_clusters3.txt
+	./figures/clustervisualization.x 500 0.595 0.6 > figures/data_clusters4.txt
 	python3 ./figures/clustervisualize.py
 	python3 ./figures/figures.py
 	python3 ./figures/time_figure.py
