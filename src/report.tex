@@ -1,31 +1,53 @@
 \documentclass[12pt,a4paper]{article}
+
+% Solución para problemas de fuentes
+\pdfmapfile{+pdftex.map}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+
+% Idioma
 \usepackage[spanish]{babel}
+
+% Matemáticas
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
-\usepackage{graphicx}
-\usepackage[margin=2.5cm]{geometry}
-\usepackage{float}
-\usepackage{cite}
-\usepackage{url}
-\usepackage{array}
-\usepackage{enumitem}
-\usepackage{listings}
-\usepackage{xcolor}
-\usepackage{subcaption}
-\usepackage[pdfusetitle, colorlinks]{hyperref}
-\hypersetup{
-    colorlinks=true,    % Colores en lugar de cajas
-    linkcolor=gray,
-    citecolor=black, % Color de los enlaces internos
-    filecolor=gray,  % Color de los enlaces a archivos
-    urlcolor=gray       % Color de los enlaces externos
-}
-\usepackage{dcolumn}
 \usepackage{bm}
 
-% Estilo para Bash (como ya lo tenías)
+% Gráficos y figuras
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{subcaption}
+
+% Geometría y formato
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{microtype}  % Mejora la tipografía
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{dcolumn}
+
+% Código y colores
+\usepackage{listings}
+\usepackage{xcolor}
+
+% Enlaces y referencias
+\usepackage{cite}
+\usepackage{url}
+\usepackage[pdfusetitle, colorlinks]{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=gray,
+    citecolor=black,
+    filecolor=gray,
+    urlcolor=gray
+}
+
+% Configuración más permisiva para evitar overfull boxes
+\sloppy
+\tolerance=1000
+\emergencystretch=3em
+
 \lstdefinestyle{bash-style}{
     backgroundcolor=\color{black!5}, % Fondo gris muy claro
     basicstyle=\ttfamily\footnotesize,
