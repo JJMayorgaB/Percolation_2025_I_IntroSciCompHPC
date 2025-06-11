@@ -24,26 +24,36 @@
 }
 \usepackage{dcolumn}
 \usepackage{bm}
-\usepackage{appendix}
-\usepackage{listings}
-\lstset{
-  language=Python,
-  basicstyle=\ttfamily\small,
-  commentstyle=\itshape\color{gray},
-  keywordstyle=\bfseries\color{blue},
-  numbers=left,
-  numberstyle=\tiny\color{gray},
-  stepnumber=1,
-  numbersep=5pt,
-  backgroundcolor=\color{white},
-  frame=single,
-  breaklines=true,
-  breakatwhitespace=false,
-  captionpos=b,
-  tabsize=2,
-  showspaces=false,
-  showstringspaces=false
+
+% Estilo para Bash (como ya lo tenías)
+\lstdefinestyle{bash-style}{
+    backgroundcolor=\color{black!5}, % Fondo gris muy claro
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue},
+    commentstyle=\color{green!50!black},
+    stringstyle=\color{purple},
+    breaklines=true,
+    frame=single,
+    language=bash,
+    numbers=none, % Sin numeración
+    showstringspaces=false,
 }
+
+% Estilo para C++
+\lstdefinestyle{cpp-style}{
+    backgroundcolor=\color{black!5},
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue},
+    commentstyle=\color{green!50!black},
+    stringstyle=\color{purple},
+    breaklines=true,
+    frame=single,
+    language=C++, % Lenguaje C++
+    numbers=left, % Numeración a la izquierda
+    numberstyle=\tiny\color{gray},
+    showstringspaces=false,
+}
+
 
 % Información del documento
 \title{Simulación de Percolación en Redes 2D\\
@@ -62,61 +72,420 @@ Este trabajo presenta una implementación computacional del proceso de percolaci
 
 \section{Introducción}
 
-La teoría de la percolación constituye un pilar fundamental en la física estadística, ofreciendo un marco conceptual para describir la conectividad y la propagación de magnitudes a través de medios desordenados. Un aspecto central de la percolación es su capacidad para modelar transiciones de fase. Esta transición se manifiesta cuando la probabilidad de ocupación ($p$) de los elementos del medio alcanza un valor crítico específico, denominado umbral de percolación ($p_c$). Por debajo de este umbral, el sistema se caracteriza por la presencia de clústeres finitos y aislados, es decir, agrupaciones de elementos conectados que no logran atravesar el sistema en su totalidad. Sin embargo, al superar $p_c$, emerge un 'clúster infinito' o spanning cluster, una vasta red de elementos conectados que se extiende de un extremo a otro del sistema. Este cambio cualitativo en la conectividad es análogo a las transiciones de fase observadas en diversos sistemas físicos, como la magnetización o la condensación de gases. La percolación, al presentar este comportamiento crítico, se erige como un modelo universal para comprender fenómenos críticos en sistemas complejos, lo que confiere a su estudio una relevancia, incluso en configuraciones simplificadas como redes 2D \cite{CantabranaBarrio2018} \cite{PERCentralPercolation}.
+El fenómeno de percolación es un modelo fundamental en física estadística y teoría de redes, que describe la conectividad y propagación en medios desordenados. Sus aplicaciones abarcan desde la propagación de incendios forestales y epidemias hasta la conductividad de materiales porosos. En su forma más simple, el modelo representa un sistema donde cada sitio (o enlace) de una red se ocupa con probabilidad \( p \), estudiándose la formación de caminos conectados. Un aspecto central es su transición de fase: al superar un valor crítico \( p_c \), emerge un 'clúster percolante' que atraviesa el sistema, análogo a transiciones de fase en magnetización o condensación de gases \cite{CantabranaBarrio2018, PERCentralPercolation}.
 \\
 
-Para la percolación de sitios en una red cuadrada 2D, existe un valor de probabilidad crítica ($p_c$) que está bien establecido en la literatura. Si la probabilidad de ocupación $p$ es mayor que $p_c$, el sistema percola y se forma un clúster de gran tamaño que atraviesa la red. Por el contrario, si $p$ es menor que $p_c$, el sistema no percola y solo se observan clústeres pequeños y aislados. El valor aceptado para la probabilidad crítica de percolación de sitios en una red cuadrada 2D es aproximadamente 0.5927. Este valor, sin embargo, es específico para este tipo de red y dimensionalidad \cite{PERCentralPercolation}.
+En este trabajo se estudia el modelo de percolación por sitio en una malla cuadrada bidimensional de tamaño \( L \times L \), donde cada celda se ocupa independientemente con probabilidad \( p \). Dos celdas ocupadas son vecinas en la dirección de von Neumann (norte, sur, este u oeste), formando clústeres o componentes conexas. Como ilustran las Figuras \ref{fig:1} y \ref{fig:2}, para \( p < p_c \) predominan clústeres finitos (Figura \ref{fig:1}), mientras que para \( p > p_c \) surge un clúster percolante (Figura \ref{fig:2}). El valor crítico para redes cuadradas bidimensionales es \( p_c \approx 0.5927 \) \cite{PERCentralPercolation}, aunque este límite teórico supone sistemas infinitos, y las simulaciones requieren analizar redes finitas.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[h]{0.4\textwidth}
+        \centering
+        \includegraphics[width=0.75\linewidth]{../figures/percolation1.png}
+        \caption{Red cuadrada.}
+        \label{fig:subfig1}
+    \end{subfigure}
+    \hspace{0.02 cm}
+    \begin{subfigure}[h]{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{../figures/clusterpercolation1.png}
+        \caption{Clústeres individuales.}
+        \label{fig:subfig2}
+    \end{subfigure}
+    \caption{Proceso de percolación para una red cuadrada por debajo de la probabilidad crítica, \( p = 0.5 \) y \( L = 10 \).}
+    \label{fig:1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[h]{0.4\textwidth}
+        \centering
+        \includegraphics[width=0.75\linewidth]{../figures/percolation2.png}
+        \caption{Red cuadrada.}
+        \label{fig:subfig1}
+    \end{subfigure}
+    \hspace{0.02 cm}
+    \begin{subfigure}[h]{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{../figures/clusterpercolation2.png}
+        \caption{Clúster percolante.}
+        \label{fig:subfig2}
+    \end{subfigure}
+    \caption{Proceso de percolación para una red cuadrada, \( p = 0.58 \) y \( L = 10 \), donde emerge un clúster percolante.}
+    \label{fig:2}
+\end{figure}
+
+En este sentido, los objetivos específicos de este proyecto son calcular la probabilidad de percolación \( P(p, L) \), es decir, la fracción de configuraciones con un clúster que conecta lados opuestos (vertical u horizontalmente), analizar el tamaño promedio del clúster más grande \( s(p, L) \) en función de \( p \) y \( L \) y evaluar el impacto del nivel de optimización e implementación de simulaciones computacionales en el tiempo de cómputo para distintos \( L \).
 \\
 
-Es fundamental reconocer que los valores teóricos de $p_c$
-y las leyes de escalado asociadas se derivan bajo la suposición de sistemas de tamaño infinito. Sin embargo, las simulaciones computacionales se realizan inevitablemente en redes de tamaño finito. Para obtener una determinación rigurosa del umbral de percolación a partir de datos de simulación y para comprender cómo el comportamiento de un sistema finito se aproxima al límite (sistema infinito), es imprescindible aplicar técnicas de escalado de tamaño finito. Este enfoque permite analizar cómo las propiedades del sistema varían con el tamaño de la red y extrapolar el valor de $p_c$ para un sistema infinito, reconociendo que los sistemas finitos exhiben un 'ensanchamiento' del punto de transición en una región de transición. Así, las conclusiones obtenidas de una simulación bien diseñada deben involucrar un estudio sistemático a través de diferentes tamaños de sistema y la aplicación de estas técnicas para validar los resultados frente a las predicciones teóricas \cite{PERCentralPercolation}.
+Así, dado el carácter probabilístico del modelo, las simulaciones se repiten múltiples veces para cada combinación de \( p \), \( L \) y nivel de optimización, permitiendo estimar promedios y desviaciones estándar. Computacionalmente, el código se implementó en C++ con estructura modular, usando un \texttt{Makefile} para automatizar ejecución, análisis de desempeño, pruebas unitarias y perfilamiento, como se detalla en la metodología.
+
 
 \section{Metodología}
+Para realizar las simulaciones se trabajo con el programa contenido en el repositorio $\texttt{Percolation\_2025\_I\_IntroSciCompHPC}$ \cite{repo} en su rama $\texttt{master}$ cuya estructura es 
+
+\begin{verbatim}
+.Percolation_2025_I_IntroSciCompHPC
+|__ .github
+|   |__ workflows
+|__ .vscode
+|__ figures
+|__ include
+|__ profiling
+|__ src
+|   |__ resultados
+|__ Makefile
+\end{verbatim}
+
+tal que en $\texttt{figures}$ se encuentran tanto las figuras utilizadas en este trabajo como los códigos necesarios para realizarlas, en $\texttt{include}$ se encuentran las implementaciones de funciones y librerías necesarias para llevar a cabo las simulaciones, teniéndose $\texttt{catch2}$, $\texttt{hoshen\_kopelman.h}$, $\texttt{matrix.h}$, $\texttt{probvalues.h}$ y $\texttt{union\_find.h}$, en $\texttt{profiling}$ se encuentra el flat profile de la simulación del sistema para $L$ = 128 y $p$ = 0.59271 $\texttt{profiling-report.txt}$.
+\\
+
+Por otro lado, en $\texttt{src}$ se encuentran los programas:
+
+\begin{itemize}
+    \item $\texttt{hoshen\_kopelman.cpp}$: Contiene la función $\texttt{hoshen\_kopelman}$ que permitirá identificar los clústeres en una red bidimensional y la función $\texttt{print\_clusters}$ que permitirá obtener como salida la red bidimensional con los clústeres identificados en, por ejemplo, un archivo.txt.
+    \item $\texttt{matrix.cpp }$: Contiene la función $\texttt{generatematrix}$ que generara aleatoriamente mediante la semilla $\texttt{seed}$ una red bidimensional dada la dimensión $L$ y la probabilidad $p$, estos argumentos se pueden recibir por linea de comandos pero en caso de no pasar $\texttt{seed}$, se tomara de forma predeterminada como un número aleatorio mediante $\texttt{std::random\_device}$, tambien contiene a $\texttt{printmatrix}$ que permitirá obtener la salida de la red bidimensional como una matriz. 
+    \item $\texttt{probvalues.cpp}$: Contiene la función $\texttt{generate\_p\_values}$ que permitirá generar $N$ valores para $p$ en el intervalo [0, 1] garantizando la existencia de minimo 10 en el intervalo [0.55, 0.65].
+    \item $\texttt{script.sh}$: Este script en $\texttt{bash}$ llevara a cabo la simulación para obtener los datos necesarios para encontrar $P(p,L)$ y $s(p,L)$.
+    \item $\texttt{printvalues.cpp}$: Permite obtener la salida de $\texttt{generate\_p\_values(N)}$ en, por ejemplo, un archivo .txt.
+    \item $\texttt{report.tex}$: Archivo .tex que contiene el reporte en \LaTeX.
+    \item $\texttt{report.bib}$: Bibliografia para $\text{report.tex}$
+    \item $\texttt{resultados/resumen.csv}$: Archivo .csv con un resumen de los datos obtenidos por medio de $\texttt{script.sh}$.
+    \item $\texttt{test.cpp}$: Función main adaptada para realizar distintos tests con $\texttt{Catch2}$.
+    \item $\texttt{union\_find.cpp}$: Contiene las funciones $\texttt{UnionFind}$, $\texttt{find}$ y $\texttt{unite}$ que se utilizaran en la función $\texttt{hoshen\_kopelman}$.
+    \item $\texttt{main.cpp }$: Función main, recibe como entrada la dimensión de la matriz $L$, la probabilidad $p$ y de forma opcional la semilla $\texttt{seed}$ para el llenado aleatorio por medio de $\texttt{generatematrix}$, realiza la clasificación de los clusters por medio de $\texttt{hoshen\_kopelman}$ e imprime la matriz sin clasificar, la matriz con los clústeres clasificados, si hay percolación y en dado caso el tamaño del clúster percolante.
+    \item $\texttt{time\_main.cpp}$ Función main para calcular los tiempos de Wall y CPU para la función $\texttt{main}$ por medio de la libreria $\texttt{chrono}$ y $\texttt{ctime}$.
+\end{itemize}
+
+Finalmente, mediante el archivo $\texttt{Makefile}$ se automatizan todos los procesos descritos anteriormente.
 
 \subsection{Algoritmo HK}
 El algoritmo de Hoshen-Kopelman (HK), descrito originalmente por Joseph Hoshen y Raoul Kopelman en 1976 , es un método computacionalmente eficiente para identificar y etiquetar clústeres o componentes conectados en una cuadrícula o red. Su diseño está optimizado para minimizar el número de comparaciones necesarias, lo que lo hace particularmente adecuado para el análisis de fenómenos de percolación \cite{OntosightAINd}.
 
 \begin{enumerate}[label=\textbf{\arabic*)}, ref=\arabic*)]
     \item \textbf{Inicialización del proceso}\\
-    La función $hoshen\_kopelman$ recibe como entrada una matriz (matrix) que representa una cuadrícula, donde los valores (usualmente 0s y 1s) indican si un sitio está vacío u ocupado, respectivamente. También recibe el tamaño lateral de la cuadrícula, L. Se crea un vector labels del mismo tamaño que la matriz, inicializado con ceros, para almacenar las etiquetas de los clústeres; un 0 en labels significa que la celda está vacía o aún no ha sido etiquetada. Se inicializa una estructura UnionFind (uf) con un tamaño N+1 (siendo N = L*L), la cual es esencial para manejar la equivalencia entre las etiquetas de los clústeres. Finalmente, next\_label se establece en 1, marcando la primera etiqueta disponible para asignar a un nuevo clúster.
+    La función \texttt{hoshen\_kopelman} recibe como entrada una matriz que representa una cuadrícula, donde los valores, usualmente ceros y unos, indican si un sitio está vacío u ocupado, respectivamente. También recibe el tamaño lateral de la cuadrícula, L. Se crea un vector $\texttt{labels}$ del mismo tamaño que la matriz, inicializado con ceros, para almacenar las etiquetas de los clústeres; un 0 en $\texttt{labels}$ significa que la celda está vacía o aún no ha sido etiquetada. Se inicializa una estructura $\texttt{UnionFind}$ ($\texttt{uf}$) con un tamaño N+1 (siendo N = L*L), la cual es esencial para manejar la equivalencia entre las etiquetas de los clústeres. Finalmente, $\texttt{next\_label}$ se establece en 1, marcando la primera etiqueta disponible para asignar a un nuevo clúster.
     
     \begin{enumerate}[label=\textbf{\roman*)}, ref=\roman*)]
-        \item \textbf{Estructura Union-Find:} La estructura UnionFind es fundamental para la eficiencia del algoritmo, permitiendo la gestión de conjuntos disjuntos. Se compone de un vector parent, donde parent[i] almacena el padre del elemento i; inicialmente, cada elemento es su propio padre. El método find(x) localiza la $''$raíz$''$ del conjunto al que pertenece x, optimizando las búsquedas futuras mediante la compresión de caminos, lo que hace que los nodos apunten directamente a la raíz. El método unite(x,y) fusiona los conjuntos que contienen a x e y. Para ello, encuentra las raíces de x e y, y si estas son diferentes, establece la raíz de uno como padre de la raíz del otro, logrando así la unión de los dos conjuntos.
+        \item \textbf{Estructura $\texttt{UnionFind}$:} La estructura $\texttt{UnionFind}$ es fundamental para la eficiencia del algoritmo, permitiendo la gestión de conjuntos disjuntos. Se compone de un vector $\texttt{parent}$, donde $\texttt{parent[i]}$ almacena el padre del elemento i; inicialmente, cada elemento es su propio padre. El método $\texttt{find(x)}$ localiza la raíz del conjunto al que pertenece x, optimizando las búsquedas futuras mediante la compresión de caminos, lo que hace que los nodos apunten directamente a la raíz. El método $\texttt{unite(x,y)}$ fusiona los conjuntos que contienen a x e y. Para ello, encuentra las raíces de x e y, y si estas son diferentes, establece la raíz de uno como padre de la raíz del otro, logrando así la unión de los dos conjuntos.
     \end{enumerate}
     \item \textbf{Etiquetado preliminar (Primera pasada)}\\
-    El algoritmo recorre cada celda de la matriz. Para cada celda (i, j) que se encuentra $"$ocupada" (es decir, matrix[id] == 1), se examinan sus vecinos adyacentes: "norte" (up) y $"$oeste" (left). Si ambos vecinos están vacíos o no ocupados, se le asigna una nueva etiqueta a la celda actual (labels[id] = next\_label++). Si solo el vecino Norte está ocupado, la celda actual hereda la etiqueta de su vecino Norte (labels[id] = up). De manera similar, si solo el vecino Oeste está ocupado, la celda actual recibe la etiqueta de su vecino Oeste (labels[id] = left). Cuando ambos vecinos (Norte y Oeste) están ocupados, la celda actual se etiqueta con la menor de las dos etiquetas de sus vecinos (labels[id] = std::min(up, left)). Además, se utiliza la estructura UnionFind para unir las dos etiquetas (uf.unite(up, left)), indicando que pertenecen al mismo clúster. Esta unión es crítica porque permite reconocer que dos etiquetas inicialmente distintas forman parte de un mismo clúster.
+    El algoritmo recorre cada celda de la matriz. Para cada celda (i, j) que se encuentra ocupada,es decir, $\texttt{matrix[id] == 1)}$, se examinan sus vecinos adyacentes: "norte" (up) y $"$oeste" (left). Si ambos vecinos están vacíos o no ocupados, se le asigna una nueva etiqueta a la celda actual $\texttt{(labels[id] = next\_label++)}$. Si solo el vecino Norte está ocupado, la celda actual hereda la etiqueta de su vecino Norte $\texttt{(labels[id] = up)}$. De manera similar, si solo el vecino Oeste está ocupado, la celda actual recibe la etiqueta de su vecino Oeste $\texttt{(labels[id] = left)}$. Cuando ambos vecinos (Norte y Oeste) están ocupados, la celda actual se etiqueta con la menor de las dos etiquetas de sus vecinos $\texttt{(labels[id] = std::min(up, left))}$. Además, se utiliza la estructura UnionFind para unir las dos etiquetas $\texttt{(uf.unite(up, left))}$, indicando que pertenecen al mismo clúster. Esta unión es crítica porque permite reconocer que dos etiquetas inicialmente distintas forman parte de un mismo clúster.
     \item \textbf{Compactación de etiquetas (Segunda Pasada)}\\
-    Después de la primera pasada, es posible que algunas celdas tengan etiquetas diferentes pero pertenezcan al mismo clúster debido a las uniones realizadas por UnionFind. Esta etapa se encarga de $"$compactar$"$ esas etiquetas, asegurando que todos los miembros de un mismo clúster compartan una única etiqueta unificada. Para esto, se emplean dos (unordered\_map): root\_to\_compact, que relaciona la $"$raíz" de un clúster (obtenida mediante UnionFind::find()) con una etiqueta compactada y consecutiva, y cluster\_sizes, que almacena el tamaño de cada clúster utilizando estas etiquetas compactadas. El algoritmo itera sobre todas las celdas en labels. Para cada celda que ya ha sido etiquetada (es decir, no es cero), se busca la raíz de su etiqueta utilizando uf.find(labels[i]). Si esta raíz aún no ha sido mapeada a una etiqueta compactada, se le asigna una nueva (compact\_label++). Posteriormente, la etiqueta de la celda actual se actualiza a su etiqueta compactada (labels[i] = label), y el tamaño del clúster correspondiente en cluster\_sizes[label] se incrementa.
+    Después de la primera pasada, es posible que algunas celdas tengan etiquetas diferentes pero pertenezcan al mismo clúster debido a las uniones realizadas por UnionFind. Esta etapa se encarga de $"$compactar$"$ esas etiquetas, asegurando que todos los miembros de un mismo clúster compartan una única etiqueta unificada. Para esto, se emplean dos $\texttt{(unordered\_map): root\_to\_compact}$, que relaciona la $"$raíz" de un clúster obtenida mediante $\texttt{UnionFind::find()}$ con una etiqueta compactada y consecutiva, y $\texttt{cluster\_sizes}$, que almacena el tamaño de cada clúster utilizando estas etiquetas compactadas. El algoritmo itera sobre todas las celdas en labels. Para cada celda que ya ha sido etiquetada, es decir, no es cero, se busca la raíz de su etiqueta utilizando $\texttt{uf.find(labels[i])}$. Si esta raíz aún no ha sido mapeada a una etiqueta compactada, se le asigna una nueva $\texttt{(compact\_label++)}$. Posteriormente, la etiqueta de la celda actual se actualiza a su etiqueta compactada $\texttt{(labels[i] = label)}$, y el tamaño del clúster correspondiente en $\texttt{cluster\_sizes[label]}$ se incrementa.
     \item \textbf{Detección de percolación}\\
-    La percolación es un fenómeno que ocurre cuando un clúster logra conectar lados opuestos de la matriz. Para identificar esto, se crean cuatro conjuntos desordenados (unordered\_set) que almacenan las etiquetas de los clústeres que tocan cada uno de los cuatro bordes de la matriz: top (fila superior), bottom (fila inferior), left (columna izquierda), y right (columna derecha). Se recorren las celdas de estas filas y columnas específicas, insertando las etiquetas de las celdas ocupadas en sus respectivos conjuntos.
+    La percolación es un fenómeno que ocurre cuando un clúster logra conectar lados opuestos de la matriz. Para identificar esto, se crean cuatro conjuntos desordenados $\texttt{(unordered\_set)}$ que almacenan las etiquetas de los clústeres que tocan cada uno de los cuatro bordes de la matriz: top (fila superior), bottom (fila inferior), left (columna izquierda), y right (columna derecha). Se recorren las celdas de estas filas y columnas específicas, insertando las etiquetas de las celdas ocupadas en sus respectivos conjuntos.
 \\
 
-Para la percolación vertical, se verifica si alguna etiqueta está presente tanto en el conjunto top como en el conjunto bottom. Si se encuentra una etiqueta común, indica la existencia de un clúster que conecta la parte superior e inferior de la matriz. De manera similar, para la percolación horizontal, se comprueba si alguna etiqueta existe tanto en el conjunto left como en el conjunto right. Si es así, significa que un clúster conecta el lado izquierdo con el derecho de la matriz. Un conjunto percolating\_labels almacena las etiquetas de los clústeres que percolan (ya sea vertical u horizontalmente). La variable booleana percolates indica si se ha detectado al menos un clúster percolante. Finalmente, se calcula max\_cluster\_size entre todos los clústeres que percolan.
+Para la percolación vertical, se verifica si alguna etiqueta está presente tanto en el conjunto top como en el conjunto bottom. Si se encuentra una etiqueta común, indica la existencia de un clúster que conecta la parte superior e inferior de la matriz. De manera similar, para la percolación horizontal, se comprueba si alguna etiqueta existe tanto en el conjunto left como en el conjunto right. Si es así, significa que un clúster conecta el lado izquierdo con el derecho de la matriz. Un conjunto $\texttt{percolating\_labels}$ almacena las etiquetas de los clústeres que percolan, ya sea vertical u horizontalmente. La variable booleana $\texttt{percolates}$ indica si se ha detectado al menos un clúster percolante. Finalmente, se calcula $\texttt{max\_cluster\_size}$ entre todos los clústeres que percolan.
+
     \item \textbf{Conclusión del algoritmo}\\
-    La función concluye devolviendo una estructura ClusterInfo. Esta estructura encapsula los resultados clave del análisis, que incluyen: cluster\_sizes (un mapa que asocia las etiquetas compactadas con sus respectivos tamaños de clúster), percolates (un valor booleano que indica si se produjo percolación), max\_cluster\_size (el tamaño del clúster percolante más grande), y labels (el vector final de etiquetas compactadas asignadas a cada celda de la matriz).
+    La función concluye devolviendo una estructura $\texttt{ClusterInfo}$. Esta estructura encapsula los resultados clave del análisis, que incluyen $\texttt{cluster\_sizes}$, un mapa que asocia las etiquetas compactadas con sus respectivos tamaños de clúster, $\texttt{percolates}$, un valor booleano que indica si se produjo percolación, $\texttt{max\_cluster\_size}$ el tamaño del clúster percolante más grande, y $\texttt{labels}$ el vector final de etiquetas compactadas asignadas a cada celda de la matriz.
 \end{enumerate}
 
+\subsection{Wall time y CPU time}
+\label{WtCPUt}
+Con el fin de obtener los Wall time y CPU time para el tiempo de computo de nuestra función $\texttt{main.cpp}$ se utilizo la función $\texttt{time\_main.cpp}$ esta realiza el mismo procedimiento que $\texttt{main.cpp}$, sin embargo, no imprime la salida de la matriz después del llenado y después de la identificación de los clústeres, tal que su unica salida es de la forma $L$, Wall time y CPU time y mediante el comando de $\texttt{GNU Parallel}$
+
+\begin{center}
+\verb|parallel './time_mainO{1}.x {3} {2} >> time-{1}-{3}.txt'|\\
+\verb|::: 1 3 ::: $(cat probabilidades10.txt) ::: {100..2000..100}'|
+\end{center}
+
+se obtienen distintos archivos .txt de la forma $\texttt{time-opt-$L$.txt}$ que permitirán graficar los tiempos de computo para los niveles de optimización $\texttt{-O1}$ y $\texttt{-O3}$. Notese que no hay valor de entrada por la linea de comandos para $\texttt{seed}$, por ende, la salida es aleatoria.
+
+
+\subsection{Script en bash $\texttt{script.sh}$}
+
+El script en bash automatiza la ejecución de simulaciones de percolación para distintos tamaños de red y probabilidades, utilizando un programa ejecutable llamado $\texttt{main.x}$. Al iniciar, elimina cualquier carpeta de resultados previa y crea una nueva estructura de directorios para almacenar datos crudos, archivos auxiliares y gráficos. Luego, define una lista de tamaños de red $L$ que serán evaluados y genera todas las combinaciones posibles con los valores de probabilidad listados en el archivo $\texttt{probabilidades50.txt}$, es decir, mediante 50 probabilidades distintas obtenidas mediante $\texttt{probvalues.cpp}$. Estas combinaciones se almacenan en un archivo temporal para su procesamiento posterior.\\
+ 
+El núcleo del script es una función llamada $\texttt{simulate}$, que toma como entrada un valor de $L$ y una probabilidad $p$. Para cada combinación, ejecuta 10 bloques de 10 repeticiones del programa principal, recolectando el tamaño del mayor clúster percolante y si ocurrió o no percolación en cada ejecución. Con esta información, calcula el valor medio de la probabilidad de percolación $P(p,L)$ y el tamaño promedio del clúster percolante $s(p,L)$ normalizado respecto al área de la red, junto con sus respectivas desviaciones estándar. Los resultados se guardan en archivos individuales para cada combinación y también se imprimen en formato $\texttt{.csv}$ como una línea resumen disponible para el usuario en caso de desear ver la salida de datos especifica. Cabe mencionar que, como se pudo inferir, la entrada de la semilla $\texttt{seed}$ por la linea de comandos es nula, se considera que dado que se realizan por cada valor de probabilidad $p$ 100 iteraciones y se itera 50 veces por tamaño, la magnitud del tamaño de los datos utilizados es lo suficientemente grande como para permitir un muestreo estadístico solido y confiable sin importar la generación de estos, es decir, los resultados son absolutamente reproducibles a pesar de la aleatoriedad de la semilla.\\
+
+Finalmente, el script utiliza $\texttt{GNU parallel}$ para ejecutar múltiples simulaciones de forma concurrente, acelerando considerablemente el proceso. Una vez completadas todas las combinaciones, se genera un archivo $\texttt{resumen.csv}$ que contiene los resultados ordenados por tamaño de red y probabilidad. Finalmente, se limpian los archivos temporales utilizados durante la ejecución y se ordenan los archivos de resultados finales para facilitar su análisis posterior
+
 \subsection{Código para gráficar}
-
-
-\subsection{Script de bash}
-
-El script de Bash automatiza la ejecución de simulaciones de percolación para distintos tamaños de red y probabilidades, utilizando un programa ejecutable llamado main.x. Al iniciar, elimina cualquier carpeta de resultados previa y crea una nueva estructura de directorios para almacenar datos crudos, archivos auxiliares y gráficos. Luego, define una lista de tamaños de red L que serán evaluados y genera todas las combinaciones posibles con los valores de probabilidad listados en el archivo probabilidades50.txt. Estas combinaciones se almacenan en un archivo temporal para su procesamiento posterior.\\
- \\
-El núcleo del script es una función llamada simulate, que toma como entrada un valor de L y una probabilidad p. Para cada combinación, ejecuta 10 bloques de 10 repeticiones del programa principal, recolectando el tamaño del mayor clúster percolante y si ocurrió o no percolación en cada ejecución. Con esta información, calcula el valor medio de la probabilidad de percolación P y el tamaño promedio del clúster percolante (normalizado respecto al área de la red), junto con sus respectivas desviaciones estándar. Los resultados se guardan en archivos individuales para cada combinación y también se imprimen en formato csv como una línea resumen.\\
+Para gráficar las matrices llenadas como las matrices con los clústeres identificados se utilizaron los codigos $\texttt{visualization.cpp}$ y $\texttt{clustervisualization.cpp}$ que permiten la salida en archivos.txt de las matrices obtenidas y controlar la dimensión $L$, la probabilidad $p$ y la semilla $\texttt{seed}$ con el fin de obtener gráficas reproducibles. De esta manera, mediante los scripts de $\texttt{python}$ $\texttt{visualize.py}$ y $\texttt{clustervisualize.py}$ reciben las matrices, por ejemplo, de la forma: 
 \\
-El script utiliza GNU parallel para ejecutar múltiples simulaciones de forma concurrente, acelerando considerablemente el proceso. Una vez completadas todas las combinaciones, se genera un archivo resumen.csv que contiene los resultados ordenados por tamaño de red y probabilidad. Finalmente, se limpian los archivos temporales utilizados durante la ejecución y se ordenan los archivos de resultados finales para facilitar su análisis posterior
+
+\begin{lstlisting}[style=bash-style]
+./figures/visualization.x 10 0.5 0.6 > figures/data1.txt
+./figures/visualization.x 10 0.58 15 > figures/data2.txt
+python3 ./figures/visualize.py
+./figures/clustervisualization.x 10 0.5 0.6 > figures/data_clusters1.txt
+./figures/clustervisualization.x 10 0.58 15 > figures/data_clusters2.txt 
+./figures/clustervisualization.x 500 0.55 0.6 > figures/data_clusters3.txt
+./figures/clustervisualization.x 500 0.595 0.6 > figures/data_clusters4.txt
+python3 ./figures/clustervisualize.py
+\end{lstlisting}
+
+De esta manera, en el ejemplo presentado, la salida para $\texttt{data1.txt}$ y $\texttt{data\_clusters1.txt}$ junto con la salida para $\texttt{data2.txt}$ y $\texttt{data\_clusters2.txt}$ permiten obtener las figuras \ref{fig:1} y \ref{fig:2}. Por otro lado, la salida de $\texttt{data\_clusters3.txt}$ y $\texttt{data\_clusters4.txt}$ nos permiten obtener las figuras \ref{fig:3a} y \ref{fig:3b}.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[h]{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{../figures/clusterpercolation3.png}
+        \caption{$p$ = 0.5.}
+        \label{fig:3a}
+    \end{subfigure}
+    \hspace{0.02 cm}
+    \begin{subfigure}[h]{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{../figures/clusterpercolation4.png}
+        \caption{$p$ = 0.595.}
+        \label{fig:3b}
+    \end{subfigure}
+    \caption{Proceso de percolación para una red cuadrada de dimensiones $L$ = 500.}
+    \label{fig:3}
+\end{figure}
+
+
+Por otro lado, el script $\texttt{figures.py}$ permite obtener las gráficas para $P(p,L)$ y $s(p,L)$ gracias a la salida obtenida mediante el script en $\texttt{bash}$ y el script $\texttt{time\_figure.py}$ permite obtener la gráfica para el tiempo de computo en función del tamaño del sistema para dos niveles distintos de optimización mediante los datos obtenidos por los archivos $\texttt{time-opt-$L$.txt}$
+
 \subsection{Automatización por medio de Makefile}
+Para automatizar los procesos descritos anteriormente se crearon distintos targets para el archivo $\texttt{Makefile}$ destinados a varias tareas especificas. Los mas relevantes para el programa y que no son subdependencias de otro target son:
+
+\begin{itemize}
+
+\item \texttt{make simul}: Compila y ejecuta una simulación rápida con parámetros predeterminados ($L$=4, $p$=0.6, $\texttt{seed}$=10). Útil para verificar que el código funciona correctamente.
+
+\item \texttt{make test}: Ejecuta pruebas unitarias utilizando la librería \texttt{Catch2}. Puede filtrar pruebas específicas usando \texttt{FILTER=...}.
+
+\item \texttt{make report}: Compila el documento LaTeX del reporte, procesa la bibliografía si existe, y genera un PDF final. Verifica que todas las figuras necesarias estén presentes antes de compilar.
+
+\item \texttt{make profile}: Realiza un análisis de rendimiento completo, incluyendo:
+\begin{itemize}
+    \item Flat profile con \texttt{gprof} (guardado en \texttt{profiling/analysis.txt})
+    \item Flame graph con \texttt{perf} (guardado como \texttt{profiling/flamegraph.svg})
+\end{itemize}
+Usa parámetros de prueba ($L$=8, $p$=0.5, $\texttt{seed}$=10).
+
+\item \texttt{make debug}: Compila el programa con flags de depuración y lo ejecuta bajo GDB para facilitar la identificación de errores.
+
+\item \texttt{make valgrind}: Realiza un análisis de memoria con Valgrind para detectar leaks y accesos inválidos, usando parámetros de prueba ($L$=6, $p$=0.6, $\texttt{seed}$=10).
+
+\item \texttt{make clean}: Elimina todos los archivos temporales, ejecutables, datos de cobertura y resultados de profiling. No afecta las figuras ni el reporte final.
+
+\item \texttt{make profiling-report.txt}: Genera un flat profile detallado usando \texttt{perf} para el caso crítico ($L$=128, $p$=0.59271, $\texttt{seed}$=10).
+
+\item \texttt{make run-simulation}: Ejecuta la simulación completa generando todos los archivos de datos necesarios para las gráficas, pero sin generar las figuras.
+
+\item \texttt{make figures}: Genera todas las figuras del análisis, incluyendo:
+\begin{itemize}
+    \item Gráficas de probabilidad de percolación y tamaño de clústers
+    \item Visualizaciones de mallas de ejemplo
+    \item Análisis de tiempos de ejecución
+\end{itemize}
+Requiere que los datos de simulación ya estén generados.
+
+\item \texttt{make clean-figures}: Elimina todas las figuras generadas, permitiendo forzar su regeneración.
+
+\item \texttt{make check-figures}: Verifica si todas las figuras necesarias existen, y si no, las genera automáticamente.
+
+\item \texttt{make help}: Muestra los distintos targets y su uso.
+
+\end{itemize}
 
 \section{Resultados}
 
-Mediante el código descrito anteriormente, se exploró el comportamiento de la percolación en una matriz bidimensional.
+\subsection{Figura para el tiempo de computo en función del tamaño del sistema}
+Después de realizar el proceso descrito en la sección \ref{WtCPUt} y ejecutar el script $\texttt{time\_figure.py}$ se obtuvo la gráfica presentada en la figura \ref{fig:4}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\linewidth]{../figures/time_analysis.png}
+    \caption{Tiempos de computo, Wall time y CPU time en función de la dimensión $L$ de la red bidimensional para los niveles de optimización $\texttt{-O1}$ y  $\texttt{-O3}$.}
+    \label{fig:4}
+\end{figure}
+
+Como se observa, el tiempo de CPU es relativamente mayor al tiempo de Wall debido al uso de $\texttt{GNU Parallel}$, ademas, también se encuentra una mínima diferencia para ambos niveles de optimización, siendo $\texttt{-O3}$ mas rápido. Por estos motivos, para el ejecutable de la función $\texttt{main.cpp}$ se decidió utilizar la bandera de optimización $\texttt{-O3}$ para su compilación y su futura ejecución en las distintas tareas del programa, como, por ejemplo, su aplicación en el script en bash.
+
+
+\subsection{Optimización por medio del flat profile}
+
+Después de obtener el flat profile mediante $\texttt{perf}$ con el target $\texttt{make profiling-report.txt}$ para el caso crítico, se obtuvo el reporte $\texttt{profiling-report.txt}$.
+\\
+
+En este, se realizaron 76 muestras del evento $\texttt{cycles:Pu}$ que corresponde a ciclos de CPU, 64927805 ciclos totales sin tener muestras perdidas obteniendose datos completos. Así, para una sola simulación el tiempo de programa fue del 82.36\% para la función $\texttt{main}$ repartiendose de la forma
+
+\begin{itemize}
+    \item 54.77\% para la función $\texttt{hoshen\_kopelman}$, donde las funciones mas costosas son $\texttt{std::unordered\_map::operator[]}$ con un 27.69\% debido al acceso e inserción en $\texttt{hash map}$ y $\texttt{std::unordered\_map::find}$ con un 13.16\% debido a la búsqueda en $\texttt{hash map}$.
+    \item 22.86\% para la función $\texttt{generatematrix}$ donde 21.36\% se destino a\\ $\texttt{std::uniform\_real\_distribution::operator()}$.
+    \item 3.06\% y 1.66\% para las funciones $\texttt{printmatrix}$ y $\texttt{print\_clusters}$ respectivamente.
+\end{itemize}
+
+En consecuencia, se observa que los principales cuellos de botella se encuentran en las operaciones de $\texttt{unordered\_map}$, relacionados con el algoritmo HK y en la generación de números aleatorios para el llenado de las matrices. De esta manera, se propuso optimizar el las funciones $\texttt{hoshen\_kopelman}$ y $\texttt{generatematrix}$ para obtener una simulación mas eficiente. Los cambios implementados se encuentran en la rama $\texttt{optimized\_main}$.
+\\
+
+Primero, se implemento para $\texttt{generatematrix}$ la función 
+\\
+
+\begin{lstlisting}[style=cpp-style]
+FastRandom::FastRandom(int seed) : dis(0.0, 1.0) {
+    if (seed == -1) {
+        std::random_device rd;
+        gen.seed(rd());
+    } else {
+        gen.seed(seed);
+    }
+}
+
+// Implementacion de fill_vector
+void FastRandom::fill_vector(std::vector<double>& vec) {
+    for (auto& val : vec) {
+        val = dis(gen);
+    }
+}
+
+// Implementacion de next()
+inline double FastRandom::next() {
+    return dis(gen);
+}
+\end{lstlisting}
+
+
+tal que la función $\texttt{FastRandom}$ esta incluida en 
+$\texttt{matrix.h}$,
+\\
+
+\begin{lstlisting}[style=cpp-style]
+#ifndef MATRIX_H
+#define MATRIX_H
+
+#include <vector>
+#include <random>
+#include <iostream>
+
+class FastRandom {
+private:
+    std::mt19937 gen;
+    std::uniform_real_distribution<double> dis;
+    
+public:
+    FastRandom(int seed = -1);
+    void fill_vector(std::vector<double>& vec);
+    inline double next();
+};
+
+std::vector<int> generatematrix(int L, double p, int seed = -1);
+void printmatrix(const std::vector<int>& matrix, int L);
+
+#endif 
+\end{lstlisting}
+
+y permitía acelerar la generación aleatoria de las matrices. De la misma manera, para $\texttt{hoshen\_kopelman}$ se realizo la optimización
+\\
+
+\begin{lstlisting}[style=cpp-style]
+ClusterInfo hoshen_kopelman(const std::vector<int>& matrix, int L) {
+    int N = L * L;
+    std::vector<int> labels(N, 0);  // 0: vacio
+    UnionFind uf(N+1);
+    int next_label = 1;
+
+    // Paso 1: etiquetado preliminar con vecinos N y O
+    for (int i = 0; i < L; ++i) {
+        for (int j = 0; j < L; ++j) {
+            int id = i * L + j;
+            if (matrix[id] == 0) continue;
+
+            int up = (i > 0 && matrix[(i - 1) * L + j] == 1) ? labels[(i - 1) * L + j] : 0;
+            int left = (j > 0 && matrix[i * L + (j - 1)] == 1) ? labels[i * L + (j - 1)] : 0;
+
+            if (up == 0 && left == 0) {
+                labels[id] = next_label++;
+            } else if (up != 0 && left == 0) {
+                labels[id] = up;
+            } else if (up == 0 && left != 0) {
+                labels[id] = left;
+            } else {
+                labels[id] = std::min(up, left);
+                uf.unite(up, left);
+            }
+        }
+    }
+
+    // OPTIMIZACION 1: Reservar capacidad para hash maps
+    std::unordered_map<int, int> root_to_compact;
+    std::unordered_map<int, int> cluster_sizes;
+    
+    // Estimar numero de clusters (tIpicamente mucho menor que N)
+    int estimated_clusters = std::min(next_label, N/4);
+    root_to_compact.reserve(estimated_clusters);
+    cluster_sizes.reserve(estimated_clusters);
+    
+    int compact_label = 1;
+
+    // OPTIMIZACION 2: Usar emplace en lugar de operator[] y find
+    for (int i = 0; i < N; ++i) {
+        if (labels[i] == 0) continue;
+        int root = uf.find(labels[i]);
+
+        // Usar emplace para evitar doble lookup
+        auto [it, inserted] = root_to_compact.emplace(root, compact_label);
+        if (inserted) {
+            compact_label++;
+        }
+
+        int label = it->second;
+        labels[i] = label;
+        
+        // Incrementar cluster size directamente
+        cluster_sizes[label]++;
+    }
+
+    // OPTIMIZACION 3: Reservar capacidad para sets y usar vectores para bordes
+    std::vector<int> top_labels, bottom_labels, left_labels, right_labels;
+    top_labels.reserve(L);
+    bottom_labels.reserve(L);
+    left_labels.reserve(L);
+    right_labels.reserve(L);
+
+    // Recopilar labels de bordes
+    for (int i = 0; i < L; ++i) {
+        if (labels[i] > 0) top_labels.push_back(labels[i]);
+        if (labels[(L - 1) * L + i] > 0) bottom_labels.push_back(labels[(L - 1) * L + i]);
+        if (labels[i * L] > 0) left_labels.push_back(labels[i * L]);
+        if (labels[i * L + (L - 1)] > 0) right_labels.push_back(labels[i * L + (L - 1)]);
+    }
+
+    // OPTIMIZACION 4: Usar sets solo cuando sea necesario
+    std::unordered_set<int> percolating_labels;
+    
+    // Ordenar para hacer interseccion mas eficiente
+    std::sort(top_labels.begin(), top_labels.end());
+    std::sort(bottom_labels.begin(), bottom_labels.end());
+    std::sort(left_labels.begin(), left_labels.end());
+    std::sort(right_labels.begin(), right_labels.end());
+
+    .
+    .
+    .
+
+    return {
+        cluster_sizes,
+        percolates,
+        max_cluster_size,
+        labels
+    };
+    
+}
+\end{lstlisting}
+
+de la que se esperaba que el manejo de memoria por medio de $\texttt{reserve}$ y $\texttt{emplace}$ mejorara la eficiencia del algoritmo HK y redujera los tiempos de ejecución de nuestro programa.
+\\
+
+Sin embargo, a pesar de las optimizaciones realizadas los valores reportados en el flat profile con $\texttt{perf}$ y obtenido para estas funciones, al momento de revisar el reporte se encontro que los porcentajes obtenidos no solo se daban en las mismas funciones que se encontraron en el código no optimizado sino que ademas, los porcentajes eran de la misma magnitud teniendo en cuenta las fluctuaciones propias debido a la naturaleza del procesador donde se llevaron a cabo las simulaciones. Este reporte se puede revisar en el repositorio para la rama $\texttt{optimized\_main}$ y se puede obtener de la misma forma que en la rama $\texttt{master}$ para el target $\texttt{$\texttt{make profiling-report.txt}$}$.
+
+\subsection{Probabilidad de percolación $P(p,L)$}
+
+\subsection{Tamaño promedio del clúster percolante mas grande $s(p,L)$}
 
 \section{Conclusiones}
 
 \clearpage
 
 \bibliographystyle{plain}
-\bibliography{report1}
+\bibliography{report}
 
 \end{document}

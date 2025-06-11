@@ -80,6 +80,17 @@
         "xutility": "cpp",
         "unordered_set": "cpp",
         "xhash": "cpp",
-        "forward_list": "cpp"
+        "forward_list": "cpp",
+        "deque": "cpp",
+        "coroutine": "cpp",
+        "resumable": "cpp",
+        "fstream": "cpp",
+        "future": "cpp",
+        "map": "cpp",
+        "regex": "cpp",
+        "set": "cpp",
+        "stack": "cpp",
+        "stop_token": "cpp",
+        "xtree": "cpp"
     }
 }
