@@ -29,7 +29,7 @@ def read_matrix(file):
     
     return np.array(matrix)
 
-def visualize_matriz(matrix):
+def visualize_matriz(matrix, save_path="percolation.png"):
     if matrix.size == 0:
         print("La matriz está vacía. Verifica el archivo de entrada.")
         return
@@ -63,23 +63,24 @@ def visualize_matriz(matrix):
     
     # Título y guardado
     plt.title("Percolation Process")
-    plt.savefig("figures/percolation.png", dpi=300, bbox_inches='tight')
+    # Save the figure
+    plt.savefig(save_path, dpi=300, bbox_inches='tight')
     plt.close()
 
 if __name__ == "__main__":
+    data_files = [
+        ("figures/data1.txt", "figures/percolation1.png"),
+        ("figures/data2.txt", "figures/percolation2.png")
+    ]
 
-    data = "figures/data.txt"
-
-    try:
-        matrix = read_matrix(data)
-
-        if matrix.size > 0:
-            visualize_matriz(matrix)
-        else:
-            print("The file does not contain a valid matrix.")
-
-    except FileNotFoundError:
-        print(f"Error: File not found: '{data}'")
-
-    except Exception as e:
-        print(f"Error: {str(e)}")
+    for data_file, output_file in data_files:
+        try:
+            print(f"Processing file: {data_file}")
+            matrix = read_matrix(data_file)
+            print(f"Matrix loaded successfully. Dimensions: {matrix.shape}")
+            visualize_matriz(matrix, save_path=output_file)
+            print(f"Graph saved to: {output_file}\n")
+        except FileNotFoundError:
+            print(f"Error: File not found: '{data_file}'")
+        except Exception as e:
+            print(f"Error processing file {data_file}: {str(e)}")

@@ -132,18 +132,29 @@ def visualize_matrix(matrix, cluster_size=None, save_path="percolation.png"):
 
     # Adjust layout with constrained_layout instead of tight_layout
     fig.set_constrained_layout(True)
-    plt.savefig("figures/clusterpercolation.png", dpi=300, bbox_inches='tight')
+    
+    # Save the figure
+    plt.savefig(save_path, dpi=300, bbox_inches='tight')
     plt.close()
 
 if __name__ == "__main__":
-    data = "figures/data_clusters.txt"
-    try:
-        matrix, cluster_size = read_matrix_and_metadata(data)
-        print(f"Matrix loaded successfully. Dimensions: {matrix.shape}")
-        if cluster_size is not None:
-            print(f"Percolating cluster size: {cluster_size}")
-        visualize_matrix(matrix, cluster_size)
-    except FileNotFoundError:
-        print(f"Error: File not found: '{data}'")
-    except Exception as e:
-        print(f"Error: {str(e)}")
+    data_files = [
+        ("figures/data_clusters1.txt", "figures/clusterpercolation1.png"),
+        ("figures/data_clusters2.txt", "figures/clusterpercolation2.png"),
+        ("figures/data_clusters3.txt", "figures/clusterpercolation3.png"),
+        ("figures/data_clusters4.txt", "figures/clusterpercolation4.png")
+    ]
+
+    for data_file, output_file in data_files:
+        try:
+            print(f"Processing file: {data_file}")
+            matrix, cluster_size = read_matrix_and_metadata(data_file)
+            print(f"Matrix loaded successfully. Dimensions: {matrix.shape}")
+            if cluster_size is not None:
+                print(f"Percolating cluster size: {cluster_size}")
+            visualize_matrix(matrix, cluster_size, save_path=output_file)
+            print(f"Graph saved to: {output_file}\n")
+        except FileNotFoundError:
+            print(f"Error: File not found: '{data_file}'")
+        except Exception as e:
+            print(f"Error processing file {data_file}: {str(e)}")

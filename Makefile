@@ -181,9 +181,13 @@ figures/clustervisualization.x: $(CLUSTERVIS_SOURCES) $(HEADERS)
 # Generar figuras (depende de datos y programas de visualización)
 $(FIGURE_FILES): figures/visualization.x figures/clustervisualization.x $(DATA_FILES) $(TIME_FILES)
 	@echo "Generando figuras..."
-	./figures/visualization.x 10 0.5 0.6 > figures/data.txt
+	./figures/visualization.x 10 0.5 0.6 > figures/data1.txt
+	./figures/visualization.x 10 0.7 0.6 > figures/data2.txt
 	python3 ./figures/visualize.py
-	./figures/clustervisualization.x 10 0.5 0.6 > figures/data_clusters.txt
+	./figures/clustervisualization.x 10 0.5 0.6 > figures/data_clusters1.txt
+	./figures/clustervisualization.x 10 0.7 0.6 > figures/data_clusters2.txt
+	./figures/clustervisualization.x 1000 0.5 0.6 > figures/data_clusters3.
+	./figures/clustervisualization.x 1000 0.7 0.6 > figures/data_clusters4.txt
 	python3 ./figures/clustervisualize.py
 	python3 ./figures/figures.py
 	python3 ./figures/time_figure.py
