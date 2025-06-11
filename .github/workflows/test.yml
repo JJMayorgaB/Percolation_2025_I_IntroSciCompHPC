@@ -6,13 +6,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: Percolation_2025_I_IntroSciCompHPC
-
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install dependencies
         run: |
@@ -24,7 +20,7 @@ jobs:
           mkdir -p $HOME/bin
           cat > $HOME/bin/spack << 'EOF'
           #!/usr/bin/env bash
-          # no-op stub so “spack load” always succeeds
+          # no-op stub so "spack load" always succeeds
           exit 0
           EOF
           chmod +x $HOME/bin/spack
