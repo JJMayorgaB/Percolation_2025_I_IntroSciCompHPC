@@ -1,4 +1,5 @@
 L,p,promedio_cluster_percolante,desviacion_cluster_percolante,media_P,desviacion_P
+<<<<<<< Updated upstream
 32,0.0000,0.00000,0.00000,0.00000,0.00000
 32,0.0523,0.00000,0.00000,0.00000,0.00000
 32,0.1000,0.00000,0.00000,0.00000,0.00000
@@ -274,3 +275,5 @@ L,p,promedio_cluster_percolante,desviacion_cluster_percolante,media_P,desviacion
 512,0.9746,0.97466,0.00030,1.00000,0.00000
 512,0.9761,0.97607,0.00033,1.00000,0.00000
 512,1.0000,1.00000,0.00000,1.00000,0.00000
+=======
+>>>>>>> Stashed changes
