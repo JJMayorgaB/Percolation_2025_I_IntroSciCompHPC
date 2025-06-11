@@ -137,7 +137,7 @@ test.x: $(TEST_OBJECTS)
 
 # Regla genérica para compilar cualquier .cpp → .o
 %.o: %.cpp $(HEADERS)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(COVERAGE) -c $< -o $@
 
 # Niveles de optimización para time_main
 OPTIMIZATION_LEVELS = 1 3
