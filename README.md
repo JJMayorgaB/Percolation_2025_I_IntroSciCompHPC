@@ -1,7 +1,5 @@
 # Percolation 2025 - Introduction to Scientific Computing and HPC
 
-[![Test Status](https://github.com/tu-usuario/Percolation_2025_I_IntroSciCompHPC/workflows/test/badge.svg)](https://github.com/tu-usuario/Percolation_2025_I_IntroSciCompHPC/actions)
-
 Este proyecto implementa simulaciones de percolación utilizando el algoritmo Hoshen-Kopelman con estructura de datos Union-Find para el análisis eficiente de clusters en redes bidimensionales.
 
 ## 📋 Descripción
