@@ -43,7 +43,7 @@ VISUALIZATION_SOURCES = figures/visualization.cpp $(SRC_DIR)/matrix.cpp $(SRC_DI
 CLUSTERVIS_SOURCES = figures/clustervisualization.cpp $(SRC_DIR)/matrix.cpp $(SRC_DIR)/hoshen_kopelman.cpp $(SRC_DIR)/union_find.cpp
 
 # Targets por defecto
-.PHONY: clean debug valgrind profile run-simulation figures report help clean-figures time-executables check-figures
+.PHONY: simul test report profile debug valgrind clean profiling-report.txt run-simulation figures clean-figures check-figures help
 .DEFAULT_GOAL := all
 
 # Simulación rápida
