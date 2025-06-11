@@ -108,6 +108,7 @@ clean:
 	rm -rf build 
 	rm -f profiling/out.folded profiling/perf.data
 	rm -f src/*.x
+	rm -f $(TEST_OBJECTS)
 
 # Compilar main.x con sanitizers y coverage
 main.x: $(MAIN_SOURCES) $(HEADERS)
