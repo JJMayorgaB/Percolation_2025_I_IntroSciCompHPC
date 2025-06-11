@@ -1,0 +1,1390 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 80  of event 'cycles:Pu'
+# Event count (approx.): 66436681
+#
+# Children      Self  Command    Shared Object        Symbol                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+# ........  ........  .........  ...................  ......................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+#
+    80.47%     0.00%  main_pg.x  libc-2.40.so         [.] __libc_start_call_main
+            |
+            ---__libc_start_call_main
+               main
+               |          
+               |--55.59%--hoshen_kopelman(std::vector<int, std::allocator<int> > const&, int)
+               |          |          
+               |          |--29.22%--std::unordered_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<std::pair<int const, int> > >::operator[](int const&)
+               |          |          std::__detail::_Map_base<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true>, true>::operator[](int const&)
+               |          |          |          
+               |          |          |--9.49%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_node(unsigned long, int const&, unsigned long) const
+               |          |          |          std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_before_node(unsigned long, int const&, unsigned long) const
+               |          |          |          |          
+               |          |          |          |--7.91%--std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_equals(int const&, unsigned long, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          |          |          |          std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_key_equals(int const&, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          |          |          |          |          
+               |          |          |          |          |--4.80%--__mcount_internal
+               |          |          |          |          |          
+               |          |          |          |           --3.11%--std::__detail::_Select1st::__1st_type<std::pair<int const, int> const&>::type&& std::__detail::_Select1st::operator()<std::pair<int const, int> const&>(std::pair<int const, int> const&) const
+               |          |          |          |                     __mcount_internal
+               |          |          |          |          
+               |          |          |           --1.58%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_bucket_index(std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          |          |                     std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_bucket_index(std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&, unsigned long) const
+               |          |          |                     _mcount
+               |          |          |          
+               |          |          |--7.41%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_bucket_index(unsigned long) const
+               |          |          |          |          
+               |          |          |          |--6.00%--std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_bucket_index(unsigned long, unsigned long) const
+               |          |          |          |          __mcount_internal
+               |          |          |          |          
+               |          |          |           --1.41%--__mcount_internal
+               |          |          |          
+               |          |          |--4.75%--__mcount_internal
+               |          |          |          
+               |          |          |--2.84%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_insert_unique_node(unsigned long, unsigned long, std::__detail::_Hash_node<std::pair<int const, int>, false>*, unsigned long)
+               |          |          |          |          
+               |          |          |          |--1.58%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_rehash(unsigned long, std::integral_constant<bool, true>)
+               |          |          |          |          std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_bucket_index(std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&, unsigned long) const
+               |          |          |          |          __mcount_internal
+               |          |          |          |          
+               |          |          |           --1.26%--_mcount
+               |          |          |          
+               |          |          |--1.61%--std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_hash_code(int const&) const
+               |          |          |          std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_hash() const
+               |          |          |          __mcount_internal
+               |          |          |          
+               |          |          |--1.58%--std::tuple<int const&>::tuple<true, true>(int const&)
+               |          |          |          __mcount_internal
+               |          |          |          
+               |          |           --1.53%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_Scoped_node::_Scoped_node<std::piecewise_construct_t const&, std::tuple<int const&>, std::tuple<> >(std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >*, std::piecewise_construct_t const&, std::tuple<int const&>&&, std::tuple<>&&)
+               |          |                     _mcount
+               |          |          
+               |          |--10.16%--std::unordered_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<std::pair<int const, int> > >::find(int const&)
+               |          |          std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::find(int const&)
+               |          |          |          
+               |          |          |--5.62%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_node(unsigned long, int const&, unsigned long) const
+               |          |          |          |          
+               |          |          |          |--4.25%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_before_node(unsigned long, int const&, unsigned long) const
+               |          |          |          |          |          
+               |          |          |          |          |--2.96%--std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_equals(int const&, unsigned long, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          |          |          |          |          std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_key_equals(int const&, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          |          |          |          |          __mcount_internal
+               |          |          |          |          |          
+               |          |          |          |           --1.29%--__mcount_internal
+               |          |          |          |          
+               |          |          |           --1.38%--_mcount
+               |          |          |          
+               |          |          |--1.61%--_mcount
+               |          |          |          
+               |          |          |--1.59%--std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_hash_code(int const&) const
+               |          |          |          __mcount_internal
+               |          |          |          
+               |          |           --1.34%--std::__detail::_Node_iterator<std::pair<int const, int>, false, false>::_Node_iterator(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+               |          |                     __mcount_internal
+               |          |          
+               |          |--4.38%--__mcount_internal
+               |          |          
+               |          |--2.58%--_mcount
+               |          |          
+               |          |--1.61%--std::unordered_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<std::pair<int const, int> > >::~unordered_map()
+               |          |          std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::~_Hashtable()
+               |          |          std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::clear()
+               |          |          std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_nodes(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+               |          |          std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_node(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+               |          |          std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_node_ptr(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+               |          |          _mcount
+               |          |          
+               |          |--1.61%--std::unordered_set<int, std::hash<int>, std::equal_to<int>, std::allocator<int> >::insert(int const&)
+               |          |          std::__detail::_Insert_base<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::insert(int const&)
+               |          |          std::pair<std::__detail::_Node_iterator<int, true, false>, bool> std::_Hashtable<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert<int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&, std::integral_constant<bool, true>)
+               |          |          std::pair<std::__detail::_Node_iterator<int, true, false>, bool> std::_Hashtable<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert_unique_aux<int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+               |          |          std::pair<std::__detail::_Node_iterator<int, true, false>, bool> std::_Hashtable<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert_unique<int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+               |          |          std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > >::__node_ptr std::__detail::_NodeBuilder<std::__detail::_Identity>::_S_build<int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+               |          |          std::__detail::_Hash_node<int, false>* std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > >::operator()<int const&>(int const&) const
+               |          |          std::__detail::_Hash_node<int, false>* std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<int, false> > >::_M_allocate_node<int const&>(int const&)
+               |          |          __mcount_internal
+               |          |          
+               |          |--1.59%--UnionFind::find(int)
+               |          |          UnionFind::find(int)
+               |          |          
+               |           --1.59%--std::unordered_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<std::pair<int const, int> > >::end()
+               |                     std::__detail::_Node_iterator<std::pair<int const, int>, false, false>::_Node_iterator(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+               |          
+               |--23.36%--generatematrix(int, double, int)
+               |          |          
+               |          |--22.53%--double std::uniform_real_distribution<double>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&)
+               |          |          double std::uniform_real_distribution<double>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&, std::uniform_real_distribution<double>::param_type const&)
+               |          |          |          
+               |          |          |--18.13%--std::__detail::_Adaptor<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>, double>::operator()()
+               |          |          |          double std::generate_canonical<double, 53ul, std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&)
+               |          |          |          |          
+               |          |          |          |--5.09%--__mcount_internal
+               |          |          |          |          
+               |          |          |          |--4.63%--__ieee754_logl
+               |          |          |          |          
+               |          |          |          |--1.55%--__logl
+               |          |          |          |          
+               |          |          |          |--1.48%--_mcount
+               |          |          |          |          
+               |          |          |           --1.25%--std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::operator()()
+               |          |          |                     std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::_M_gen_rand()
+               |          |          |          
+               |          |           --4.40%--__mcount_internal
+               |          |          
+               |           --0.83%--std::vector<int, std::allocator<int> >::vector(unsigned long, int const&, std::allocator<int> const&)
+               |                     std::vector<int, std::allocator<int> >::_M_fill_initialize(unsigned long, int const&)
+               |                     int* std::__uninitialized_fill_n_a<int*, unsigned long, int, int>(int*, unsigned long, int const&, std::allocator<int>&)
+               |                     int* std::uninitialized_fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+               |                     int* std::__uninitialized_fill_n<true>::__uninit_fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+               |                     int* std::fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+               |                     int* std::__fill_n_a<int*, unsigned long, int>(int*, unsigned long, int const&, std::random_access_iterator_tag)
+               |                     void std::__fill_a<int*, int>(int*, int*, int const&)
+               |                     __gnu_cxx::__enable_if<std::__is_scalar<int>::__value, void>::__type std::__fill_a1<int*, int>(int*, int*, int const&)
+               |          
+                --1.52%--print_clusters(std::vector<int, std::allocator<int> > const&, int)
+                          __mcount_internal
+
+    80.47%     0.00%  main_pg.x  main_pg.x            [.] main
+            |
+            ---main
+               |          
+               |--55.59%--hoshen_kopelman(std::vector<int, std::allocator<int> > const&, int)
+               |          |          
+               |          |--29.22%--std::unordered_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<std::pair<int const, int> > >::operator[](int const&)
+               |          |          std::__detail::_Map_base<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true>, true>::operator[](int const&)
+               |          |          |          
+               |          |          |--9.49%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_node(unsigned long, int const&, unsigned long) const
+               |          |          |          std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_before_node(unsigned long, int const&, unsigned long) const
+               |          |          |          |          
+               |          |          |          |--7.91%--std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_equals(int const&, unsigned long, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          |          |          |          std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_key_equals(int const&, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          |          |          |          |          
+               |          |          |          |          |--4.80%--__mcount_internal
+               |          |          |          |          |          
+               |          |          |          |           --3.11%--std::__detail::_Select1st::__1st_type<std::pair<int const, int> const&>::type&& std::__detail::_Select1st::operator()<std::pair<int const, int> const&>(std::pair<int const, int> const&) const
+               |          |          |          |                     __mcount_internal
+               |          |          |          |          
+               |          |          |           --1.58%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_bucket_index(std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          |          |                     std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_bucket_index(std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&, unsigned long) const
+               |          |          |                     _mcount
+               |          |          |          
+               |          |          |--7.41%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_bucket_index(unsigned long) const
+               |          |          |          |          
+               |          |          |          |--6.00%--std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_bucket_index(unsigned long, unsigned long) const
+               |          |          |          |          __mcount_internal
+               |          |          |          |          
+               |          |          |           --1.41%--__mcount_internal
+               |          |          |          
+               |          |          |--4.75%--__mcount_internal
+               |          |          |          
+               |          |          |--2.84%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_insert_unique_node(unsigned long, unsigned long, std::__detail::_Hash_node<std::pair<int const, int>, false>*, unsigned long)
+               |          |          |          |          
+               |          |          |          |--1.58%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_rehash(unsigned long, std::integral_constant<bool, true>)
+               |          |          |          |          std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_bucket_index(std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&, unsigned long) const
+               |          |          |          |          __mcount_internal
+               |          |          |          |          
+               |          |          |           --1.26%--_mcount
+               |          |          |          
+               |          |          |--1.61%--std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_hash_code(int const&) const
+               |          |          |          std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_hash() const
+               |          |          |          __mcount_internal
+               |          |          |          
+               |          |          |--1.58%--std::tuple<int const&>::tuple<true, true>(int const&)
+               |          |          |          __mcount_internal
+               |          |          |          
+               |          |           --1.53%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_Scoped_node::_Scoped_node<std::piecewise_construct_t const&, std::tuple<int const&>, std::tuple<> >(std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >*, std::piecewise_construct_t const&, std::tuple<int const&>&&, std::tuple<>&&)
+               |          |                     _mcount
+               |          |          
+               |          |--10.16%--std::unordered_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<std::pair<int const, int> > >::find(int const&)
+               |          |          std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::find(int const&)
+               |          |          |          
+               |          |          |--5.62%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_node(unsigned long, int const&, unsigned long) const
+               |          |          |          |          
+               |          |          |          |--4.25%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_before_node(unsigned long, int const&, unsigned long) const
+               |          |          |          |          |          
+               |          |          |          |          |--2.96%--std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_equals(int const&, unsigned long, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          |          |          |          |          std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_key_equals(int const&, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          |          |          |          |          __mcount_internal
+               |          |          |          |          |          
+               |          |          |          |           --1.29%--__mcount_internal
+               |          |          |          |          
+               |          |          |           --1.38%--_mcount
+               |          |          |          
+               |          |          |--1.61%--_mcount
+               |          |          |          
+               |          |          |--1.59%--std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_hash_code(int const&) const
+               |          |          |          __mcount_internal
+               |          |          |          
+               |          |           --1.34%--std::__detail::_Node_iterator<std::pair<int const, int>, false, false>::_Node_iterator(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+               |          |                     __mcount_internal
+               |          |          
+               |          |--4.38%--__mcount_internal
+               |          |          
+               |          |--2.58%--_mcount
+               |          |          
+               |          |--1.61%--std::unordered_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<std::pair<int const, int> > >::~unordered_map()
+               |          |          std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::~_Hashtable()
+               |          |          std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::clear()
+               |          |          std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_nodes(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+               |          |          std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_node(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+               |          |          std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_node_ptr(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+               |          |          _mcount
+               |          |          
+               |          |--1.61%--std::unordered_set<int, std::hash<int>, std::equal_to<int>, std::allocator<int> >::insert(int const&)
+               |          |          std::__detail::_Insert_base<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::insert(int const&)
+               |          |          std::pair<std::__detail::_Node_iterator<int, true, false>, bool> std::_Hashtable<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert<int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&, std::integral_constant<bool, true>)
+               |          |          std::pair<std::__detail::_Node_iterator<int, true, false>, bool> std::_Hashtable<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert_unique_aux<int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+               |          |          std::pair<std::__detail::_Node_iterator<int, true, false>, bool> std::_Hashtable<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert_unique<int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+               |          |          std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > >::__node_ptr std::__detail::_NodeBuilder<std::__detail::_Identity>::_S_build<int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+               |          |          std::__detail::_Hash_node<int, false>* std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > >::operator()<int const&>(int const&) const
+               |          |          std::__detail::_Hash_node<int, false>* std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<int, false> > >::_M_allocate_node<int const&>(int const&)
+               |          |          __mcount_internal
+               |          |          
+               |          |--1.59%--UnionFind::find(int)
+               |          |          UnionFind::find(int)
+               |          |          
+               |           --1.59%--std::unordered_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<std::pair<int const, int> > >::end()
+               |                     std::__detail::_Node_iterator<std::pair<int const, int>, false, false>::_Node_iterator(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+               |          
+               |--23.36%--generatematrix(int, double, int)
+               |          |          
+               |          |--22.53%--double std::uniform_real_distribution<double>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&)
+               |          |          double std::uniform_real_distribution<double>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&, std::uniform_real_distribution<double>::param_type const&)
+               |          |          |          
+               |          |          |--18.13%--std::__detail::_Adaptor<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>, double>::operator()()
+               |          |          |          double std::generate_canonical<double, 53ul, std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&)
+               |          |          |          |          
+               |          |          |          |--5.09%--__mcount_internal
+               |          |          |          |          
+               |          |          |          |--4.63%--__ieee754_logl
+               |          |          |          |          
+               |          |          |          |--1.55%--__logl
+               |          |          |          |          
+               |          |          |          |--1.48%--_mcount
+               |          |          |          |          
+               |          |          |           --1.25%--std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::operator()()
+               |          |          |                     std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::_M_gen_rand()
+               |          |          |          
+               |          |           --4.40%--__mcount_internal
+               |          |          
+               |           --0.83%--std::vector<int, std::allocator<int> >::vector(unsigned long, int const&, std::allocator<int> const&)
+               |                     std::vector<int, std::allocator<int> >::_M_fill_initialize(unsigned long, int const&)
+               |                     int* std::__uninitialized_fill_n_a<int*, unsigned long, int, int>(int*, unsigned long, int const&, std::allocator<int>&)
+               |                     int* std::uninitialized_fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+               |                     int* std::__uninitialized_fill_n<true>::__uninit_fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+               |                     int* std::fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+               |                     int* std::__fill_n_a<int*, unsigned long, int>(int*, unsigned long, int const&, std::random_access_iterator_tag)
+               |                     void std::__fill_a<int*, int>(int*, int*, int const&)
+               |                     __gnu_cxx::__enable_if<std::__is_scalar<int>::__value, void>::__type std::__fill_a1<int*, int>(int*, int*, int const&)
+               |          
+                --1.52%--print_clusters(std::vector<int, std::allocator<int> > const&, int)
+                          __mcount_internal
+
+    55.59%     2.86%  main_pg.x  main_pg.x            [.] hoshen_kopelman(std::vector<int, std::allocator<int> > const&, int)
+            |          
+            |--52.73%--hoshen_kopelman(std::vector<int, std::allocator<int> > const&, int)
+            |          |          
+            |          |--29.22%--std::unordered_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<std::pair<int const, int> > >::operator[](int const&)
+            |          |          std::__detail::_Map_base<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true>, true>::operator[](int const&)
+            |          |          |          
+            |          |          |--9.49%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_node(unsigned long, int const&, unsigned long) const
+            |          |          |          std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_before_node(unsigned long, int const&, unsigned long) const
+            |          |          |          |          
+            |          |          |          |--7.91%--std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_equals(int const&, unsigned long, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+            |          |          |          |          std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_key_equals(int const&, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+            |          |          |          |          |          
+            |          |          |          |          |--4.80%--__mcount_internal
+            |          |          |          |          |          
+            |          |          |          |           --3.11%--std::__detail::_Select1st::__1st_type<std::pair<int const, int> const&>::type&& std::__detail::_Select1st::operator()<std::pair<int const, int> const&>(std::pair<int const, int> const&) const
+            |          |          |          |                     __mcount_internal
+            |          |          |          |          
+            |          |          |           --1.58%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_bucket_index(std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+            |          |          |                     std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_bucket_index(std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&, unsigned long) const
+            |          |          |                     _mcount
+            |          |          |          
+            |          |          |--7.41%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_bucket_index(unsigned long) const
+            |          |          |          |          
+            |          |          |          |--6.00%--std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_bucket_index(unsigned long, unsigned long) const
+            |          |          |          |          __mcount_internal
+            |          |          |          |          
+            |          |          |           --1.41%--__mcount_internal
+            |          |          |          
+            |          |          |--4.75%--__mcount_internal
+            |          |          |          
+            |          |          |--2.84%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_insert_unique_node(unsigned long, unsigned long, std::__detail::_Hash_node<std::pair<int const, int>, false>*, unsigned long)
+            |          |          |          |          
+            |          |          |          |--1.58%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_rehash(unsigned long, std::integral_constant<bool, true>)
+            |          |          |          |          std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_bucket_index(std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&, unsigned long) const
+            |          |          |          |          __mcount_internal
+            |          |          |          |          
+            |          |          |           --1.26%--_mcount
+            |          |          |          
+            |          |          |--1.61%--std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_hash_code(int const&) const
+            |          |          |          std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_hash() const
+            |          |          |          __mcount_internal
+            |          |          |          
+            |          |          |--1.58%--std::tuple<int const&>::tuple<true, true>(int const&)
+            |          |          |          __mcount_internal
+            |          |          |          
+            |          |           --1.53%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_Scoped_node::_Scoped_node<std::piecewise_construct_t const&, std::tuple<int const&>, std::tuple<> >(std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >*, std::piecewise_construct_t const&, std::tuple<int const&>&&, std::tuple<>&&)
+            |          |                     _mcount
+            |          |          
+            |          |--10.16%--std::unordered_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<std::pair<int const, int> > >::find(int const&)
+            |          |          std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::find(int const&)
+            |          |          |          
+            |          |          |--5.62%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_node(unsigned long, int const&, unsigned long) const
+            |          |          |          |          
+            |          |          |          |--4.25%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_before_node(unsigned long, int const&, unsigned long) const
+            |          |          |          |          |          
+            |          |          |          |          |--2.96%--std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_equals(int const&, unsigned long, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+            |          |          |          |          |          std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_key_equals(int const&, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+            |          |          |          |          |          __mcount_internal
+            |          |          |          |          |          
+            |          |          |          |           --1.29%--__mcount_internal
+            |          |          |          |          
+            |          |          |           --1.38%--_mcount
+            |          |          |          
+            |          |          |--1.61%--_mcount
+            |          |          |          
+            |          |          |--1.59%--std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_hash_code(int const&) const
+            |          |          |          __mcount_internal
+            |          |          |          
+            |          |           --1.34%--std::__detail::_Node_iterator<std::pair<int const, int>, false, false>::_Node_iterator(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+            |          |                     __mcount_internal
+            |          |          
+            |          |--4.38%--__mcount_internal
+            |          |          
+            |          |--2.58%--_mcount
+            |          |          
+            |          |--1.61%--std::unordered_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<std::pair<int const, int> > >::~unordered_map()
+            |          |          std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::~_Hashtable()
+            |          |          std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::clear()
+            |          |          std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_nodes(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+            |          |          std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_node(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+            |          |          std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_node_ptr(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+            |          |          _mcount
+            |          |          
+            |          |--1.61%--std::unordered_set<int, std::hash<int>, std::equal_to<int>, std::allocator<int> >::insert(int const&)
+            |          |          std::__detail::_Insert_base<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::insert(int const&)
+            |          |          std::pair<std::__detail::_Node_iterator<int, true, false>, bool> std::_Hashtable<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert<int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&, std::integral_constant<bool, true>)
+            |          |          std::pair<std::__detail::_Node_iterator<int, true, false>, bool> std::_Hashtable<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert_unique_aux<int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+            |          |          std::pair<std::__detail::_Node_iterator<int, true, false>, bool> std::_Hashtable<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert_unique<int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+            |          |          std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > >::__node_ptr std::__detail::_NodeBuilder<std::__detail::_Identity>::_S_build<int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+            |          |          std::__detail::_Hash_node<int, false>* std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > >::operator()<int const&>(int const&) const
+            |          |          std::__detail::_Hash_node<int, false>* std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<int, false> > >::_M_allocate_node<int const&>(int const&)
+            |          |          __mcount_internal
+            |          |          
+            |          |--1.59%--UnionFind::find(int)
+            |          |          UnionFind::find(int)
+            |          |          
+            |           --1.59%--std::unordered_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<std::pair<int const, int> > >::end()
+            |                     std::__detail::_Node_iterator<std::pair<int const, int>, false, false>::_Node_iterator(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+            |          
+             --2.86%--__libc_start_call_main
+                       main
+                       hoshen_kopelman(std::vector<int, std::allocator<int> > const&, int)
+
+    49.02%    49.02%  main_pg.x  libc-2.40.so         [.] __mcount_internal
+            |
+            ---__libc_start_call_main
+               main
+               |          
+               |--38.01%--hoshen_kopelman(std::vector<int, std::allocator<int> > const&, int)
+               |          |          
+               |          |--24.84%--std::unordered_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<std::pair<int const, int> > >::operator[](int const&)
+               |          |          std::__detail::_Map_base<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true>, true>::operator[](int const&)
+               |          |          |          
+               |          |          |--7.91%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_node(unsigned long, int const&, unsigned long) const
+               |          |          |          std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_before_node(unsigned long, int const&, unsigned long) const
+               |          |          |          std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_equals(int const&, unsigned long, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          |          |          std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_key_equals(int const&, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          |          |          |          
+               |          |          |          |--4.80%--__mcount_internal
+               |          |          |          |          
+               |          |          |           --3.11%--std::__detail::_Select1st::__1st_type<std::pair<int const, int> const&>::type&& std::__detail::_Select1st::operator()<std::pair<int const, int> const&>(std::pair<int const, int> const&) const
+               |          |          |                     __mcount_internal
+               |          |          |          
+               |          |          |--7.41%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_bucket_index(unsigned long) const
+               |          |          |          |          
+               |          |          |          |--6.00%--std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_bucket_index(unsigned long, unsigned long) const
+               |          |          |          |          __mcount_internal
+               |          |          |          |          
+               |          |          |           --1.41%--__mcount_internal
+               |          |          |          
+               |          |          |--4.75%--__mcount_internal
+               |          |          |          
+               |          |          |--1.61%--std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_hash_code(int const&) const
+               |          |          |          std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_hash() const
+               |          |          |          __mcount_internal
+               |          |          |          
+               |          |          |--1.58%--std::tuple<int const&>::tuple<true, true>(int const&)
+               |          |          |          __mcount_internal
+               |          |          |          
+               |          |           --1.58%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_insert_unique_node(unsigned long, unsigned long, std::__detail::_Hash_node<std::pair<int const, int>, false>*, unsigned long)
+               |          |                     std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_rehash(unsigned long, std::integral_constant<bool, true>)
+               |          |                     std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_bucket_index(std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&, unsigned long) const
+               |          |                     __mcount_internal
+               |          |          
+               |          |--7.18%--std::unordered_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<std::pair<int const, int> > >::find(int const&)
+               |          |          std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::find(int const&)
+               |          |          |          
+               |          |          |--4.25%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_node(unsigned long, int const&, unsigned long) const
+               |          |          |          std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_before_node(unsigned long, int const&, unsigned long) const
+               |          |          |          |          
+               |          |          |          |--2.96%--std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_equals(int const&, unsigned long, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          |          |          |          std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_key_equals(int const&, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          |          |          |          __mcount_internal
+               |          |          |          |          
+               |          |          |           --1.29%--__mcount_internal
+               |          |          |          
+               |          |          |--1.59%--std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_hash_code(int const&) const
+               |          |          |          __mcount_internal
+               |          |          |          
+               |          |           --1.34%--std::__detail::_Node_iterator<std::pair<int const, int>, false, false>::_Node_iterator(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+               |          |                     __mcount_internal
+               |          |          
+               |          |--4.38%--__mcount_internal
+               |          |          
+               |           --1.61%--std::unordered_set<int, std::hash<int>, std::equal_to<int>, std::allocator<int> >::insert(int const&)
+               |                     std::__detail::_Insert_base<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::insert(int const&)
+               |                     std::pair<std::__detail::_Node_iterator<int, true, false>, bool> std::_Hashtable<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert<int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&, std::integral_constant<bool, true>)
+               |                     std::pair<std::__detail::_Node_iterator<int, true, false>, bool> std::_Hashtable<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert_unique_aux<int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+               |                     std::pair<std::__detail::_Node_iterator<int, true, false>, bool> std::_Hashtable<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert_unique<int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+               |                     std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > >::__node_ptr std::__detail::_NodeBuilder<std::__detail::_Identity>::_S_build<int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+               |                     std::__detail::_Hash_node<int, false>* std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > >::operator()<int const&>(int const&) const
+               |                     std::__detail::_Hash_node<int, false>* std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<int, false> > >::_M_allocate_node<int const&>(int const&)
+               |                     __mcount_internal
+               |          
+               |--9.49%--generatematrix(int, double, int)
+               |          double std::uniform_real_distribution<double>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&)
+               |          double std::uniform_real_distribution<double>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&, std::uniform_real_distribution<double>::param_type const&)
+               |          |          
+               |          |--5.09%--std::__detail::_Adaptor<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>, double>::operator()()
+               |          |          double std::generate_canonical<double, 53ul, std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&)
+               |          |          __mcount_internal
+               |          |          
+               |           --4.40%--__mcount_internal
+               |          
+                --1.52%--print_clusters(std::vector<int, std::allocator<int> > const&, int)
+                          __mcount_internal
+
+    29.22%     0.00%  main_pg.x  main_pg.x            [.] std::unordered_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<std::pair<int const, int> > >::operator[](int const&)
+            |
+            ---std::unordered_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<std::pair<int const, int> > >::operator[](int const&)
+               std::__detail::_Map_base<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true>, true>::operator[](int const&)
+               |          
+               |--9.49%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_node(unsigned long, int const&, unsigned long) const
+               |          std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_before_node(unsigned long, int const&, unsigned long) const
+               |          |          
+               |          |--7.91%--std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_equals(int const&, unsigned long, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          |          std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_key_equals(int const&, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          |          |          
+               |          |          |--4.80%--__mcount_internal
+               |          |          |          
+               |          |           --3.11%--std::__detail::_Select1st::__1st_type<std::pair<int const, int> const&>::type&& std::__detail::_Select1st::operator()<std::pair<int const, int> const&>(std::pair<int const, int> const&) const
+               |          |                     __mcount_internal
+               |          |          
+               |           --1.58%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_bucket_index(std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |                     std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_bucket_index(std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&, unsigned long) const
+               |                     _mcount
+               |          
+               |--7.41%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_bucket_index(unsigned long) const
+               |          |          
+               |          |--6.00%--std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_bucket_index(unsigned long, unsigned long) const
+               |          |          __mcount_internal
+               |          |          
+               |           --1.41%--__mcount_internal
+               |          
+               |--4.75%--__mcount_internal
+               |          
+               |--2.84%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_insert_unique_node(unsigned long, unsigned long, std::__detail::_Hash_node<std::pair<int const, int>, false>*, unsigned long)
+               |          |          
+               |          |--1.58%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_rehash(unsigned long, std::integral_constant<bool, true>)
+               |          |          std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_bucket_index(std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&, unsigned long) const
+               |          |          __mcount_internal
+               |          |          
+               |           --1.26%--_mcount
+               |          
+               |--1.61%--std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_hash_code(int const&) const
+               |          std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_hash() const
+               |          __mcount_internal
+               |          
+               |--1.58%--std::tuple<int const&>::tuple<true, true>(int const&)
+               |          __mcount_internal
+               |          
+                --1.53%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_Scoped_node::_Scoped_node<std::piecewise_construct_t const&, std::tuple<int const&>, std::tuple<> >(std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >*, std::piecewise_construct_t const&, std::tuple<int const&>&&, std::tuple<>&&)
+                          _mcount
+
+    29.22%     0.00%  main_pg.x  main_pg.x            [.] std::__detail::_Map_base<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true>, true>::operator[](int const&)
+            |
+            ---std::__detail::_Map_base<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true>, true>::operator[](int const&)
+               |          
+               |--9.49%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_node(unsigned long, int const&, unsigned long) const
+               |          std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_before_node(unsigned long, int const&, unsigned long) const
+               |          |          
+               |          |--7.91%--std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_equals(int const&, unsigned long, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          |          std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_key_equals(int const&, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          |          |          
+               |          |          |--4.80%--__mcount_internal
+               |          |          |          
+               |          |           --3.11%--std::__detail::_Select1st::__1st_type<std::pair<int const, int> const&>::type&& std::__detail::_Select1st::operator()<std::pair<int const, int> const&>(std::pair<int const, int> const&) const
+               |          |                     __mcount_internal
+               |          |          
+               |           --1.58%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_bucket_index(std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |                     std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_bucket_index(std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&, unsigned long) const
+               |                     _mcount
+               |          
+               |--7.41%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_bucket_index(unsigned long) const
+               |          |          
+               |          |--6.00%--std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_bucket_index(unsigned long, unsigned long) const
+               |          |          __mcount_internal
+               |          |          
+               |           --1.41%--__mcount_internal
+               |          
+               |--4.75%--__mcount_internal
+               |          
+               |--2.84%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_insert_unique_node(unsigned long, unsigned long, std::__detail::_Hash_node<std::pair<int const, int>, false>*, unsigned long)
+               |          |          
+               |          |--1.58%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_rehash(unsigned long, std::integral_constant<bool, true>)
+               |          |          std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_bucket_index(std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&, unsigned long) const
+               |          |          __mcount_internal
+               |          |          
+               |           --1.26%--_mcount
+               |          
+               |--1.61%--std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_hash_code(int const&) const
+               |          std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_hash() const
+               |          __mcount_internal
+               |          
+               |--1.58%--std::tuple<int const&>::tuple<true, true>(int const&)
+               |          __mcount_internal
+               |          
+                --1.53%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_Scoped_node::_Scoped_node<std::piecewise_construct_t const&, std::tuple<int const&>, std::tuple<> >(std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >*, std::piecewise_construct_t const&, std::tuple<int const&>&&, std::tuple<>&&)
+                          _mcount
+
+    23.36%     0.00%  main_pg.x  main_pg.x            [.] generatematrix(int, double, int)
+            |
+            ---generatematrix(int, double, int)
+               |          
+               |--22.53%--double std::uniform_real_distribution<double>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&)
+               |          double std::uniform_real_distribution<double>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&, std::uniform_real_distribution<double>::param_type const&)
+               |          |          
+               |          |--18.13%--std::__detail::_Adaptor<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>, double>::operator()()
+               |          |          double std::generate_canonical<double, 53ul, std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&)
+               |          |          |          
+               |          |          |--5.09%--__mcount_internal
+               |          |          |          
+               |          |          |--4.63%--__ieee754_logl
+               |          |          |          
+               |          |          |--1.55%--__logl
+               |          |          |          
+               |          |          |--1.48%--_mcount
+               |          |          |          
+               |          |           --1.25%--std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::operator()()
+               |          |                     std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::_M_gen_rand()
+               |          |          
+               |           --4.40%--__mcount_internal
+               |          
+                --0.83%--std::vector<int, std::allocator<int> >::vector(unsigned long, int const&, std::allocator<int> const&)
+                          std::vector<int, std::allocator<int> >::_M_fill_initialize(unsigned long, int const&)
+                          int* std::__uninitialized_fill_n_a<int*, unsigned long, int, int>(int*, unsigned long, int const&, std::allocator<int>&)
+                          int* std::uninitialized_fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+                          int* std::__uninitialized_fill_n<true>::__uninit_fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+                          int* std::fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+                          int* std::__fill_n_a<int*, unsigned long, int>(int*, unsigned long, int const&, std::random_access_iterator_tag)
+                          void std::__fill_a<int*, int>(int*, int*, int const&)
+                          __gnu_cxx::__enable_if<std::__is_scalar<int>::__value, void>::__type std::__fill_a1<int*, int>(int*, int*, int const&)
+
+    22.53%     0.00%  main_pg.x  main_pg.x            [.] double std::uniform_real_distribution<double>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&)
+            |
+            ---double std::uniform_real_distribution<double>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&)
+               double std::uniform_real_distribution<double>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&, std::uniform_real_distribution<double>::param_type const&)
+               |          
+               |--18.13%--std::__detail::_Adaptor<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>, double>::operator()()
+               |          double std::generate_canonical<double, 53ul, std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&)
+               |          |          
+               |          |--5.09%--__mcount_internal
+               |          |          
+               |          |--4.63%--__ieee754_logl
+               |          |          
+               |          |--1.55%--__logl
+               |          |          
+               |          |--1.48%--_mcount
+               |          |          
+               |           --1.25%--std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::operator()()
+               |                     std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::_M_gen_rand()
+               |          
+                --4.40%--__mcount_internal
+
+    22.53%     0.00%  main_pg.x  main_pg.x            [.] double std::uniform_real_distribution<double>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&, std::uniform_real_distribution<double>::param_type const&)
+            |
+            ---double std::uniform_real_distribution<double>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&, std::uniform_real_distribution<double>::param_type const&)
+               |          
+               |--18.13%--std::__detail::_Adaptor<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>, double>::operator()()
+               |          double std::generate_canonical<double, 53ul, std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&)
+               |          |          
+               |          |--5.09%--__mcount_internal
+               |          |          
+               |          |--4.63%--__ieee754_logl
+               |          |          
+               |          |--1.55%--__logl
+               |          |          
+               |          |--1.48%--_mcount
+               |          |          
+               |           --1.25%--std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::operator()()
+               |                     std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::_M_gen_rand()
+               |          
+                --4.40%--__mcount_internal
+
+    18.13%     4.12%  main_pg.x  main_pg.x            [.] double std::generate_canonical<double, 53ul, std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&)
+            |          
+            |--14.00%--double std::generate_canonical<double, 53ul, std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&)
+            |          |          
+            |          |--5.09%--__mcount_internal
+            |          |          
+            |          |--4.63%--__ieee754_logl
+            |          |          
+            |          |--1.55%--__logl
+            |          |          
+            |          |--1.48%--_mcount
+            |          |          
+            |           --1.25%--std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::operator()()
+            |                     std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::_M_gen_rand()
+            |          
+             --4.12%--__libc_start_call_main
+                       main
+                       generatematrix(int, double, int)
+                       double std::uniform_real_distribution<double>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&)
+                       double std::uniform_real_distribution<double>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&, std::uniform_real_distribution<double>::param_type const&)
+                       std::__detail::_Adaptor<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>, double>::operator()()
+                       double std::generate_canonical<double, 53ul, std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&)
+
+    18.13%     0.00%  main_pg.x  main_pg.x            [.] std::__detail::_Adaptor<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>, double>::operator()()
+            |
+            ---std::__detail::_Adaptor<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>, double>::operator()()
+               double std::generate_canonical<double, 53ul, std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&)
+               |          
+               |--5.09%--__mcount_internal
+               |          
+               |--4.63%--__ieee754_logl
+               |          
+               |--1.55%--__logl
+               |          
+               |--1.48%--_mcount
+               |          
+                --1.25%--std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::operator()()
+                          std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::_M_gen_rand()
+
+    15.11%     0.00%  main_pg.x  main_pg.x            [.] std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_node(unsigned long, int const&, unsigned long) const
+            |
+            ---std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_node(unsigned long, int const&, unsigned long) const
+               |          
+               |--13.74%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_before_node(unsigned long, int const&, unsigned long) const
+               |          |          
+               |          |--10.87%--std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_equals(int const&, unsigned long, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          |          std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_key_equals(int const&, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          |          |          
+               |          |          |--7.76%--__mcount_internal
+               |          |          |          
+               |          |           --3.11%--std::__detail::_Select1st::__1st_type<std::pair<int const, int> const&>::type&& std::__detail::_Select1st::operator()<std::pair<int const, int> const&>(std::pair<int const, int> const&) const
+               |          |                     __mcount_internal
+               |          |          
+               |          |--1.58%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_bucket_index(std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          |          std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_bucket_index(std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&, unsigned long) const
+               |          |          _mcount
+               |          |          
+               |           --1.29%--__mcount_internal
+               |          
+                --1.38%--_mcount
+
+    13.74%     0.00%  main_pg.x  main_pg.x            [.] std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_before_node(unsigned long, int const&, unsigned long) const
+            |
+            ---std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_before_node(unsigned long, int const&, unsigned long) const
+               |          
+               |--10.87%--std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_equals(int const&, unsigned long, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_key_equals(int const&, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          |          
+               |          |--7.76%--__mcount_internal
+               |          |          
+               |           --3.11%--std::__detail::_Select1st::__1st_type<std::pair<int const, int> const&>::type&& std::__detail::_Select1st::operator()<std::pair<int const, int> const&>(std::pair<int const, int> const&) const
+               |                     __mcount_internal
+               |          
+               |--1.58%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_bucket_index(std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_bucket_index(std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&, unsigned long) const
+               |          _mcount
+               |          
+                --1.29%--__mcount_internal
+
+    13.02%    13.02%  main_pg.x  libc-2.40.so         [.] _mcount
+            |
+            ---__libc_start_call_main
+               main
+               |          
+               |--11.54%--hoshen_kopelman(std::vector<int, std::allocator<int> > const&, int)
+               |          |          
+               |          |--4.37%--std::unordered_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<std::pair<int const, int> > >::operator[](int const&)
+               |          |          std::__detail::_Map_base<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true>, true>::operator[](int const&)
+               |          |          |          
+               |          |          |--1.58%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_node(unsigned long, int const&, unsigned long) const
+               |          |          |          std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_before_node(unsigned long, int const&, unsigned long) const
+               |          |          |          std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_bucket_index(std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          |          |          std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_bucket_index(std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&, unsigned long) const
+               |          |          |          _mcount
+               |          |          |          
+               |          |          |--1.53%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_Scoped_node::_Scoped_node<std::piecewise_construct_t const&, std::tuple<int const&>, std::tuple<> >(std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >*, std::piecewise_construct_t const&, std::tuple<int const&>&&, std::tuple<>&&)
+               |          |          |          _mcount
+               |          |          |          
+               |          |           --1.26%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_insert_unique_node(unsigned long, unsigned long, std::__detail::_Hash_node<std::pair<int const, int>, false>*, unsigned long)
+               |          |                     _mcount
+               |          |          
+               |          |--2.98%--std::unordered_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<std::pair<int const, int> > >::find(int const&)
+               |          |          std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::find(int const&)
+               |          |          |          
+               |          |          |--1.61%--_mcount
+               |          |          |          
+               |          |           --1.38%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_node(unsigned long, int const&, unsigned long) const
+               |          |                     _mcount
+               |          |          
+               |          |--2.58%--_mcount
+               |          |          
+               |           --1.61%--std::unordered_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<std::pair<int const, int> > >::~unordered_map()
+               |                     std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::~_Hashtable()
+               |                     std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::clear()
+               |                     std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_nodes(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+               |                     std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_node(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+               |                     std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_node_ptr(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+               |                     _mcount
+               |          
+                --1.48%--generatematrix(int, double, int)
+                          double std::uniform_real_distribution<double>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&)
+                          double std::uniform_real_distribution<double>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&, std::uniform_real_distribution<double>::param_type const&)
+                          std::__detail::_Adaptor<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>, double>::operator()()
+                          double std::generate_canonical<double, 53ul, std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&)
+                          _mcount
+
+    10.87%     0.00%  main_pg.x  main_pg.x            [.] std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_equals(int const&, unsigned long, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+            |
+            ---std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_equals(int const&, unsigned long, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_key_equals(int const&, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          
+               |--7.76%--__mcount_internal
+               |          
+                --3.11%--std::__detail::_Select1st::__1st_type<std::pair<int const, int> const&>::type&& std::__detail::_Select1st::operator()<std::pair<int const, int> const&>(std::pair<int const, int> const&) const
+                          __mcount_internal
+
+    10.87%     0.00%  main_pg.x  main_pg.x            [.] std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_key_equals(int const&, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+            |
+            ---std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_key_equals(int const&, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          
+               |--7.76%--__mcount_internal
+               |          
+                --3.11%--std::__detail::_Select1st::__1st_type<std::pair<int const, int> const&>::type&& std::__detail::_Select1st::operator()<std::pair<int const, int> const&>(std::pair<int const, int> const&) const
+                          __mcount_internal
+
+    10.16%     0.00%  main_pg.x  main_pg.x            [.] std::unordered_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<std::pair<int const, int> > >::find(int const&)
+            |
+            ---std::unordered_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<std::pair<int const, int> > >::find(int const&)
+               std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::find(int const&)
+               |          
+               |--5.62%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_node(unsigned long, int const&, unsigned long) const
+               |          |          
+               |          |--4.25%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_before_node(unsigned long, int const&, unsigned long) const
+               |          |          |          
+               |          |          |--2.96%--std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_equals(int const&, unsigned long, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          |          |          std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_key_equals(int const&, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          |          |          __mcount_internal
+               |          |          |          
+               |          |           --1.29%--__mcount_internal
+               |          |          
+               |           --1.38%--_mcount
+               |          
+               |--1.61%--_mcount
+               |          
+               |--1.59%--std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_hash_code(int const&) const
+               |          __mcount_internal
+               |          
+                --1.34%--std::__detail::_Node_iterator<std::pair<int const, int>, false, false>::_Node_iterator(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+                          __mcount_internal
+
+    10.16%     0.00%  main_pg.x  main_pg.x            [.] std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::find(int const&)
+            |
+            ---std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::find(int const&)
+               |          
+               |--5.62%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_node(unsigned long, int const&, unsigned long) const
+               |          |          
+               |          |--4.25%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_find_before_node(unsigned long, int const&, unsigned long) const
+               |          |          |          
+               |          |          |--2.96%--std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_equals(int const&, unsigned long, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          |          |          std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >::_M_key_equals(int const&, std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               |          |          |          __mcount_internal
+               |          |          |          
+               |          |           --1.29%--__mcount_internal
+               |          |          
+               |           --1.38%--_mcount
+               |          
+               |--1.61%--_mcount
+               |          
+               |--1.59%--std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_hash_code(int const&) const
+               |          __mcount_internal
+               |          
+                --1.34%--std::__detail::_Node_iterator<std::pair<int const, int>, false, false>::_Node_iterator(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+                          __mcount_internal
+
+     7.41%     0.00%  main_pg.x  main_pg.x            [.] std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_bucket_index(unsigned long) const
+            |
+            ---std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_bucket_index(unsigned long) const
+               |          
+               |--6.00%--std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_bucket_index(unsigned long, unsigned long) const
+               |          __mcount_internal
+               |          
+                --1.41%--__mcount_internal
+
+     6.00%     0.00%  main_pg.x  main_pg.x            [.] std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_bucket_index(unsigned long, unsigned long) const
+            |
+            ---std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_bucket_index(unsigned long, unsigned long) const
+               __mcount_internal
+
+     4.63%     4.63%  main_pg.x  libm-2.40.so         [.] __ieee754_logl
+            |
+            ---__libc_start_call_main
+               main
+               generatematrix(int, double, int)
+               double std::uniform_real_distribution<double>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&)
+               double std::uniform_real_distribution<double>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&, std::uniform_real_distribution<double>::param_type const&)
+               std::__detail::_Adaptor<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>, double>::operator()()
+               double std::generate_canonical<double, 53ul, std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&)
+               __ieee754_logl
+
+     3.20%     0.00%  main_pg.x  main_pg.x            [.] std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_hash_code(int const&) const
+            |
+            ---std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_hash_code(int const&) const
+               |          
+               |--1.61%--std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_hash() const
+               |          __mcount_internal
+               |          
+                --1.59%--__mcount_internal
+
+     3.16%     0.00%  main_pg.x  main_pg.x            [.] std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_bucket_index(std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&, unsigned long) const
+            |
+            ---std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_bucket_index(std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&, unsigned long) const
+               |          
+               |--1.58%--_mcount
+               |          
+                --1.58%--__mcount_internal
+
+     3.15%     3.15%  main_pg.x  libstdc++.so.6.0.33  [.] std::ostream::sentry::sentry(std::ostream&)
+            |
+            ---0xea20e8f63100
+               memmove@plt
+               0x40f180
+               std::ostream::sentry::sentry(std::ostream&)
+
+     3.15%     0.00%  main_pg.x  [unknown]            [.] 0x0000ea20e8f63100
+            |
+            ---0xea20e8f63100
+               memmove@plt
+               0x40f180
+               std::ostream::sentry::sentry(std::ostream&)
+
+     3.15%     0.00%  main_pg.x  main_pg.x            [.] memmove@plt
+            |
+            ---memmove@plt
+               0x40f180
+               std::ostream::sentry::sentry(std::ostream&)
+
+     3.15%     0.00%  main_pg.x  [unknown]            [.] 0x000000000040f180
+            |
+            ---0x40f180
+               std::ostream::sentry::sentry(std::ostream&)
+
+     3.11%     0.00%  main_pg.x  main_pg.x            [.] std::__detail::_Select1st::__1st_type<std::pair<int const, int> const&>::type&& std::__detail::_Select1st::operator()<std::pair<int const, int> const&>(std::pair<int const, int> const&) const
+            |
+            ---std::__detail::_Select1st::__1st_type<std::pair<int const, int> const&>::type&& std::__detail::_Select1st::operator()<std::pair<int const, int> const&>(std::pair<int const, int> const&) const
+               __mcount_internal
+
+     3.05%     3.05%  main_pg.x  libc-2.40.so         [.] __memmove_avx_unaligned_erms
+            |
+            ---__memmove_avx_unaligned_erms
+
+     2.93%     1.59%  main_pg.x  main_pg.x            [.] std::__detail::_Node_iterator<std::pair<int const, int>, false, false>::_Node_iterator(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+            |          
+            |--1.59%--__libc_start_call_main
+            |          main
+            |          hoshen_kopelman(std::vector<int, std::allocator<int> > const&, int)
+            |          std::unordered_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<std::pair<int const, int> > >::end()
+            |          std::__detail::_Node_iterator<std::pair<int const, int>, false, false>::_Node_iterator(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+            |          
+             --1.34%--std::__detail::_Node_iterator<std::pair<int const, int>, false, false>::_Node_iterator(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+                       __mcount_internal
+
+     2.93%     2.93%  main_pg.x  libstdc++.so.6.0.33  [.] std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)
+            |
+            ---0xec96158b480011ee
+               std::basic_ostream<char, std::char_traits<char> >::~basic_ostream()
+               0x7faa5f064318
+               std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)
+
+     2.93%     0.00%  main_pg.x  [unknown]            [.] 0xec96158b480011ee
+            |
+            ---0xec96158b480011ee
+               std::basic_ostream<char, std::char_traits<char> >::~basic_ostream()
+               0x7faa5f064318
+               std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)
+
+     2.93%     0.00%  main_pg.x  libstdc++.so.6.0.33  [.] std::basic_ostream<char, std::char_traits<char> >::~basic_ostream()
+            |
+            ---std::basic_ostream<char, std::char_traits<char> >::~basic_ostream()
+               0x7faa5f064318
+               std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)
+
+     2.93%     0.00%  main_pg.x  [unknown]            [.] 0x00007faa5f064318
+            |
+            ---0x7faa5f064318
+               std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)
+
+     2.84%     0.00%  main_pg.x  main_pg.x            [.] std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_insert_unique_node(unsigned long, unsigned long, std::__detail::_Hash_node<std::pair<int const, int>, false>*, unsigned long)
+            |
+            ---std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_insert_unique_node(unsigned long, unsigned long, std::__detail::_Hash_node<std::pair<int const, int>, false>*, unsigned long)
+               |          
+               |--1.58%--std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_rehash(unsigned long, std::integral_constant<bool, true>)
+               |          std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_bucket_index(std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&, unsigned long) const
+               |          __mcount_internal
+               |          
+                --1.26%--_mcount
+
+     1.61%     0.00%  main_pg.x  main_pg.x            [.] std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_hash() const
+            |
+            ---std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_hash() const
+               __mcount_internal
+
+     1.61%     0.00%  main_pg.x  main_pg.x            [.] std::unordered_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<std::pair<int const, int> > >::~unordered_map()
+            |
+            ---std::unordered_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<std::pair<int const, int> > >::~unordered_map()
+               std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::~_Hashtable()
+               std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::clear()
+               std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_nodes(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+               std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_node(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+               std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_node_ptr(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+               _mcount
+
+     1.61%     0.00%  main_pg.x  main_pg.x            [.] std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::~_Hashtable()
+            |
+            ---std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::~_Hashtable()
+               std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::clear()
+               std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_nodes(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+               std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_node(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+               std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_node_ptr(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+               _mcount
+
+     1.61%     0.00%  main_pg.x  main_pg.x            [.] std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::clear()
+            |
+            ---std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::clear()
+               std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_nodes(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+               std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_node(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+               std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_node_ptr(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+               _mcount
+
+     1.61%     0.00%  main_pg.x  main_pg.x            [.] std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_nodes(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+            |
+            ---std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_nodes(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+               std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_node(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+               std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_node_ptr(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+               _mcount
+
+     1.61%     0.00%  main_pg.x  main_pg.x            [.] std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_node(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+            |
+            ---std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_node(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+               std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_node_ptr(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+               _mcount
+
+     1.61%     0.00%  main_pg.x  main_pg.x            [.] std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_node_ptr(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+            |
+            ---std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >::_M_deallocate_node_ptr(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+               _mcount
+
+     1.61%     0.00%  main_pg.x  main_pg.x            [.] std::unordered_set<int, std::hash<int>, std::equal_to<int>, std::allocator<int> >::insert(int const&)
+            |
+            ---std::unordered_set<int, std::hash<int>, std::equal_to<int>, std::allocator<int> >::insert(int const&)
+               std::__detail::_Insert_base<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::insert(int const&)
+               std::pair<std::__detail::_Node_iterator<int, true, false>, bool> std::_Hashtable<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert<int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&, std::integral_constant<bool, true>)
+               std::pair<std::__detail::_Node_iterator<int, true, false>, bool> std::_Hashtable<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert_unique_aux<int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+               std::pair<std::__detail::_Node_iterator<int, true, false>, bool> std::_Hashtable<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert_unique<int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+               std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > >::__node_ptr std::__detail::_NodeBuilder<std::__detail::_Identity>::_S_build<int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+               std::__detail::_Hash_node<int, false>* std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > >::operator()<int const&>(int const&) const
+               std::__detail::_Hash_node<int, false>* std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<int, false> > >::_M_allocate_node<int const&>(int const&)
+               __mcount_internal
+
+     1.61%     0.00%  main_pg.x  main_pg.x            [.] std::__detail::_Insert_base<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::insert(int const&)
+            |
+            ---std::__detail::_Insert_base<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::insert(int const&)
+               std::pair<std::__detail::_Node_iterator<int, true, false>, bool> std::_Hashtable<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert<int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&, std::integral_constant<bool, true>)
+               std::pair<std::__detail::_Node_iterator<int, true, false>, bool> std::_Hashtable<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert_unique_aux<int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+               std::pair<std::__detail::_Node_iterator<int, true, false>, bool> std::_Hashtable<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert_unique<int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+               std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > >::__node_ptr std::__detail::_NodeBuilder<std::__detail::_Identity>::_S_build<int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+               std::__detail::_Hash_node<int, false>* std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > >::operator()<int const&>(int const&) const
+               std::__detail::_Hash_node<int, false>* std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<int, false> > >::_M_allocate_node<int const&>(int const&)
+               __mcount_internal
+
+     1.61%     0.00%  main_pg.x  main_pg.x            [.] std::pair<std::__detail::_Node_iterator<int, true, false>, bool> std::_Hashtable<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert<int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&, std::integral_constant<bool, true>)
+            |
+            ---std::pair<std::__detail::_Node_iterator<int, true, false>, bool> std::_Hashtable<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert<int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&, std::integral_constant<bool, true>)
+               std::pair<std::__detail::_Node_iterator<int, true, false>, bool> std::_Hashtable<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert_unique_aux<int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+               std::pair<std::__detail::_Node_iterator<int, true, false>, bool> std::_Hashtable<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert_unique<int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+               std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > >::__node_ptr std::__detail::_NodeBuilder<std::__detail::_Identity>::_S_build<int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+               std::__detail::_Hash_node<int, false>* std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > >::operator()<int const&>(int const&) const
+               std::__detail::_Hash_node<int, false>* std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<int, false> > >::_M_allocate_node<int const&>(int const&)
+               __mcount_internal
+
+     1.61%     0.00%  main_pg.x  main_pg.x            [.] std::pair<std::__detail::_Node_iterator<int, true, false>, bool> std::_Hashtable<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert_unique_aux<int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+            |
+            ---std::pair<std::__detail::_Node_iterator<int, true, false>, bool> std::_Hashtable<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert_unique_aux<int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+               std::pair<std::__detail::_Node_iterator<int, true, false>, bool> std::_Hashtable<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert_unique<int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+               std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > >::__node_ptr std::__detail::_NodeBuilder<std::__detail::_Identity>::_S_build<int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+               std::__detail::_Hash_node<int, false>* std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > >::operator()<int const&>(int const&) const
+               std::__detail::_Hash_node<int, false>* std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<int, false> > >::_M_allocate_node<int const&>(int const&)
+               __mcount_internal
+
+     1.61%     0.00%  main_pg.x  main_pg.x            [.] std::pair<std::__detail::_Node_iterator<int, true, false>, bool> std::_Hashtable<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert_unique<int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+            |
+            ---std::pair<std::__detail::_Node_iterator<int, true, false>, bool> std::_Hashtable<int, int, std::allocator<int>, std::__detail::_Identity, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert_unique<int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+               std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > >::__node_ptr std::__detail::_NodeBuilder<std::__detail::_Identity>::_S_build<int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+               std::__detail::_Hash_node<int, false>* std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > >::operator()<int const&>(int const&) const
+               std::__detail::_Hash_node<int, false>* std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<int, false> > >::_M_allocate_node<int const&>(int const&)
+               __mcount_internal
+
+     1.61%     0.00%  main_pg.x  main_pg.x            [.] std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > >::__node_ptr std::__detail::_NodeBuilder<std::__detail::_Identity>::_S_build<int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+            |
+            ---std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > >::__node_ptr std::__detail::_NodeBuilder<std::__detail::_Identity>::_S_build<int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > >(int const&, int const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > > const&)
+               std::__detail::_Hash_node<int, false>* std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > >::operator()<int const&>(int const&) const
+               std::__detail::_Hash_node<int, false>* std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<int, false> > >::_M_allocate_node<int const&>(int const&)
+               __mcount_internal
+
+     1.61%     0.00%  main_pg.x  main_pg.x            [.] std::__detail::_Hash_node<int, false>* std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > >::operator()<int const&>(int const&) const
+            |
+            ---std::__detail::_Hash_node<int, false>* std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<int, false> > >::operator()<int const&>(int const&) const
+               std::__detail::_Hash_node<int, false>* std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<int, false> > >::_M_allocate_node<int const&>(int const&)
+               __mcount_internal
+
+     1.61%     0.00%  main_pg.x  main_pg.x            [.] std::__detail::_Hash_node<int, false>* std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<int, false> > >::_M_allocate_node<int const&>(int const&)
+            |
+            ---std::__detail::_Hash_node<int, false>* std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<int, false> > >::_M_allocate_node<int const&>(int const&)
+               __mcount_internal
+
+     1.59%     1.59%  main_pg.x  main_pg.x            [.] UnionFind::find(int)
+            |
+            ---__libc_start_call_main
+               main
+               hoshen_kopelman(std::vector<int, std::allocator<int> > const&, int)
+               UnionFind::find(int)
+               UnionFind::find(int)
+
+     1.59%     0.00%  main_pg.x  main_pg.x            [.] std::unordered_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<std::pair<int const, int> > >::end()
+            |
+            ---std::unordered_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<std::pair<int const, int> > >::end()
+               std::__detail::_Node_iterator<std::pair<int const, int>, false, false>::_Node_iterator(std::__detail::_Hash_node<std::pair<int const, int>, false>*)
+
+     1.58%     0.00%  main_pg.x  main_pg.x            [.] std::tuple<int const&>::tuple<true, true>(int const&)
+            |
+            ---std::tuple<int const&>::tuple<true, true>(int const&)
+               __mcount_internal
+
+     1.58%     0.00%  main_pg.x  main_pg.x            [.] std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_bucket_index(std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+            |
+            ---std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_bucket_index(std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&) const
+               std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_bucket_index(std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&, unsigned long) const
+               _mcount
+
+     1.58%     0.00%  main_pg.x  main_pg.x            [.] std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_rehash(unsigned long, std::integral_constant<bool, true>)
+            |
+            ---std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_rehash(unsigned long, std::integral_constant<bool, true>)
+               std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_bucket_index(std::__detail::_Hash_node_value<std::pair<int const, int>, false> const&, unsigned long) const
+               __mcount_internal
+
+     1.57%     1.57%  main_pg.x  libc-2.40.so         [.] _IO_fwrite
+            |
+            ---_IO_fwrite
+
+     1.55%     1.55%  main_pg.x  libm-2.40.so         [.] __logl
+            |
+            ---__libc_start_call_main
+               main
+               generatematrix(int, double, int)
+               double std::uniform_real_distribution<double>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&)
+               double std::uniform_real_distribution<double>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&, std::uniform_real_distribution<double>::param_type const&)
+               std::__detail::_Adaptor<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>, double>::operator()()
+               double std::generate_canonical<double, 53ul, std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&)
+               __logl
+
+     1.54%     1.54%  main_pg.x  libstdc++.so.6.0.33  [.] std::ostream& std::ostream::_M_insert<long>(long)
+            |
+            ---0x3480011ec5a158b
+               virtual thunk to std::basic_ostream<char, std::char_traits<char> >::~basic_ostream()
+               0x6
+               std::ostream& std::ostream::_M_insert<long>(long)
+
+     1.54%     0.00%  main_pg.x  [unknown]            [.] 0x03480011ec5a158b
+            |
+            ---0x3480011ec5a158b
+               virtual thunk to std::basic_ostream<char, std::char_traits<char> >::~basic_ostream()
+               0x6
+               std::ostream& std::ostream::_M_insert<long>(long)
+
+     1.54%     0.00%  main_pg.x  libstdc++.so.6.0.33  [.] virtual thunk to std::basic_ostream<char, std::char_traits<char> >::~basic_ostream()
+            |
+            ---virtual thunk to std::basic_ostream<char, std::char_traits<char> >::~basic_ostream()
+               0x6
+               std::ostream& std::ostream::_M_insert<long>(long)
+
+     1.54%     0.00%  main_pg.x  [unknown]            [.] 0x0000000000000006
+            |
+            ---0x6
+               std::ostream& std::ostream::_M_insert<long>(long)
+
+     1.53%     0.00%  main_pg.x  main_pg.x            [.] std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_Scoped_node::_Scoped_node<std::piecewise_construct_t const&, std::tuple<int const&>, std::tuple<> >(std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >*, std::piecewise_construct_t const&, std::tuple<int const&>&&, std::tuple<>&&)
+            |
+            ---std::_Hashtable<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_Scoped_node::_Scoped_node<std::piecewise_construct_t const&, std::tuple<int const&>, std::tuple<> >(std::__detail::_Hashtable_alloc<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> > >*, std::piecewise_construct_t const&, std::tuple<int const&>&&, std::tuple<>&&)
+               _mcount
+
+     1.53%     1.53%  main_pg.x  [unknown]            [k] 0xffffffffb73feaf3
+            |
+            ---0x2030203120312030
+               __GI___libc_write
+               0xffffffffb840012b
+               0xffffffffb83b58a7
+               0xffffffffb73fef89
+               0xffffffffb73feaf3
+
+     1.53%     0.00%  main_pg.x  [unknown]            [k] 0x2030203120312030
+            |
+            ---0x2030203120312030
+               __GI___libc_write
+               0xffffffffb840012b
+               0xffffffffb83b58a7
+               0xffffffffb73fef89
+               0xffffffffb73feaf3
+
+     1.53%     0.00%  main_pg.x  libc-2.40.so         [.] __GI___libc_write
+            |
+            ---__GI___libc_write
+               0xffffffffb840012b
+               0xffffffffb83b58a7
+               0xffffffffb73fef89
+               0xffffffffb73feaf3
+
+     1.53%     0.00%  main_pg.x  [unknown]            [.] 0xffffffffb840012b
+            |
+            ---0xffffffffb840012b
+               0xffffffffb83b58a7
+               0xffffffffb73fef89
+               0xffffffffb73feaf3
+
+     1.53%     0.00%  main_pg.x  [unknown]            [.] 0xffffffffb83b58a7
+            |
+            ---0xffffffffb83b58a7
+               0xffffffffb73fef89
+               0xffffffffb73feaf3
+
+     1.53%     0.00%  main_pg.x  [unknown]            [.] 0xffffffffb73fef89
+            |
+            ---0xffffffffb73fef89
+               0xffffffffb73feaf3
+
+     1.52%     0.00%  main_pg.x  main_pg.x            [.] print_clusters(std::vector<int, std::allocator<int> > const&, int)
+            |
+            ---print_clusters(std::vector<int, std::allocator<int> > const&, int)
+               __mcount_internal
+
+     1.48%     1.48%  main_pg.x  libc-2.40.so         [.] _IO_file_xsputn@@GLIBC_2.2.5
+            |
+            ---_IO_file_xsputn@@GLIBC_2.2.5
+
+     1.45%     1.45%  main_pg.x  libc-2.40.so         [.] _IO_file_setbuf@@GLIBC_2.2.5
+            |
+            ---_IO_file_setbuf@@GLIBC_2.2.5
+
+     1.25%     1.25%  main_pg.x  main_pg.x            [.] std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::_M_gen_rand()
+            |
+            ---__libc_start_call_main
+               main
+               generatematrix(int, double, int)
+               double std::uniform_real_distribution<double>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&)
+               double std::uniform_real_distribution<double>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&, std::uniform_real_distribution<double>::param_type const&)
+               std::__detail::_Adaptor<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>, double>::operator()()
+               double std::generate_canonical<double, 53ul, std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&)
+               std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::operator()()
+               std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::_M_gen_rand()
+
+     1.25%     0.00%  main_pg.x  main_pg.x            [.] std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::operator()()
+            |
+            ---std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::operator()()
+               std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::_M_gen_rand()
+
+     1.25%     0.00%  main_pg.x  ld-2.40.so           [.] _dl_start_user
+            |
+            ---_dl_start_user
+               |          
+                --1.23%--_dl_sysdep_start
+                          dl_main
+                          _dl_relocate_object
+
+     1.23%     1.23%  main_pg.x  ld-2.40.so           [.] _dl_relocate_object
+            |
+            ---_dl_start_user
+               _dl_sysdep_start
+               dl_main
+               _dl_relocate_object
+
+     1.23%     0.00%  main_pg.x  ld-2.40.so           [.] _dl_sysdep_start
+            |
+            ---_dl_sysdep_start
+               dl_main
+               _dl_relocate_object
+
+     1.23%     0.00%  main_pg.x  ld-2.40.so           [.] dl_main
+            |
+            ---dl_main
+               _dl_relocate_object
+
+     0.83%     0.83%  main_pg.x  main_pg.x            [.] __gnu_cxx::__enable_if<std::__is_scalar<int>::__value, void>::__type std::__fill_a1<int*, int>(int*, int*, int const&)
+            |
+            ---__libc_start_call_main
+               main
+               generatematrix(int, double, int)
+               std::vector<int, std::allocator<int> >::vector(unsigned long, int const&, std::allocator<int> const&)
+               std::vector<int, std::allocator<int> >::_M_fill_initialize(unsigned long, int const&)
+               int* std::__uninitialized_fill_n_a<int*, unsigned long, int, int>(int*, unsigned long, int const&, std::allocator<int>&)
+               int* std::uninitialized_fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+               int* std::__uninitialized_fill_n<true>::__uninit_fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+               int* std::fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+               int* std::__fill_n_a<int*, unsigned long, int>(int*, unsigned long, int const&, std::random_access_iterator_tag)
+               void std::__fill_a<int*, int>(int*, int*, int const&)
+               __gnu_cxx::__enable_if<std::__is_scalar<int>::__value, void>::__type std::__fill_a1<int*, int>(int*, int*, int const&)
+
+     0.83%     0.00%  main_pg.x  main_pg.x            [.] std::vector<int, std::allocator<int> >::vector(unsigned long, int const&, std::allocator<int> const&)
+            |
+            ---std::vector<int, std::allocator<int> >::vector(unsigned long, int const&, std::allocator<int> const&)
+               std::vector<int, std::allocator<int> >::_M_fill_initialize(unsigned long, int const&)
+               int* std::__uninitialized_fill_n_a<int*, unsigned long, int, int>(int*, unsigned long, int const&, std::allocator<int>&)
+               int* std::uninitialized_fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+               int* std::__uninitialized_fill_n<true>::__uninit_fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+               int* std::fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+               int* std::__fill_n_a<int*, unsigned long, int>(int*, unsigned long, int const&, std::random_access_iterator_tag)
+               void std::__fill_a<int*, int>(int*, int*, int const&)
+               __gnu_cxx::__enable_if<std::__is_scalar<int>::__value, void>::__type std::__fill_a1<int*, int>(int*, int*, int const&)
+
+     0.83%     0.00%  main_pg.x  main_pg.x            [.] std::vector<int, std::allocator<int> >::_M_fill_initialize(unsigned long, int const&)
+            |
+            ---std::vector<int, std::allocator<int> >::_M_fill_initialize(unsigned long, int const&)
+               int* std::__uninitialized_fill_n_a<int*, unsigned long, int, int>(int*, unsigned long, int const&, std::allocator<int>&)
+               int* std::uninitialized_fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+               int* std::__uninitialized_fill_n<true>::__uninit_fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+               int* std::fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+               int* std::__fill_n_a<int*, unsigned long, int>(int*, unsigned long, int const&, std::random_access_iterator_tag)
+               void std::__fill_a<int*, int>(int*, int*, int const&)
+               __gnu_cxx::__enable_if<std::__is_scalar<int>::__value, void>::__type std::__fill_a1<int*, int>(int*, int*, int const&)
+
+     0.83%     0.00%  main_pg.x  main_pg.x            [.] int* std::__uninitialized_fill_n_a<int*, unsigned long, int, int>(int*, unsigned long, int const&, std::allocator<int>&)
+            |
+            ---int* std::__uninitialized_fill_n_a<int*, unsigned long, int, int>(int*, unsigned long, int const&, std::allocator<int>&)
+               int* std::uninitialized_fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+               int* std::__uninitialized_fill_n<true>::__uninit_fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+               int* std::fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+               int* std::__fill_n_a<int*, unsigned long, int>(int*, unsigned long, int const&, std::random_access_iterator_tag)
+               void std::__fill_a<int*, int>(int*, int*, int const&)
+               __gnu_cxx::__enable_if<std::__is_scalar<int>::__value, void>::__type std::__fill_a1<int*, int>(int*, int*, int const&)
+
+     0.83%     0.00%  main_pg.x  main_pg.x            [.] int* std::uninitialized_fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+            |
+            ---int* std::uninitialized_fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+               int* std::__uninitialized_fill_n<true>::__uninit_fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+               int* std::fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+               int* std::__fill_n_a<int*, unsigned long, int>(int*, unsigned long, int const&, std::random_access_iterator_tag)
+               void std::__fill_a<int*, int>(int*, int*, int const&)
+               __gnu_cxx::__enable_if<std::__is_scalar<int>::__value, void>::__type std::__fill_a1<int*, int>(int*, int*, int const&)
+
+     0.83%     0.00%  main_pg.x  main_pg.x            [.] int* std::__uninitialized_fill_n<true>::__uninit_fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+            |
+            ---int* std::__uninitialized_fill_n<true>::__uninit_fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+               int* std::fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+               int* std::__fill_n_a<int*, unsigned long, int>(int*, unsigned long, int const&, std::random_access_iterator_tag)
+               void std::__fill_a<int*, int>(int*, int*, int const&)
+               __gnu_cxx::__enable_if<std::__is_scalar<int>::__value, void>::__type std::__fill_a1<int*, int>(int*, int*, int const&)
+
+     0.83%     0.00%  main_pg.x  main_pg.x            [.] int* std::fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+            |
+            ---int* std::fill_n<int*, unsigned long, int>(int*, unsigned long, int const&)
+               int* std::__fill_n_a<int*, unsigned long, int>(int*, unsigned long, int const&, std::random_access_iterator_tag)
+               void std::__fill_a<int*, int>(int*, int*, int const&)
+               __gnu_cxx::__enable_if<std::__is_scalar<int>::__value, void>::__type std::__fill_a1<int*, int>(int*, int*, int const&)
+
+     0.83%     0.00%  main_pg.x  main_pg.x            [.] int* std::__fill_n_a<int*, unsigned long, int>(int*, unsigned long, int const&, std::random_access_iterator_tag)
+            |
+            ---int* std::__fill_n_a<int*, unsigned long, int>(int*, unsigned long, int const&, std::random_access_iterator_tag)
+               void std::__fill_a<int*, int>(int*, int*, int const&)
+               __gnu_cxx::__enable_if<std::__is_scalar<int>::__value, void>::__type std::__fill_a1<int*, int>(int*, int*, int const&)
+
+     0.83%     0.00%  main_pg.x  main_pg.x            [.] void std::__fill_a<int*, int>(int*, int*, int const&)
+            |
+            ---void std::__fill_a<int*, int>(int*, int*, int const&)
+               __gnu_cxx::__enable_if<std::__is_scalar<int>::__value, void>::__type std::__fill_a1<int*, int>(int*, int*, int const&)
+
+     0.58%     0.58%  main_pg.x  ld-2.40.so           [.] _dl_lookup_symbol_x
+            |
+            ---0x1d6680
+               0x7faa5ee84dd0
+               _dl_lookup_symbol_x
+
+     0.58%     0.00%  main_pg.x  [unknown]            [.] 0x00000000001d6680
+            |
+            ---0x1d6680
+               0x7faa5ee84dd0
+               _dl_lookup_symbol_x
+
+     0.58%     0.00%  main_pg.x  [unknown]            [.] 0x00007faa5ee84dd0
+            |
+            ---0x7faa5ee84dd0
+               _dl_lookup_symbol_x
+
+     0.54%     0.54%  main_pg.x  ld-2.40.so           [.] do_lookup_x
+            |
+            ---0
+               0x7faa5f25bf70
+               do_lookup_x
+
+     0.54%     0.00%  main_pg.x  [unknown]            [.] 0000000000000000
+            |
+            ---0
+               0x7faa5f25bf70
+               do_lookup_x
+
+     0.54%     0.00%  main_pg.x  [unknown]            [.] 0x00007faa5f25bf70
+            |
+            ---0x7faa5f25bf70
+               do_lookup_x
+
+     0.37%     0.00%  main_pg.x  [unknown]            [.] 0xffffffffb8400bb2
+     0.35%     0.35%  main_pg.x  [unknown]            [k] 0xffffffffb73563d7
+     0.35%     0.00%  main_pg.x  [unknown]            [k] 0x00007faa5f2d88b8
+     0.35%     0.00%  main_pg.x  ld-2.40.so           [.] _dl_map_object
+     0.35%     0.00%  main_pg.x  ld-2.40.so           [.] _dl_load_cache_lookup
+     0.35%     0.00%  main_pg.x  [unknown]            [.] 0xffffffffb83bb719
+     0.11%     0.11%  main_pg.x  ld-2.40.so           [.] __GI___tunables_init
+     0.11%     0.00%  main_pg.x  [unknown]            [.] 0x7370616377682e75
+     0.02%     0.00%  main_pg.x  [unknown]            [.] 0xffffffffb83bb6d7
+     0.02%     0.00%  main_pg.x  [unknown]            [.] 0xffffffffb734f235
+     0.02%     0.02%  main_pg.x  [unknown]            [k] 0xffffffffb830a760
+     0.02%     0.00%  main_pg.x  ld-2.40.so           [.] _dl_setup_hash
+     0.00%     0.00%  main_pg.x  ld-2.40.so           [.] _dl_start
+     0.00%     0.00%  main_pg.x  [unknown]            [k] 0xffffffffb830aa54
+     0.00%     0.00%  main_pg.x  [unknown]            [k] 0xffffffffb8400b93
+     0.00%     0.00%  main_pg.x  [unknown]            [k] 0xffffffffb734f2b7
+     0.00%     0.00%  main_pg.x  [unknown]            [k] 0xffffffffb7158891
+     0.00%     0.00%  main_pg.x  [unknown]            [.] 0xffffffffb734f257
+     0.00%     0.00%  main_pg.x  ld-2.40.so           [.] _start
+     0.00%     0.00%  main_pg.x  [unknown]            [k] 0xffffffffb83bb647
+
+
+#
+# (Tip: To see callchains in a more compact form: perf report -g folded)
+#
