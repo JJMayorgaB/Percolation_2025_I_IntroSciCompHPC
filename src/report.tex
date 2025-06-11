@@ -263,7 +263,20 @@ De esta manera, en el ejemplo presentado, la salida para $\texttt{data1.txt}$ y 
 \end{figure}
 
 
-Por otro lado, el script $\texttt{figures.py}$ permite obtener las gráficas para $P(p,L)$ y $s(p,L)$ gracias a la salida obtenida mediante el script en $\texttt{bash}$ y el script $\texttt{time\_figure.py}$ permite obtener la gráfica para el tiempo de computo en función del tamaño del sistema para dos niveles distintos de optimización mediante los datos obtenidos por los archivos $\texttt{time-opt-$L$.txt}$
+Por otro lado, el script $\texttt{figures.py}$ permite obtener las gráficas para $P(p,L)$ y $s(p,L)$ gracias a la salida obtenida mediante el script en $\texttt{bash}$ y el script $\texttt{time\_figure.py}$ permite obtener la gráfica para el tiempo de computo en función del tamaño del sistema para dos niveles distintos de optimización mediante los datos obtenidos por los archivos $\texttt{time-opt-$L$.txt}$.
+\\
+
+El script $\texttt{time\_figure.py}$ procesa los archivos de datos temporales generados por las mediciones de rendimiento para diferentes tamaños de matriz $L$ y niveles de optimización. Este script lee los archivos con formato $\texttt{time-opt-L.txt}$, donde $\texttt{opt}$ corresponde al nivel de optimización ($\texttt{O1}$ o $\texttt{O3}$) y $L$ representa las dimensiones de la matriz.
+
+Para cada combinación de parámetros, el script calcula el promedio y la desviación estándar tanto del wall time como del tiempo de CPU para los tiempos observados para el mism $L$ en distintos valores de $p$ aleatorios, con el fin de estandarizar el resultado. Los datos se visualizan en una gráfica con escala logarítmica en ambos ejes, donde se pueden comparar los tiempos de ejecución entre los diferentes niveles de optimización. La gráfica resultante incluye:
+
+\begin{itemize}
+\item Tiempo de pared representado con marcadores circulares
+\item Tiempo de CPU representado con marcadores cuadrados (escalado por un factor de 1000)
+\item Líneas sólidas para el nivel de optimización O1
+\item Líneas discontinuas para el nivel de optimización O3
+\item Barras de error que muestran la desviación estándar
+\end{itemize}
 
 \subsection{Automatización por medio de Makefile}
 Para automatizar los procesos descritos anteriormente se crearon distintos targets para el archivo $\texttt{Makefile}$ destinados a varias tareas especificas. Los mas relevantes para el programa y que no son subdependencias de otro target son:
