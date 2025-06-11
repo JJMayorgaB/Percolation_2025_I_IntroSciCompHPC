@@ -61,12 +61,19 @@ valgrind: main_val.x
 test: test.x
 	./test.x $(FILTER)
 
+#coverage
+coverage: test.x
+	./$<
+	@gcovr --html --html-details -o coverage.html
+	@echo "Coverage report generated at -> firefox coverage.html
+
 #flat profile
 profiling-report.txt: main_pg.x
 	@mkdir -p profiling
 	perf record -g --output=profiling/perf.data \
 	            ./main_pg.x 128 0.59271 10
-	perf report --stdio --input=profiling/perf.data > profiling/report.txt
+	perf report --stdio --input=profiling/perf.data > profiling/profiling-report.txt
+	@echo "Wrote flat profile report to profiling/profiling-report.txt"
 
 #profile
 profile: main_pg.x 
