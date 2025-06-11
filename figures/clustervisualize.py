@@ -133,7 +133,7 @@ def visualize_matrix(matrix, cluster_size=None, save_path="percolation.png"):
     # Adjust layout with constrained_layout instead of tight_layout
     fig.set_constrained_layout(True)
     plt.savefig("figures/clusterpercolation.png", dpi=300, bbox_inches='tight')
-    plt.show()
+    plt.close()
 
 if __name__ == "__main__":
     data = "figures/data_clusters.txt"

@@ -48,7 +48,7 @@ ax.set_ylim(-0.1, 1.1)
 plt.savefig("figures/Cluster_all_L.png", bbox_inches='tight', dpi=300)
 #plt.savefig("figures/Cluster_all_L.pdf", bbox_inches='tight', dpi=300)
 
-plt.show()
+plt.close()
 
 #GRAFICO 2
 fig, ax = plt.subplots(figsize=(10, 7))
@@ -97,4 +97,4 @@ ax.set_ylim(-0.1, 1.1)
 plt.savefig("figures/P_all_L.png", bbox_inches='tight', dpi=300)
 #plt.savefig("figures/Cluster_all_L.pdf", bbox_inches='tight', dpi=300)
 
-plt.show()
+plt.close()

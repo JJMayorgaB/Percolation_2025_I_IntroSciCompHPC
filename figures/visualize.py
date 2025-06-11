@@ -64,7 +64,7 @@ def visualize_matriz(matrix):
     # Título y guardado
     plt.title("Percolation Process")
     plt.savefig("figures/percolation.png", dpi=300, bbox_inches='tight')
-    plt.show()
+    plt.close()
 
 if __name__ == "__main__":
 

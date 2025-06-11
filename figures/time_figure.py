@@ -147,7 +147,7 @@ def main():
     
     print("\nGráfica guardada como 'time_analysis.png' y 'time_analysis.pdf'")
     
-    plt.show()
+    plt.close()
 
 if __name__ == "__main__":
     main()

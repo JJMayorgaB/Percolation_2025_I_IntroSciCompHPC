@@ -26,13 +26,18 @@ HEADERS = $(wildcard $(INC_DIR)/*.h)
 DATA_FILES = build/graficas/L32_P.txt build/graficas/L64_P.txt build/graficas/L128_P.txt build/graficas/L256_P.txt build/graficas/L512_P.txt \
              build/graficas/L32_Cluster.txt build/graficas/L64_Cluster.txt build/graficas/L128_Cluster.txt build/graficas/L256_Cluster.txt build/graficas/L512_Cluster.txt
 FIGURE_FILES = figures/P_all_L.png figures/Cluster_all_L.png figures/percolation.png figures/clusterpercolation.png figures/time_analysis.png
-TIME_FILES = $(wildcard time-*-*.txt)
+TIME_FILES = time-1-100.txt time-1-200.txt time-1-300.txt time-1-400.txt time-1-500.txt \
+             time-1-600.txt time-1-700.txt time-1-800.txt time-1-900.txt time-1-1000.txt \
+             time-1-1100.txt time-1-1200.txt time-1-1300.txt time-1-1400.txt time-1-1500.txt \
+             time-1-1600.txt time-1-1700.txt time-1-1800.txt time-1-1900.txt time-1-2000.txt \
+             time-3-100.txt time-3-200.txt time-3-300.txt time-3-400.txt time-3-500.txt \
+             time-3-600.txt time-3-700.txt time-3-800.txt time-3-900.txt time-3-1000.txt \
+             time-3-1100.txt time-3-1200.txt time-3-1300.txt time-3-1400.txt time-3-1500.txt \
+             time-3-1600.txt time-3-1700.txt time-3-1800.txt time-3-1900.txt time-3-2000.txt
 
 # Targets por defecto
-.PHONY: all clean debug valgrind profile run-simulation figures report help clean-figures time-executables
+.PHONY: clean debug valgrind profile run-simulation figures report help clean-figures time-executables check-figures
 .DEFAULT_GOAL := all
-
-all: main.x printvalues.x
 
 # Compilar main.x con sanitizers y coverage
 main.x: $(MAIN_SOURCES) $(HEADERS)
@@ -47,7 +52,7 @@ time_mainO%.x: $(TIME_MAIN_SOURCES) $(HEADERS)
 	$(CXX) $(CXXFLAGS) -O$* $(SANITIZE_FLAGS) -o $@ $(TIME_MAIN_SOURCES)
 
 # Target para ejecutar los experimentos de tiempo
-time-computing: $(TIME_EXECUTABLES) probabilidades10.txt
+$(TIME_FILES): $(TIME_EXECUTABLES) probabilidades10.txt
 	parallel './time_mainO{1}.x {3} {2} >> time-{1}-{3}.txt' ::: 1 3 ::: $$(cat probabilidades10.txt) ::: {100..2000..100}
 
 # Target para compilar solo los ejecutables de tiempo
@@ -67,6 +72,11 @@ run-simulation: main.x printvalues.x probabilidades50.txt
 	@bash $(SRC_DIR)/script.sh
 	@echo "Simulación completada. Datos generados en build/graficas/"
 
+# Regla para generar los archivos de datos individualmente
+$(DATA_FILES): 
+	@echo "Los archivos de datos no existen. Ejecutando simulación..."
+	@$(MAKE) run-simulation
+
 # Archivos fuente para visualización
 VISUALIZATION_SOURCES = figures/visualization.cpp $(SRC_DIR)/matrix.cpp $(SRC_DIR)/hoshen_kopelman.cpp $(SRC_DIR)/union_find.cpp
 CLUSTERVIS_SOURCES = figures/clustervisualization.cpp $(SRC_DIR)/matrix.cpp $(SRC_DIR)/hoshen_kopelman.cpp $(SRC_DIR)/union_find.cpp
@@ -79,41 +89,29 @@ figures/visualization.x: $(VISUALIZATION_SOURCES) $(HEADERS)
 figures/clustervisualization.x: $(CLUSTERVIS_SOURCES) $(HEADERS)
 	$(CXX) $(CXXFLAGS) -o $@ $(CLUSTERVIS_SOURCES)
 
-# Regla para generar los archivos de datos individualmente
-$(DATA_FILES): 
-	@echo "Los archivos de datos no existen. Ejecutando simulación..."
-	@$(MAKE) run-simulation
-
 # Generar figuras (depende de datos y programas de visualización)
-$(FIGURE_FILES): figures/visualization.x figures/clustervisualization.x | $(DATA_FILES) | $(TIME_FILES)
+$(FIGURE_FILES): figures/visualization.x figures/clustervisualization.x $(DATA_FILES) $(TIME_FILES)
 	@echo "Generando figuras..."
 	./figures/visualization.x 10 0.5 0.6 > figures/data.txt
 	python3 ./figures/visualize.py
 	./figures/clustervisualization.x 10 0.5 0.6 > figures/data_clusters.txt
 	python3 ./figures/clustervisualize.py
 	python3 ./figures/figures.py
-	@if ls time-*-*.txt 1> /dev/null 2>&1; then \
-		echo "Generando gráfica de tiempo..."; \
-		python3 ./figures/time_figure.py; \
-	else \
-		echo "Advertencia: No se encontraron archivos time-*-*.txt, omitiendo gráfica de tiempo"; \
-	fi
+	python3 ./figures/time_figure.py
 	@echo "Figuras generadas exitosamente"
 
 
 # Target para generar figuras manualmente
 figures: $(FIGURE_FILES)
 
-report: report.pdf
-
-report.pdf: src/report.tex src/report.bib
+report:	src/report.tex src/report.bib check-figures
 	@mkdir -p latex_output
 	@echo "Compilando reporte LaTeX..."
 	# Primera compilación
 	pdflatex -interaction=nonstopmode -halt-on-error -output-directory=latex_output src/report.tex
 	# Procesar bibliografía si existe
-	@if [ -f src/report1.bib ]; then \
-		cp src/report1.bib latex_output/; \
+	@if [ -f src/report.bib ]; then \
+		cp src/report.bib latex_output/; \
 		cd latex_output && bibtex report && cd ..; \
 		echo "Bibliografía procesada"; \
 	else \
@@ -125,7 +123,22 @@ report.pdf: src/report.tex src/report.bib
 	pdflatex -interaction=nonstopmode -halt-on-error -output-directory=latex_output src/report.tex
 	# Copiar PDF final al directorio raíz
 	cp latex_output/report.pdf report.pdf
+	rm -rf latex_output
 	@echo "Reporte generado exitosamente: report.pdf"
+
+# Helper target para verificar figuras
+check-figures:
+	@missing_figs=""; \
+	for fig in $(FIGURE_FILES); do \
+		if [ ! -f "$$fig" ]; then \
+			missing_figs="$$missing_figs $$fig"; \
+		fi; \
+	done; \
+	if [ -n "$$missing_figs" ]; then \
+		echo "Error: Figuras faltantes:$$missing_figs"; \
+		echo "Ejecuta 'make figures' para generarlas."; \
+		exit 1; \
+	fi
 
 # Simulación rápida
 simul: main.x
@@ -167,7 +180,7 @@ profile: main_pg.x
 clean:
 	rm -f *.x *.gcno *.gcda *.gcov *.data *.out *.txt gmon.out
 	rm -f figures/*.x figures/data.txt figures/data_clusters.txt
-	rm -rf build latex_output profiling
+	rm -rf build profiling
 	rm -f src/*.x
 	
 # Limpiar solo figuras (útil para forzar regeneración)
@@ -176,7 +189,6 @@ clean-figures:
 
 help:
 	@echo "Targets disponibles:"
-	@echo "  all            - Compilar main.x y printvalues.x"
 	@echo "  run-simulation - Ejecutar simulación y generar datos"
 	@echo "  figures        - Generar figuras (solo si no existen)"
 	@echo "  report         - Generar reporte PDF"
