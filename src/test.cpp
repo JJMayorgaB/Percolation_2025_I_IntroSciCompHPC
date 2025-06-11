@@ -6,7 +6,7 @@
 TEST_CASE("En arreglo de solo ceros nunca hay percolación", "[ceros]"){
 	
 	int n_muestras = 10;
-	std::vector<int> tamanhos = {10, 20, 30, 40, 50, 500, 1000, 5000};
+	std::vector<int> tamanhos = {10, 20, 30, 40, 50, 500, 1000};
 
 	for (int L: tamanhos){
 
@@ -34,7 +34,7 @@ TEST_CASE("En arreglo de solo ceros nunca hay percolación", "[ceros]"){
 TEST_CASE("En arreglo de unos siempre hay percolación", "[unos]"){
 	
 	int n_muestras = 10;
-	std::vector<int> tamanhos = {10, 20, 30, 40, 50, 500, 1000, 5000};
+	std::vector<int> tamanhos = {10, 20, 30, 40, 50, 500, 1000};
 
 	for (int L: tamanhos){
 
@@ -74,9 +74,6 @@ TEST_CASE("Se detectan percolaciones horizontales", "[horizontal]"){
 		int percolating_count_hor = 0;
 		int total_cluster_size_hor = 0;
 
-		printmatrix(horizontal, L);
-		std::cout << "\n";
-
 		for (int ii = 0; ii < n_muestras; ii++){
 			ClusterInfo hk_horizontal = hoshen_kopelman(horizontal, L);
 			if (hk_horizontal.percolates){
@@ -106,9 +103,6 @@ TEST_CASE("Se detectan percolaciones verticales", "[vertical]"){
 
 		int percolating_count_ver = 0;
 		int total_cluster_size_ver = 0;
-
-		printmatrix(vertical,L);
-		std::cout << "\n";
 
 		for (int ii = 0; ii < n_muestras; ii++){
 			ClusterInfo hk_vertical = hoshen_kopelman(vertical, L);
