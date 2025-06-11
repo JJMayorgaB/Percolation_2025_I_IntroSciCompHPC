@@ -41,7 +41,7 @@ ax.set_ylabel("Tamaño normalizado del clúster", fontsize=11)
 # Ajustes de estilo
 ax.grid(True, linestyle=':', alpha=0.7)
 ax.legend(loc='upper left', framealpha=0.95, fontsize=10)
-ax.set_xlim(0, 1)
+ax.set_xlim(0.4, 1)
 ax.set_ylim(-0.1, 1.1)
 
 # Guardar sin tight_layout para evitar problemas
