@@ -247,14 +247,14 @@ De esta manera, en el ejemplo presentado, la salida para $\texttt{data1.txt}$ y 
     \centering
     \begin{subfigure}[h]{0.45\textwidth}
         \centering
-        \includegraphics[width=0.9\linewidth]{../figures/clusterpercolation3.png}
+        \includegraphics[width=1.0\linewidth]{../figures/clusterpercolation3.png}
         \caption{$p$ = 0.5.}
         \label{fig:3a}
     \end{subfigure}
     \hspace{0.02 cm}
     \begin{subfigure}[h]{0.45\textwidth}
         \centering
-        \includegraphics[width=0.9\linewidth]{../figures/clusterpercolation4.png}
+        \includegraphics[width=1.0\linewidth]{../figures/clusterpercolation4.png}
         \caption{$p$ = 0.595.}
         \label{fig:3b}
     \end{subfigure}
@@ -263,18 +263,16 @@ De esta manera, en el ejemplo presentado, la salida para $\texttt{data1.txt}$ y 
 \end{figure}
 
 
-Por otro lado, el script $\texttt{figures.py}$ permite obtener las gráficas para $P(p,L)$ y $s(p,L)$ gracias a la salida obtenida mediante el script en $\texttt{bash}$ y el script $\texttt{time\_figure.py}$ permite obtener la gráfica para el tiempo de computo en función del tamaño del sistema para dos niveles distintos de optimización mediante los datos obtenidos por los archivos $\texttt{time-opt-$L$.txt}$.
+Por otro lado, el script $\texttt{figures.py}$ permite obtener las gráficas para $P(p,L)$ y $s(p,L)$ gracias a la salida obtenida mediante el script en $\texttt{bash}$ y el script $\texttt{time\_figure.py}$ procesa los archivos de datos temporales generados por las mediciones de rendimiento para diferentes tamaños de matriz $L$ y niveles de optimización. Este script lee los archivos con formato $\texttt{time-opt-L.txt}$, donde $\texttt{opt}$ corresponde al nivel de optimización $\texttt{-O1}$ o $\texttt{-O3}$, y $L$ representa las dimensiones de la matriz.
 \\
 
-El script $\texttt{time\_figure.py}$ procesa los archivos de datos temporales generados por las mediciones de rendimiento para diferentes tamaños de matriz $L$ y niveles de optimización. Este script lee los archivos con formato $\texttt{time-opt-L.txt}$, donde $\texttt{opt}$ corresponde al nivel de optimización ($\texttt{O1}$ o $\texttt{O3}$) y $L$ representa las dimensiones de la matriz.
-
-Para cada combinación de parámetros, el script calcula el promedio y la desviación estándar tanto del wall time como del tiempo de CPU para los tiempos observados para el mism $L$ en distintos valores de $p$ aleatorios, con el fin de estandarizar el resultado. Los datos se visualizan en una gráfica con escala logarítmica en ambos ejes, donde se pueden comparar los tiempos de ejecución entre los diferentes niveles de optimización. La gráfica resultante incluye:
+Para cada combinación de parámetros, el script calcula el promedio y la desviación estándar tanto del Wall time como de CPU time para los tiempos observados para el mismo $L$ en distintos valores de $p$ aleatorios, con el fin de estandarizar el resultado. Los datos se visualizan en una gráfica con escala logarítmica en ambos ejes, donde se pueden comparar los tiempos de ejecución entre los diferentes niveles de optimización. La gráfica resultante incluye:
 
 \begin{itemize}
 \item Tiempo de pared representado con marcadores circulares
 \item Tiempo de CPU representado con marcadores cuadrados (escalado por un factor de 1000)
-\item Líneas sólidas para el nivel de optimización O1
-\item Líneas discontinuas para el nivel de optimización O3
+\item Líneas sólidas para el nivel de optimización $\texttt{-O1}$
+\item Líneas discontinuas para el nivel de optimización $\texttt{-O3}$
 \item Barras de error que muestran la desviación estándar
 \end{itemize}
 
@@ -329,7 +327,7 @@ Después de realizar el proceso descrito en la sección \ref{WtCPUt} y ejecutar 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\linewidth]{../figures/time_analysis.png}
+    \includegraphics[width=1.0\linewidth]{../figures/time_analysis.png}
     \caption{Tiempos de computo, Wall time y CPU time en función de la dimensión $L$ de la red bidimensional para los niveles de optimización $\texttt{-O1}$ y  $\texttt{-O3}$.}
     \label{fig:4}
 \end{figure}
@@ -522,7 +520,7 @@ Los resultados obtenidos para la probabilidad de percolación $P(p,L)$ por medio
 
 \begin{figure}[H]
     \centering
-   \includegraphics[width=0.75\linewidth]{../figures/P_all_L.png}
+   \includegraphics[width=1.0\linewidth]{../figures/P_all_L.png}
    \caption{Probabilidad de percolación en función de la probabilidad de llenado para distintos L.}
     \label{fig:5}
 \end{figure}
@@ -538,7 +536,7 @@ Los resultados obtenidos para el tamaño medio de clúster de percolación $s(p,
 
 \begin{figure}[H]
    \centering
-   \includegraphics[width=0.75\linewidth]{../figures/Cluster_all_L.png}
+   \includegraphics[width=1.0\linewidth]{../figures/Cluster_all_L.png}
     \caption{Tamaño medio de clúster de percolación en función de la probabilidad de llenado para distintos L.}
     \label{fig:6}
 \end{figure}
@@ -554,7 +552,7 @@ El estudio realizado permitió caracterizar satisfactoriamente el fenómeno de p
 
     \item El algoritmo de Hoshen-Kopelman demostró ser eficiente para el análisis de sistemas de tamaño moderado, $L \leq 2000$, aunque el análisis de profiling reveló que aproximadamente el 78\% del tiempo de ejecución se concentra en solo dos funciones: la identificación de clústeres (55\%) y la generación de la matriz aleatoria (23\%).
 
-    \item Las optimizaciones implementadas, -O1 y -O3, mostraron mejoras modestas en el tiempo de ejecución, sugiriendo que el algoritmo ya está altamente optimizado en su forma básica. Los intentos de optimización manual adicional no produjeron mejoras significativas.
+    \item Las optimizaciones implementadas, $\texttt{-O1}$ y $\texttt{-O3}$, mostraron mejoras modestas en el tiempo de ejecución, sugiriendo que el algoritmo ya está altamente optimizado en su forma básica. Los intentos de optimización manual adicional no produjeron mejoras significativas.
 
     \item Las simulaciones para diferentes tamaños de red permitieron observar el fenómeno de escalamiento crítico, donde las propiedades del sistema cerca de $p_c$ dependen fuertemente del tamaño $L$, mientras que lejos del punto crítico el comportamiento es más universal.
 
