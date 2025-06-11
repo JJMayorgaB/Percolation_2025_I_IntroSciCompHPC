@@ -34,42 +34,85 @@ ClusterInfo hoshen_kopelman(const std::vector<int>& matrix, int L) {
         }
     }
 
-    // Paso 2: compactar etiquetas usando las raíces
+    // OPTIMIZACIÓN 1: Reservar capacidad para hash maps
     std::unordered_map<int, int> root_to_compact;
     std::unordered_map<int, int> cluster_sizes;
+    
+    // Estimar número de clusters (típicamente mucho menor que N)
+    int estimated_clusters = std::min(next_label, N/4);
+    root_to_compact.reserve(estimated_clusters);
+    cluster_sizes.reserve(estimated_clusters);
+    
     int compact_label = 1;
 
+    // OPTIMIZACIÓN 2: Usar emplace en lugar de operator[] y find
     for (int i = 0; i < N; ++i) {
         if (labels[i] == 0) continue;
         int root = uf.find(labels[i]);
 
-        if (root_to_compact.find(root) == root_to_compact.end()) {
-            root_to_compact[root] = compact_label++;
+        // Usar emplace para evitar doble lookup
+        auto [it, inserted] = root_to_compact.emplace(root, compact_label);
+        if (inserted) {
+            compact_label++;
         }
 
-        int label = root_to_compact[root];
+        int label = it->second;
         labels[i] = label;
+        
+        // Incrementar cluster size directamente
         cluster_sizes[label]++;
     }
 
-    // Paso 3: detectar percolación vertical y horizontal
-    std::unordered_set<int> top, bottom, left, right;
+    // OPTIMIZACIÓN 3: Reservar capacidad para sets y usar vectores para bordes
+    std::vector<int> top_labels, bottom_labels, left_labels, right_labels;
+    top_labels.reserve(L);
+    bottom_labels.reserve(L);
+    left_labels.reserve(L);
+    right_labels.reserve(L);
 
+    // Recopilar labels de bordes
     for (int i = 0; i < L; ++i) {
-        if (labels[i] > 0) top.insert(labels[i]);                                 // fila superior
-        if (labels[(L - 1) * L + i] > 0) bottom.insert(labels[(L - 1) * L + i]);  // fila inferior
-
-        if (labels[i * L] > 0) left.insert(labels[i * L]);                        // columna izquierda
-        if (labels[i * L + (L - 1)] > 0) right.insert(labels[i * L + (L - 1)]);   // columna derecha
+        if (labels[i] > 0) top_labels.push_back(labels[i]);
+        if (labels[(L - 1) * L + i] > 0) bottom_labels.push_back(labels[(L - 1) * L + i]);
+        if (labels[i * L] > 0) left_labels.push_back(labels[i * L]);
+        if (labels[i * L + (L - 1)] > 0) right_labels.push_back(labels[i * L + (L - 1)]);
     }
 
+    // OPTIMIZACIÓN 4: Usar sets solo cuando sea necesario
     std::unordered_set<int> percolating_labels;
+    
+    // Ordenar para hacer intersección más eficiente
+    std::sort(top_labels.begin(), top_labels.end());
+    std::sort(bottom_labels.begin(), bottom_labels.end());
+    std::sort(left_labels.begin(), left_labels.end());
+    std::sort(right_labels.begin(), right_labels.end());
 
-    for (int lbl : top) {
-        if (bottom.count(lbl)) percolating_labels.insert(lbl);  // percolación vertical
+    // Intersección vertical (top ∩ bottom)
+    auto it1 = top_labels.begin();
+    auto it2 = bottom_labels.begin();
+    while (it1 != top_labels.end() && it2 != bottom_labels.end()) {
+        if (*it1 == *it2) {
+            percolating_labels.insert(*it1);
+            ++it1; ++it2;
+        } else if (*it1 < *it2) {
+            ++it1;
+        } else {
+            ++it2;
+        }
     }
-    for (int lbl : left) {
-        if (right.count(lbl)) percolating_labels.insert(lbl);   // percolación horizontal
+
+    // Intersección horizontal (left ∩ right)
+    it1 = left_labels.begin();
+    it2 = right_labels.begin();
+    while (it1 != left_labels.end() && it2 != right_labels.end()) {
+        if (*it1 == *it2) {
+            percolating_labels.insert(*it1);
+            ++it1; ++it2;
+        } else if (*it1 < *it2) {
+            ++it1;
+        } else {
+            ++it2;
+        }
     }
 
     bool percolates = !percolating_labels.empty();
@@ -84,6 +127,7 @@ ClusterInfo hoshen_kopelman(const std::vector<int>& matrix, int L) {
         max_cluster_size,
         labels
     };
+    
 }
 
 void print_clusters(const std::vector<int>& labels, int L) {
