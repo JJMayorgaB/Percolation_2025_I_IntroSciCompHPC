@@ -7,9 +7,10 @@
 TEST_CASE("En arreglo de solo ceros nunca hay percolación, Y en arreglo de unos, siempre la hay.", "[unosceros]"){
 	
 	int n_muestras = 10;
-	int tamanhos[10] = {1, 10, 20, 30, 40, 50, 500, 1000, 5000, 10000};
+	std::vector<int> tamanhos = {10, 20, 30, 40, 50, 500, 1000, 5000, 10000};
 
 	for (int L: tamanhos){
+
 		std::vector<int> unos(L*L,1);
 		std::vector<int> ceros(L*L,0);
 
@@ -36,21 +37,23 @@ TEST_CASE("En arreglo de solo ceros nunca hay percolación, Y en arreglo de unos
 		double probability_unos = static_cast<double>(percolating_count_unos) / n_muestras;
 		double probability_ceros = static_cast<double>(percolating_count_ceros) / n_muestras;
 
-		double mean_cluster_size_unos = static_cast<double>(total_cluster_size_unos) / n_muestras;
-		double mean_cluster_size_ceros = static_cast<double>(total_cluster_size_ceros) / n_muestras;
+		double mean_cluster_size_unos = static_cast<double>(total_cluster_size_unos) / (n_muestras*(L*L));
+		double mean_cluster_size_ceros = static_cast<double>(total_cluster_size_ceros) / (n_muestras*(L*L));
 
 		REQUIRE(probability_unos == 1.0);
-		REQUIRE(mean_cluster_size_unos==L*L);
+		REQUIRE(mean_cluster_size_unos==1.0);
 		REQUIRE(probability_ceros == 0.0);
 		REQUIRE(mean_cluster_size_ceros==0);
 	}
 }
 
 TEST_CASE("Se detectan percolaciones verticales y horizontales","[horizontal_vertical]"){
+
 	int n_muestras = 10;
-	int tamanhos[10] = {1, 10, 20};
+	std::vector<int> tamanhos = {10, 20, 50};
 
 	for (int L: tamanhos){
+	
 		int fila = L/2;
 		std::vector<int> horizontal(L*L,0);
 		for (int l=0; l < L; l++){
@@ -88,13 +91,13 @@ TEST_CASE("Se detectan percolaciones verticales y horizontales","[horizontal_ver
 		double probability_hor = static_cast<double>(percolating_count_hor) / n_muestras;
 		double probability_ver = static_cast<double>(percolating_count_ver) / n_muestras;
 
-		double mean_cluster_size_hor = static_cast<double>(total_cluster_size_hor) / n_muestras;
-		double mean_cluster_size_ver = static_cast<double>(total_cluster_size_ver) / n_muestras;
+		double mean_cluster_size_hor = static_cast<double>(total_cluster_size_hor) / (n_muestras*(L*L));
+		double mean_cluster_size_ver = static_cast<double>(total_cluster_size_ver) / (n_muestras*(L*L));
 
 		REQUIRE(probability_hor == 1.0);
-		REQUIRE(mean_cluster_size_hor==L);
+		REQUIRE(mean_cluster_size_hor==(1.0/L));
 		REQUIRE(probability_ver == 1.0);
-		REQUIRE(mean_cluster_size_ver==L);
+		REQUIRE(mean_cluster_size_ver==(1.0/L));
 		
 	}
 }

@@ -18,8 +18,10 @@ FLAME = $(HOME)/Downloads/FlameGraph
 MAIN_SOURCES = $(SRC_DIR)/main.cpp $(SRC_DIR)/matrix.cpp $(SRC_DIR)/hoshen_kopelman.cpp $(SRC_DIR)/union_find.cpp
 TIME_MAIN_SOURCES =  $(SRC_DIR)/time_main.cpp $(SRC_DIR)/matrix.cpp $(SRC_DIR)/hoshen_kopelman.cpp $(SRC_DIR)/union_find.cpp
 PRINTVALUES_SOURCES = $(SRC_DIR)/printvalues.cpp $(SRC_DIR)/probvalues.cpp
+TEST_SOURCES = $(SRC_DIR)/test.cpp $(SRC_DIR)/matrix.cpp $(SRC_DIR)/hoshen_kopelman.cpp $(SRC_DIR)/union_find.cpp 
+TEST_OBJECTS = $(TEST_SOURCES:.cpp=.o) 
 
-# Headers (ajusta según tus archivos)
+# Headers 
 HEADERS = $(wildcard $(INC_DIR)/*.h)
 
 # Archivos de datos y figuras
@@ -35,13 +37,99 @@ TIME_FILES = time-1-100.txt time-1-200.txt time-1-300.txt time-1-400.txt time-1-
              time-3-1100.txt time-3-1200.txt time-3-1300.txt time-3-1400.txt time-3-1500.txt \
              time-3-1600.txt time-3-1700.txt time-3-1800.txt time-3-1900.txt time-3-2000.txt
 
+# Archivos fuente para visualización
+VISUALIZATION_SOURCES = figures/visualization.cpp $(SRC_DIR)/matrix.cpp $(SRC_DIR)/hoshen_kopelman.cpp $(SRC_DIR)/union_find.cpp
+CLUSTERVIS_SOURCES = figures/clustervisualization.cpp $(SRC_DIR)/matrix.cpp $(SRC_DIR)/hoshen_kopelman.cpp $(SRC_DIR)/union_find.cpp
+
 # Targets por defecto
 .PHONY: clean debug valgrind profile run-simulation figures report help clean-figures time-executables check-figures
 .DEFAULT_GOAL := all
 
+# Simulación rápida
+simul: main.x
+	./main.x 4 0.6 10 
+
+# Debug con GDB
+debug: main_debug.x
+	gdb ./main_debug.x
+
+# Análisis con Valgrind
+valgrind: main_val.x
+	valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes ./main_val.x 6 0.6 10
+
+#test con catch2
+test: test.x
+	./test.x $(FILTER)
+
+#flat profile
+profiling-report.txt: main_pg.x
+	@mkdir -p profiling
+	perf record -g --output=profiling/perf.data \
+	            ./main_pg.x 128 0.59271 10
+	perf report --stdio --input=profiling/perf.data > profiling/report.txt
+
+#profile
+profile: main_pg.x 
+	@mkdir -p profiling
+	./main_pg.x 8 0.5 10 
+	gprof main_pg.x gmon.out | grep -v 'std::\|__gnu_cxx\|operator\|std::chrono\|std::__' > profiling/analysis.txt
+	perf record --call-graph dwarf -F99 -g -- ./main_pg.x 8 0.5 10
+	perf script | $(FLAME)/stackcollapse-perf.pl > profiling/out.folded
+	$(FLAME)/flamegraph.pl profiling/out.folded > profiling/flamegraph.svg
+	@echo "Wrote flat profile and flamegraph to profiling/analysis.txt and profiling/flamegraph.svg"
+	
+#imprime el reporte en LaTex
+report:	src/report.tex src/report.bib check-figures
+	@mkdir -p latex_output
+	@echo "Compilando reporte LaTeX..."
+	# Primera compilación
+	pdflatex -interaction=nonstopmode -halt-on-error -output-directory=latex_output src/report.tex
+	# Procesar bibliografía si existe
+	@if [ -f src/report.bib ]; then \
+		cp src/report.bib latex_output/; \
+		cd latex_output && bibtex report && cd ..; \
+		echo "Bibliografía procesada"; \
+	else \
+		echo "Advertencia: No se encontró archivo .bib"; \
+	fi
+	# Segunda compilación para resolver referencias
+	pdflatex -interaction=nonstopmode -halt-on-error -output-directory=latex_output src/report.tex
+	# Tercera compilación para asegurar referencias cruzadas
+	pdflatex -interaction=nonstopmode -halt-on-error -output-directory=latex_output src/report.tex
+	# Copiar PDF final al directorio raíz
+	cp latex_output/report.pdf report.pdf
+	rm -rf latex_output
+	@echo "Reporte generado exitosamente: report.pdf"
+
+#borra archivos temporales
+clean:
+	rm -f *.x *.gcno *.gcda *.gcov *.data *.out *.txt gmon.out
+	rm -f figures/*.x figures/data.txt figures/data_clusters.txt
+	rm -rf build 
+	rm -f profiling/out.folded profiling/perf.data
+	rm -f src/*.x
+
 # Compilar main.x con sanitizers y coverage
 main.x: $(MAIN_SOURCES) $(HEADERS)
 	$(CXX) $(CXXFLAGS) -O3 $(SANITIZE_FLAGS) $(COVERAGE_FLAGS) -o $@ $(MAIN_SOURCES)
+
+main_debug.x: $(MAIN_SOURCES) $(HEADERS)
+	$(CXX) $(CXXFLAGS) $(DEBUG_FLAGS) -o $@ $(MAIN_SOURCES)
+
+main_val.x: $(MAIN_SOURCES) $(HEADERS)
+	$(CXX) $(CXXFLAGS) $(VALGRIND_FLAGS) -o $@ $(MAIN_SOURCES)
+
+# Profiling con gprof
+main_pg.x: $(MAIN_SOURCES) $(HEADERS)
+	$(CXX) $(CXXFLAGS) $(PROFILE_FLAGS) -o $@ $(MAIN_SOURCES)
+
+# Regla para compilar test.x
+test.x: $(TEST_OBJECTS)
+	$(CXX) $^ -o $@
+
+# Regla genérica para compilar cualquier .cpp → .o
+%.o: %.cpp $(HEADERS)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Niveles de optimización para time_main
 OPTIMIZATION_LEVELS = 1 3
@@ -77,9 +165,6 @@ $(DATA_FILES):
 	@echo "Los archivos de datos no existen. Ejecutando simulación..."
 	@$(MAKE) run-simulation
 
-# Archivos fuente para visualización
-VISUALIZATION_SOURCES = figures/visualization.cpp $(SRC_DIR)/matrix.cpp $(SRC_DIR)/hoshen_kopelman.cpp $(SRC_DIR)/union_find.cpp
-CLUSTERVIS_SOURCES = figures/clustervisualization.cpp $(SRC_DIR)/matrix.cpp $(SRC_DIR)/hoshen_kopelman.cpp $(SRC_DIR)/union_find.cpp
 
 # Compilar programa de visualización
 figures/visualization.x: $(VISUALIZATION_SOURCES) $(HEADERS)
@@ -104,29 +189,7 @@ $(FIGURE_FILES): figures/visualization.x figures/clustervisualization.x $(DATA_F
 # Target para generar figuras manualmente
 figures: $(FIGURE_FILES)
 
-report:	src/report.tex src/report.bib check-figures
-	@mkdir -p latex_output
-	@echo "Compilando reporte LaTeX..."
-	# Primera compilación
-	pdflatex -interaction=nonstopmode -halt-on-error -output-directory=latex_output src/report.tex
-	# Procesar bibliografía si existe
-	@if [ -f src/report.bib ]; then \
-		cp src/report.bib latex_output/; \
-		cd latex_output && bibtex report && cd ..; \
-		echo "Bibliografía procesada"; \
-	else \
-		echo "Advertencia: No se encontró archivo .bib"; \
-	fi
-	# Segunda compilación para resolver referencias
-	pdflatex -interaction=nonstopmode -halt-on-error -output-directory=latex_output src/report.tex
-	# Tercera compilación para asegurar referencias cruzadas
-	pdflatex -interaction=nonstopmode -halt-on-error -output-directory=latex_output src/report.tex
-	# Copiar PDF final al directorio raíz
-	cp latex_output/report.pdf report.pdf
-	rm -rf latex_output
-	@echo "Reporte generado exitosamente: report.pdf"
-
-# Helper target para verificar figuras
+# Helper target para verificar figuras, en caso de no existir las crea
 check-figures:
 	@missing_figs=""; \
 	for fig in $(FIGURE_FILES); do \
@@ -139,50 +202,6 @@ check-figures:
 		$(MAKE) figures; \
 		exit 1; \
 	fi
-
-# Simulación rápida
-simul: main.x
-	./main.x 4 0.6 10 
-
-# Debug con GDB
-debug: main_debug.x
-	gdb ./main_debug.x
-
-main_debug.x: $(MAIN_SOURCES) $(HEADERS)
-	$(CXX) $(CXXFLAGS) $(DEBUG_FLAGS) -o $@ $(MAIN_SOURCES)
-
-# Análisis con Valgrind
-valgrind: main_val.x
-	valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes ./main_val.x 6 0.6 10
-
-main_val.x: $(MAIN_SOURCES) $(HEADERS)
-	$(CXX) $(CXXFLAGS) $(VALGRIND_FLAGS) -o $@ $(MAIN_SOURCES)
-
-# Profiling con gprof
-main_pg.x: $(MAIN_SOURCES) $(HEADERS)
-	$(CXX) $(CXXFLAGS) $(PROFILE_FLAGS) -o $@ $(MAIN_SOURCES)
-
-profiling-report.txt: main_pg.x
-	@mkdir -p profiling
-	perf record -g --output=profiling/perf.data \
-	            ./main_pg.x 128 0.59271 10
-	perf report --stdio --input=profiling/perf.data > profiling/report.txt
-
-profile: main_pg.x 
-	@mkdir -p profiling
-	./main_pg.x 8 0.5 10 
-	gprof main_pg.x gmon.out | grep -v 'std::\|__gnu_cxx\|operator\|std::chrono\|std::__' > profiling/analysis.txt
-	perf record --call-graph dwarf -F99 -g -- ./main_pg.x 8 0.5 10
-	perf script | $(FLAME)/stackcollapse-perf.pl > profiling/out.folded
-	$(FLAME)/flamegraph.pl profiling/out.folded > profiling/flamegraph.svg
-	@echo "Wrote flat profile and flamegraph to profiling/analysis.txt and profiling/flamegraph.svg"
-
-clean:
-	rm -f *.x *.gcno *.gcda *.gcov *.data *.out *.txt gmon.out
-	rm -f figures/*.x figures/data.txt figures/data_clusters.txt
-	rm -rf build 
-	rm -f profiling/out.folded profiling/perf.data
-	rm -f src/*.x
 	
 # Limpiar solo figuras (útil para forzar regeneración)
 clean-figures:
