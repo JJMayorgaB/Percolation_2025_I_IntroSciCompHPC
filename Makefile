@@ -50,38 +50,10 @@ CLUSTERVIS_SOURCES = figures/clustervisualization.cpp $(SRC_DIR)/matrix.cpp $(SR
 simul: main.x
 	./main.x 4 0.6 10 
 
-# Debug con GDB
-debug: main_debug.x
-	gdb ./main_debug.x
-
-# Análisis con Valgrind
-valgrind: main_val.x
-	valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes ./main_val.x 6 0.6 10
-
 #test con catch2
 test: test.x
 	./test.x $(FILTER)
 
-#flat profile
-profiling-report.txt: main_pg.x
-	@mkdir -p profiling
-	perf record -g --output=profiling/perf.data \
-	            ./main_pg.x 128 0.59271 10
-	perf report --stdio --input=profiling/perf.data > profiling/profiling-report.txt
-	@echo "Wrote flat profile report to profiling/profiling-report.txt"
-
-#profile
-profile: main_pg.x 
-	@mkdir -p profiling
-	./main_pg.x 8 0.5 10 
-	@#Profiling con gprof
-	gprof main_pg.x gmon.out | grep -v 'std::\|__gnu_cxx\|operator\|std::chrono\|std::__' > profiling/analysis.txt
-	@#Profiling con perf
-	perf record --call-graph dwarf -F99 -g -- ./main_pg.x 8 0.5 10
-	perf script | $(FLAME)/stackcollapse-perf.pl > profiling/out.folded
-	$(FLAME)/flamegraph.pl profiling/out.folded > profiling/flamegraph.svg
-	@echo "Wrote flat profile and flamegraph to profiling/analysis.txt and profiling/flamegraph.svg"
-	
 #imprime el reporte en LaTex
 report:	src/report.tex src/report.bib check-figures
 	@mkdir -p latex_output
@@ -105,6 +77,26 @@ report:	src/report.tex src/report.bib check-figures
 	rm -rf latex_output
 	@echo "Reporte generado exitosamente: report.pdf"
 
+#profile
+profile: main_pg.x 
+	@mkdir -p profiling
+	./main_pg.x 8 0.5 10 
+	@#Profiling con gprof
+	gprof main_pg.x gmon.out | grep -v 'std::\|__gnu_cxx\|operator\|std::chrono\|std::__' > profiling/analysis.txt
+	@#Profiling con perf
+	perf record --call-graph dwarf -F99 -g -- ./main_pg.x 8 0.5 10
+	perf script | $(FLAME)/stackcollapse-perf.pl > profiling/out.folded
+	$(FLAME)/flamegraph.pl profiling/out.folded > profiling/flamegraph.svg
+	@echo "Wrote flat profile and flamegraph to profiling/analysis.txt and profiling/flamegraph.svg"
+
+# Debug con GDB
+debug: main_debug.x
+	gdb ./main_debug.x
+
+# Análisis con Valgrind
+valgrind: main_val.x
+	valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes ./main_val.x 6 0.6 10
+
 #borra archivos temporales
 clean:
 	rm -f *.x *.gcno *.gcda *.gcov *.data *.out *.txt gmon.out
@@ -113,6 +105,14 @@ clean:
 	rm -f profiling/out.folded profiling/perf.data
 	rm -f src/*.x
 	rm -f $(TEST_OBJECTS)
+
+#flat profile
+profiling-report.txt: main_pg.x
+	@mkdir -p profiling
+	perf record -g --output=profiling/perf.data \
+	            ./main_pg.x 128 0.59271 10
+	perf report --stdio --input=profiling/perf.data > profiling/profiling-report.txt
+	@echo "Wrote flat profile report to profiling/profiling-report.txt"
 
 # Compilar main.x con sanitizers y coverage
 main.x: $(MAIN_SOURCES) $(HEADERS)
@@ -148,9 +148,6 @@ time_mainO%.x: $(TIME_MAIN_SOURCES) $(HEADERS)
 $(TIME_FILES): $(TIME_EXECUTABLES) probabilidades10.txt
 	parallel './time_mainO{1}.x {3} {2} >> time-{1}-{3}.txt' ::: 1 3 ::: $$(cat probabilidades10.txt) ::: {100..2000..100}
 
-# Target para compilar solo los ejecutables de tiempo
-time-executables: $(TIME_EXECUTABLES)
-
 # Compilar printvalues.x
 printvalues.x: $(PRINTVALUES_SOURCES) $(HEADERS)
 	$(CXX) $(CXXFLAGS) $(SANITIZE_FLAGS) $(COVERAGE_FLAGS) -o $@ $(PRINTVALUES_SOURCES)
@@ -169,7 +166,6 @@ run-simulation: main.x printvalues.x probabilidades50.txt
 $(DATA_FILES): 
 	@echo "Los archivos de datos no existen. Ejecutando simulación..."
 	@$(MAKE) run-simulation
-
 
 # Compilar programa de visualización
 figures/visualization.x: $(VISUALIZATION_SOURCES) $(HEADERS)
@@ -218,13 +214,16 @@ clean-figures:
 
 help:
 	@echo "Targets disponibles:"
-	@echo "  run-simulation - Ejecutar simulación y generar datos"
-	@echo "  figures        - Generar figuras (solo si no existen)"
-	@echo "  report         - Generar reporte PDF"
-	@echo "  clean-figures  - Limpiar solo las figuras"
-	@echo "  debug          - Compilar y ejecutar con GDB"
-	@echo "  valgrind       - Análisis de memoria con Valgrind"
-	@echo "  profile        - Profiling completo con gprof y flamegraph"
-	@echo "  clean          - Limpiar archivos generados"
-	@echo "  simul          - Compilación y simulación con L=4, p=0.6 y seed=10"
-	@echo "  help           - Mostrar esta ayuda"
+	@echo "  simul          		- Compilación y simulación con L=4, p=0.6 y seed=10"
+	@echo "  test					- Test con Catch2"
+	@echo "  report         		- Generar reporte PDF"
+	@echo "  profile        		- Profiling completo con gprof y flamegraph"
+	@echo "  debug          		- Compilar y ejecutar con GDB"
+	@echo "  valgrind       		- Análisis de memoria con Valgrind"
+	@echo "  clean          		- Limpiar archivos temporales generados"
+	@echo "  profiling-report.txt	- Genera el flat profile para L=128, p=0.59271"
+	@echo "  run-simulation 		- Ejecutar simulación y genera datos para las graficas/analisis"
+	@echo "  figures        		- Generar figuras (solo si no existen)"
+	@echo "  clean-figures  		- Limpiar solo las figuras"
+	@echo "  check-figures			- Revisa si las graficas necesarias para el reporte estan hechas, sino, las hace"
+	@echo "  help           		- Mostrar esta ayuda"
